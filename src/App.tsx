@@ -1,5 +1,11 @@
-import React from "react";
+import { ConfigProvider, Layout } from 'antd';
+import React from 'react';
+import { Theme } from './constant/Theme';
 
 export const App = (): React.JSX.Element => {
-  return <div>Temp</div>;
+  return (
+    <ConfigProvider theme={Theme}>
+      <Layout>fdf</Layout>
+    </ConfigProvider>
+  );
 };
