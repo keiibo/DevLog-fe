@@ -1,11 +1,17 @@
 // src/routes/AppRouter.js
 import React from 'react';
-import { BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Root } from '../Root';
+import { Landing } from '../feature/landing/pages/Landing';
 
 export const AppRouter = (): React.JSX.Element => {
   return (
     <Router>
-      <Routes></Routes>
+      <Routes>
+        <Route path="/" element={<Root />}>
+          <Route index element={<Landing />} />
+        </Route>
+      </Routes>
     </Router>
   );
 };

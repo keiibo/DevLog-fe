@@ -1,8 +1,8 @@
-import { Flex } from 'antd';
+import { Flex, Image } from 'antd';
 import React from 'react';
 import { styled } from 'styled-components';
-import { Colors } from '../../../constant/Colors';
-import { MultiLineText } from '../MultiLineText';
+import { Colors } from '../../constant/Colors';
+import { MultiLineText } from './MultiLineText';
 
 type TProps = {
   imageUrl: string;
@@ -20,7 +20,13 @@ export const ThemeSection = ({
   return (
     <Flex align="center" gap={56}>
       <StyledImageContainer>
-        <img src={imageUrl} alt={imageAlt} width={'100px'} height={'100px'} />
+        <Image
+          preview={false}
+          src={imageUrl}
+          alt={imageAlt}
+          width={'100px'}
+          height={'100px'}
+        />
       </StyledImageContainer>
       <Flex vertical gap={16}>
         <StyledTitle>{title}</StyledTitle>

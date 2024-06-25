@@ -1,8 +1,13 @@
+import { Meta, StoryObj } from '@storybook/react';
 import { GlobalHeader } from './GlobalHeader';
 
-export default {
-  title: 'GlobalHeader',
-  component: GlobalHeader
-};
+const meta = {
+  title: 'composition/GlobalHeader',
+  component: GlobalHeader,
+  tags: ['autodocs']
+} satisfies Meta<typeof GlobalHeader>;
 
-export const Default = () => <GlobalHeader></GlobalHeader>;
+export default meta;
+type TStory = StoryObj<typeof meta>;
+
+export const Default: TStory = {};

@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Flex, Image } from 'antd';
 import { Header as AntDHeader } from 'antd/es/layout/layout';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -11,11 +11,10 @@ type TMenu = {
 };
 
 type TStyledMenuItemProps = {
-  isSelected: boolean;
+  $isSelected: boolean;
 };
 
 export const GlobalHeader = (): React.JSX.Element => {
-  const [selectedItem, setSelectedItem] = useState<TMenu | null>(null);
   const items = [
     {
       key: 1,
@@ -23,26 +22,34 @@ export const GlobalHeader = (): React.JSX.Element => {
     },
     {
       key: 2,
-      label: 'menu1'
+      label: 'menu2'
     },
     {
       key: 3,
-      label: 'menu1'
+      label: 'menu3'
     }
   ];
+  const [selectedItem, setSelectedItem] = useState<TMenu>(items[0]);
+
   return (
     <StyledAntDHeader>
       <StyledImageContainer>
-        <StyledLink to={''}>
-          <img src="src/assets/DeveLog.png" alt="develog" width={152} />
+        <StyledLink to={'#'}>
+          <Image
+            preview={false}
+            src="src/assets/DeveLog.png"
+            alt="develog"
+            width={152}
+          />
         </StyledLink>
       </StyledImageContainer>
       <Flex gap={32}>
         {items.map((item) => (
           <StyledMenuItem
+            to={`/${item.label}`}
             key={item.key}
             onClick={() => setSelectedItem(item)}
-            isSelected={selectedItem?.key === item.key}
+            $isSelected={selectedItem?.key === item.key}
           >
             {item.label}
           </StyledMenuItem>
@@ -53,6 +60,7 @@ export const GlobalHeader = (): React.JSX.Element => {
 };
 
 const StyledAntDHeader = styled(AntDHeader)`
+  width: 100%;
   background-color: ${Colors.MAIN};
   height: 80px;
   display: flex;
@@ -70,15 +78,17 @@ const StyledImageContainer = styled.div`
   align-items: center;
 `;
 
-const StyledMenuItem = styled.a<TStyledMenuItemProps>`
+const StyledMenuItem = styled(Link)<TStyledMenuItemProps>`
   font-size: 16px;
   font-weight: bold;
   color: ${Colors.TEXT};
   transition:
     color 0.4s,
     text-shadow 0.4s;
-  border-bottom: ${({ isSelected }) =>
-    isSelected ? `1px solid ${Colors.TEXT}` : 'none'}; // 選択時にボーダーを表示
+  border-bottom: ${({ $isSelected }) =>
+    $isSelected
+      ? `1px solid ${Colors.TEXT}`
+      : 'none'}; // 選択時にボーダーを表示
 
   &:hover {
     color: ${Colors.WHITE};
