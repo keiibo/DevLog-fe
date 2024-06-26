@@ -7,32 +7,40 @@ type TProps = {
   defaultValue?: string | number;
   placeholder: string;
   width?: number;
+  buttonText: string;
 };
 
 export const InputWithButton = ({
   defaultValue,
   placeholder,
-  width
+  width,
+  buttonText
 }: TProps): React.JSX.Element => {
   return (
-    <Space.Compact>
+    <StyledCompact width={width}>
       <StyledAntDInput
         defaultValue={defaultValue}
         placeholder={placeholder}
-        width={width ? width * 0.7 : undefined}
+        width={width ? width : 100}
       />
-      <StyledButton type="primary">Submit</StyledButton>
-    </Space.Compact>
+      <StyledButton type="primary">{buttonText}</StyledButton>
+    </StyledCompact>
   );
 };
 
+const StyledCompact = styled(Space.Compact)<{ width?: number }>`
+  width: ${({ width }) => (width ? `${width}px` : '100px')};
+  display: flex;
+  height: 100%;
+`;
+
 // Inputに対するスタイリング、flex-basisを使って幅を指定
-const StyledAntDInput = styled(AntDInput)<{ width?: number }>`
-  flex: 7; // 全体の70%
-  width: ${({ width }) => (width ? `${width}px` : 'auto')};
+const StyledAntDInput = styled(AntDInput)`
+  flex: 6; // 全体の70%
 `;
 
 // Buttonに対するスタイリング
 const StyledButton = styled(Button)`
-  flex: 3; // 全体の30%
+  flex: 4; // 全体の30%
+  box-shadow: none;
 `;

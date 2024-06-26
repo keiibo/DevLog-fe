@@ -8,7 +8,8 @@ const meta = {
   argTypes: {
     defaultValue: { control: 'text' },
     placeholder: { control: 'text' },
-    width: { control: 'number' }
+    width: { control: 'number' },
+    buttonText: { control: 'text' }
   },
   tags: ['autodocs']
 } satisfies Meta<typeof InputWithButton>;
@@ -18,8 +19,8 @@ type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
   args: {
-    defaultValue: 'デフォルト',
     placeholder: 'プレースホルダー',
-    width: 300
+    width: 200,
+    buttonText: '送信'
   }
 };

@@ -25,7 +25,7 @@ const StyledContent = styled(Content)`
     100vh - ${LayoutNum.HEADER_HEIGHT}px - ${LayoutNum.FOOTER_HEIGHT}px
   );
   color: ${Colors.TEXT};
-  padding: 32px 124px;
+  padding: calc(${LayoutNum.HEADER_HEIGHT}px + 32px) 124px 32px 124px;
 `;
 
 const StyledFooter = styled(Footer)`

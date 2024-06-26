@@ -4,7 +4,6 @@ import { styled } from 'styled-components';
 import { themeSectionData } from '../../../constant/ThemeSectionData';
 import { Image } from 'antd';
 import { Colors } from '../../../constant/Colors';
-import { Input } from '../../../components/composition/element/Input';
 import { Button } from '../../../components/composition/element/Button';
 import { InputWithButton } from '../../../components/composition/element/InputWithButton';
 
@@ -14,37 +13,47 @@ import { InputWithButton } from '../../../components/composition/element/InputWi
 export const Landing = (): React.JSX.Element => {
   return (
     <StyledContainer>
-      <StyledTitleContainer>
-        <StyledTitleWrapper>
-          <Image preview={false} src="src/assets/Develog.svg" />
-          <p>コーディングの旅を記録し、シェアしよう。</p>
-        </StyledTitleWrapper>
-        <Image preview={false} src="src/assets/files.png" />
-      </StyledTitleContainer>
-      <StyledThemeSectionContainer>
-        {themeSectionData.map((theme) => (
-          <ThemeSection
-            imageUrl={theme.imageUrl}
-            imageAlt={theme.imageAlt}
-            title={theme.title}
-            description={theme.description}
-          />
-        ))}
-      </StyledThemeSectionContainer>
-      <StyledResistContainer>
-        <StyledH2>
-          <span>仲間</span>を探す旅に出かけよう
-        </StyledH2>
-        <InputWithButton placeholder={'メールアドレス'} />
-        <p>または</p>
-        <Button
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        >
-          ログイン
-        </Button>
-      </StyledResistContainer>
+      <StyledWrapper>
+        <StyledTitleContainer>
+          <StyledTitleWrapper>
+            <Image preview={false} src="src/assets/Develog.svg" />
+            <p>コーディングの旅を記録し、シェアしよう。</p>
+          </StyledTitleWrapper>
+          <Image preview={false} src="src/assets/files.png" />
+        </StyledTitleContainer>
+        <StyledThemeSectionContainer>
+          {themeSectionData.map((theme) => (
+            <ThemeSection
+              imageUrl={theme.imageUrl}
+              imageAlt={theme.imageAlt}
+              title={theme.title}
+              description={theme.description}
+            />
+          ))}
+        </StyledThemeSectionContainer>
+        <StyledResistContainer>
+          <StyledH2>
+            <span>仲間</span>を探す旅に出かけよう
+          </StyledH2>
+          <StyledInputContainer>
+            <InputWithButton
+              placeholder={'メールアドレス'}
+              width={720}
+              buttonText={'登録'}
+            />
+            <p>または</p>
+            <Button
+              type="primary"
+              onClick={function (): void {
+                throw new Error('Function not implemented.');
+              }}
+              width="120px"
+            >
+              ログイン
+            </Button>
+          </StyledInputContainer>
+        </StyledResistContainer>
+      </StyledWrapper>
     </StyledContainer>
   );
 };
@@ -52,9 +61,14 @@ export const Landing = (): React.JSX.Element => {
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 120px;
 `;
-
+const StyledWrapper = styled.div`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+`;
 const StyledThemeSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -83,4 +97,12 @@ const StyledH2 = styled.h2`
   span {
     color: ${Colors.LIGHT_BLUE_ACCENT};
   }
+`;
+
+const StyledInputContainer = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  height: 100px;
+  padding: 20px 12px;
 `;

@@ -4,6 +4,7 @@ import React from 'react';
 import { Theme } from '../src/constant/Theme';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Colors } from '../src/constant/Colors';
+import GlobalStyle from '../src/constant/GlobalStyle';
 
 export const preview: Preview = {
   parameters: {
@@ -29,6 +30,7 @@ export const decorators = [
   (Story) => (
     <ConfigProvider theme={Theme}>
       <MemoryRouter>
+        <GlobalStyle />
         <Routes>
           <Route path="/" element={<Story />} />
         </Routes>

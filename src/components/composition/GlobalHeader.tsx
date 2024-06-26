@@ -66,6 +66,8 @@ const StyledAntDHeader = styled(AntDHeader)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
+  z-index: 100;
 `;
 
 const StyledLink = styled(Link)`
