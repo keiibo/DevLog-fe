@@ -21,13 +21,12 @@ export const Root = (): React.JSX.Element => {
 
 const StyledContent = styled(Content)`
   background-color: ${Colors.MAIN};
-  min-height: calc(
-    100vh - ${LayoutNum.HEADER_HEIGHT}px - ${LayoutNum.FOOTER_HEIGHT}px
-  );
+  min-height: calc(100vh - ${LayoutNum.FOOTER_HEIGHT}px);
   color: ${Colors.TEXT};
-  padding: calc(${LayoutNum.HEADER_HEIGHT}px + 32px) 124px 32px 124px;
+  padding: calc(${LayoutNum.HEADER_HEIGHT}px + 16px) 64px 16px 64px;
 `;
 
 const StyledFooter = styled(Footer)`
   text-align: center;
+  height: ${LayoutNum.HEADER_HEIGHT}px;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input as AntDInput, Space } from 'antd';
 import styled from 'styled-components';
-import { Button } from './Button';
+import { Button } from '../button/Button';
 
 type TProps = {
   defaultValue?: string | number;

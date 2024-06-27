@@ -4,8 +4,8 @@ import { styled } from 'styled-components';
 import { themeSectionData } from '../../../constant/ThemeSectionData';
 import { Image } from 'antd';
 import { Colors } from '../../../constant/Colors';
-import { Button } from '../../../components/element/Button';
-import { InputWithButton } from '../../../components/element/InputWithButton';
+import { Button } from '../../../components/element/button/Button';
+import { InputWithButton } from '../../../components/element/input/InputWithButton';
 import { Typewriter } from '../components/Typewriter';
 
 /**
@@ -34,7 +34,7 @@ export const Landing = (): React.JSX.Element => {
         </StyledThemeSectionContainer>
         <StyledResistContainer>
           <StyledH2>
-            <span>仲間</span>を探す旅に出かけよう
+            さぁ、<span>仲間</span>を探す旅に出かけよう
           </StyledH2>
           <StyledInputContainer>
             <InputWithButton
@@ -82,7 +82,11 @@ const StyledTitleContainer = styled.div`
   gap: 234px;
 `;
 
-const StyledTitleWrapper = styled.div``;
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
 const StyledResistContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -96,7 +100,14 @@ const StyledH2 = styled.h2`
   color: ${Colors.WHITE};
   margin: 0;
   span {
-    color: ${Colors.LIGHT_BLUE_ACCENT};
+    background: linear-gradient(
+      to right,
+      ${Colors.LIGHT_BLUE_ACCENT},
+      ${Colors.PURPLE}
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 `;
 

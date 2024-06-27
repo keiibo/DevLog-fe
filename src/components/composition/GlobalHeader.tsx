@@ -3,7 +3,7 @@ import { Header as AntDHeader } from 'antd/es/layout/layout';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../../constant/Colors';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { RootPath } from '../../constant/RootPath';
 // import { useAuth0 } from '@auth0/auth0-react';
 
@@ -17,6 +17,7 @@ type TStyledMenuItemProps = {
 };
 
 export const GlobalHeader = (): React.JSX.Element => {
+  const location = useLocation();
   const items = [
     {
       key: 1,
@@ -47,6 +48,16 @@ export const GlobalHeader = (): React.JSX.Element => {
   ];
   const [selectedItem, setSelectedItem] = useState<TMenu>(items[0]);
   // const { loginWithRedirect } = useAuth0();
+
+  // URLに基づいてメニュー項目をフィルタリング
+  const filteredItems = items.filter(() => {
+    // ログインページにいるときは「ログイン」メニューを表示しない
+    if (location.pathname === '/login') {
+      return false;
+    }
+    return true;
+  });
+
   return (
     <StyledAntDHeader>
       <StyledImageContainer>
@@ -60,7 +71,7 @@ export const GlobalHeader = (): React.JSX.Element => {
         </StyledLink>
       </StyledImageContainer>
       <Flex gap={32}>
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <StyledMenuItem
             to={`${RootPath.ROOT_PATH}/${item.path}`}
             key={item.key}

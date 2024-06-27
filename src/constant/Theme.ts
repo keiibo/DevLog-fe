@@ -2,10 +2,13 @@ import { Colors } from './Colors';
 
 export const Theme = {
   token: {
-    colorPrimary: Colors.MAIN,
+    colorPrimary: Colors.PURPLE,
     borderRadius: 8,
     colorError: Colors.RED,
-    colorPrimaryText: Colors.TEXT
+    colorPrimaryText: Colors.TEXT,
+    colorTextSecondary: Colors.TEXT,
+    colorTextTertiary: Colors.TEXT,
+    colorTextLabel: Colors.TEXT
   },
   components: {
     Button: {
