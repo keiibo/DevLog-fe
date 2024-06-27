@@ -9,7 +9,8 @@ const meta: Meta<typeof Select> = {
     controls: {
       include: []
     }
-  }
+  },
+  tags: ['autodocs']
 };
 
 export default meta;

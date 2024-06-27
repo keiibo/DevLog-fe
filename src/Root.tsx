@@ -23,7 +23,8 @@ const StyledContent = styled(Content)`
   background-color: ${Colors.MAIN};
   min-height: calc(100vh - ${LayoutNum.FOOTER_HEIGHT}px);
   color: ${Colors.TEXT};
-  padding: calc(${LayoutNum.HEADER_HEIGHT}px + 16px) 64px 16px 64px;
+  padding: calc(${LayoutNum.HEADER_HEIGHT}px + 16px) 64px
+    calc(${LayoutNum.FOOTER_HEIGHT}px + 16px) 64px;
 `;
 
 const StyledFooter = styled(Footer)`

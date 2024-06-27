@@ -10,7 +10,8 @@ const meta: Meta<typeof Form> = {
     controls: {
       include: []
     }
-  }
+  },
+  tags: ['autodocs']
 };
 
 export default meta;
