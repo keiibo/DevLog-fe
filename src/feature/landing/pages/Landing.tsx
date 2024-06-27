@@ -4,8 +4,8 @@ import { styled } from 'styled-components';
 import { themeSectionData } from '../../../constant/ThemeSectionData';
 import { Image } from 'antd';
 import { Colors } from '../../../constant/Colors';
-import { Button } from '../../../components/composition/element/Button';
-import { InputWithButton } from '../../../components/composition/element/InputWithButton';
+import { Button } from '../../../components/element/Button';
+import { InputWithButton } from '../../../components/element/InputWithButton';
 import { Typewriter } from '../components/Typewriter';
 
 /**

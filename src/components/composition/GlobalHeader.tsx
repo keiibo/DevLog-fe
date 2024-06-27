@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../../constant/Colors';
 import { Link } from 'react-router-dom';
+import { RootPath } from '../../constant/RootPath';
+// import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenu = {
   key: number;
@@ -18,19 +20,32 @@ export const GlobalHeader = (): React.JSX.Element => {
   const items = [
     {
       key: 1,
-      label: 'menu1'
+      label: 'menu1',
+      path: '',
+      onClick: (item: TMenu) => {
+        setSelectedItem(item);
+      }
     },
     {
       key: 2,
-      label: 'menu2'
+      label: 'menu2',
+      path: '',
+      onClick: (item: TMenu) => {
+        setSelectedItem(item);
+      }
     },
     {
       key: 3,
-      label: 'menu3'
+      label: 'ログイン',
+      path: 'login',
+      onClick: (item: TMenu) => {
+        setSelectedItem(item);
+        // loginWithRedirect();
+      }
     }
   ];
   const [selectedItem, setSelectedItem] = useState<TMenu>(items[0]);
-
+  // const { loginWithRedirect } = useAuth0();
   return (
     <StyledAntDHeader>
       <StyledImageContainer>
@@ -46,9 +61,9 @@ export const GlobalHeader = (): React.JSX.Element => {
       <Flex gap={32}>
         {items.map((item) => (
           <StyledMenuItem
-            to={`/${item.label}`}
+            to={`${RootPath.ROOT_PATH}/${item.path}`}
             key={item.key}
-            onClick={() => setSelectedItem(item)}
+            onClick={() => item.onClick(item)}
             $isSelected={selectedItem?.key === item.key}
           >
             {item.label}

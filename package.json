@@ -9,9 +9,11 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "start": "HTTPS=true npm run"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@reduxjs/toolkit": "^2.2.5",
     "@storybook/addon-docs": "^8.1.10",
     "antd": "^5.18.0",
