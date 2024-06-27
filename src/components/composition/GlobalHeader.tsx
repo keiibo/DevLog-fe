@@ -39,6 +39,7 @@ export const GlobalHeader = (): React.JSX.Element => {
       label: 'ログイン',
       path: 'login',
       onClick: (item: TMenu) => {
+        //  TODO.Login
         setSelectedItem(item);
         // loginWithRedirect();
       }
