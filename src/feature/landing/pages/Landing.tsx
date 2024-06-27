@@ -6,6 +6,7 @@ import { Image } from 'antd';
 import { Colors } from '../../../constant/Colors';
 import { Button } from '../../../components/composition/element/Button';
 import { InputWithButton } from '../../../components/composition/element/InputWithButton';
+import { Typewriter } from '../components/Typewriter';
 
 /**
  * LP画面
@@ -17,7 +18,7 @@ export const Landing = (): React.JSX.Element => {
         <StyledTitleContainer>
           <StyledTitleWrapper>
             <Image preview={false} src="src/assets/Develog.svg" />
-            <p>コーディングの旅を記録し、シェアしよう。</p>
+            <Typewriter text="コーディングの旅を記録し、シェアしよう。" />
           </StyledTitleWrapper>
           <Image preview={false} src="src/assets/files.png" />
         </StyledTitleContainer>

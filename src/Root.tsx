@@ -14,7 +14,7 @@ export const Root = (): React.JSX.Element => {
       <StyledContent>
         <Outlet />
       </StyledContent>
-      <StyledFooter>Ant Design ©2018 Created by Ant UED</StyledFooter>
+      <StyledFooter>DevLog ©2024 Created by keibo</StyledFooter>
     </Layout>
   );
 };
