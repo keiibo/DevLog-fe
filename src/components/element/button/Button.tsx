@@ -30,5 +30,5 @@ type StyledButtonProps = {
 };
 const StyledButton = styled(AntDButton)<StyledButtonProps>`
   width: ${({ width }) => width || 'auto'}; // width が指定されていなければ自動
-  height: ${({ height }) => height || '100%'};
+  height: ${({ height }) => height || 'auto'};
 `;

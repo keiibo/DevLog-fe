@@ -1,62 +1,49 @@
-import { Flex, Image } from 'antd';
+import { Image, Menu, MenuProps } from 'antd';
 import { Header as AntDHeader } from 'antd/es/layout/layout';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Colors } from '../../constant/Colors';
-import { Link, useLocation } from 'react-router-dom';
-import { RootPath } from '../../constant/RootPath';
+import { Link, useNavigate } from 'react-router-dom';
+import { TGetProjectRes } from '../../feature/dashboard/types/TProject';
 // import { useAuth0 } from '@auth0/auth0-react';
 
-type TMenu = {
-  key: number;
-  label: string;
+type TMenuItem = Required<MenuProps>['items'][number];
+
+type TProps = {
+  selectedProjectName: string;
+  projectList: TGetProjectRes[];
+  setProject: React.Dispatch<React.SetStateAction<TGetProjectRes | null>>;
 };
 
-type TStyledMenuItemProps = {
-  $isSelected: boolean;
-};
-
-export const GlobalHeader = (): React.JSX.Element => {
-  const location = useLocation();
-  const items = [
+export const GlobalHeader = ({
+  selectedProjectName,
+  projectList,
+  setProject
+}: TProps): React.JSX.Element => {
+  const navigate = useNavigate();
+  const items: TMenuItem[] = [
+    { key: '1', label: 'menu1' },
     {
-      key: 1,
-      label: 'menu1',
-      path: '',
-      onClick: (item: TMenu) => {
-        setSelectedItem(item);
-      }
+      key: '2',
+      label: selectedProjectName,
+      children: projectList.map((project) => {
+        return {
+          key: project._id,
+          label: project.name
+        };
+      })
     },
-    {
-      key: 2,
-      label: 'menu2',
-      path: '',
-      onClick: (item: TMenu) => {
-        setSelectedItem(item);
-      }
-    },
-    {
-      key: 3,
-      label: 'ログイン',
-      path: 'login',
-      onClick: (item: TMenu) => {
-        //  TODO.Login
-        setSelectedItem(item);
-        // loginWithRedirect();
-      }
-    }
+    { key: '3', label: 'ログイン' }
   ];
-  const [selectedItem, setSelectedItem] = useState<TMenu>(items[0]);
-  // const { loginWithRedirect } = useAuth0();
 
-  // URLに基づいてメニュー項目をフィルタリング
-  const filteredItems = items.filter(() => {
-    // ログインページにいるときは「ログイン」メニューを表示しない
-    if (location.pathname === '/login') {
-      return false;
+  const handleMenuClick = (e: { key: string }) => {
+    if (e.key === '1' || e.key === '2' || e.key === '3') {
+      return;
     }
-    return true;
-  });
+    const selectedKey = e.key;
+    const project = projectList.find((p) => p._id === selectedKey);
+    setProject(project ? project : null);
+    navigate(`/dashboard?id=${project?._id}`);
+  };
 
   return (
     <StyledAntDHeader>
@@ -64,36 +51,30 @@ export const GlobalHeader = (): React.JSX.Element => {
         <StyledLink to={'#'}>
           <Image
             preview={false}
-            src="src/assets/DeveLog.png"
+            src="/src/assets/DevLog_header_logo.svg"
             alt="develog"
             width={152}
           />
         </StyledLink>
       </StyledImageContainer>
-      <Flex gap={32}>
-        {filteredItems.map((item) => (
-          <StyledMenuItem
-            to={`${RootPath.ROOT_PATH}/${item.path}`}
-            key={item.key}
-            onClick={() => item.onClick(item)}
-            $isSelected={selectedItem?.key === item.key}
-          >
-            {item.label}
-          </StyledMenuItem>
-        ))}
-      </Flex>
+      <Menu
+        mode="horizontal"
+        items={items}
+        style={{
+          marginLeft: 'auto'
+        }}
+        onClick={handleMenuClick}
+      />
     </StyledAntDHeader>
   );
 };
 
 const StyledAntDHeader = styled(AntDHeader)`
   width: 100%;
-  background-color: ${Colors.MAIN};
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
   z-index: 100;
 `;
 
@@ -105,22 +86,4 @@ const StyledLink = styled(Link)`
 const StyledImageContainer = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const StyledMenuItem = styled(Link)<TStyledMenuItemProps>`
-  font-size: 16px;
-  font-weight: bold;
-  color: ${Colors.TEXT};
-  transition:
-    color 0.4s,
-    text-shadow 0.4s;
-  border-bottom: ${({ $isSelected }) =>
-    $isSelected
-      ? `1px solid ${Colors.TEXT}`
-      : 'none'}; // 選択時にボーダーを表示
-
-  &:hover {
-    color: ${Colors.WHITE};
-    text-shadow: 0px 8px 8px rgba(244, 245, 247, 1);
-  }
 `;

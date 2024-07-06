@@ -2,7 +2,6 @@ import React from 'react';
 import { Tabs as AntDTabs } from 'antd';
 import { TabsProps } from 'antd/es/tabs';
 import { styled } from 'styled-components';
-import { Colors } from '../../../constant/Colors';
 
 type TProps = TabsProps;
 export const Tab = ({ ...props }: TProps): React.JSX.Element => {
@@ -26,17 +25,9 @@ const StyledAntDTabs = styled(AntDTabs)`
     min-width: 200px;
     min-height: 64px;
     justify-content: center;
-    color: ${Colors.TEXT};
     border: none !important;
     font-weight: bold;
     font-size: 24px !important;
     letter-spacing: 1px;
-    background-color: ${Colors.PURPLE} !important;
-    &-active {
-      background-color: ${Colors.TEXT} !important;
-      .ant-tabs-tab-btn {
-        color: ${Colors.MAIN} !important;
-      }
-    }
   }
 `;

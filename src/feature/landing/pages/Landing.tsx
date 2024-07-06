@@ -7,11 +7,13 @@ import { Colors } from '../../../constant/Colors';
 import { Button } from '../../../components/element/button/Button';
 import { InputWithButton } from '../../../components/element/input/InputWithButton';
 import { Typewriter } from '../components/Typewriter';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * LP画面
  */
 export const Landing = (): React.JSX.Element => {
+  const navigate = useNavigate();
   return (
     <StyledContainer>
       <StyledWrapper>
@@ -45,9 +47,7 @@ export const Landing = (): React.JSX.Element => {
             <p>または</p>
             <Button
               type="primary"
-              onClick={function (): void {
-                throw new Error('Function not implemented.');
-              }}
+              onClick={() => navigate('/login')}
               width="120px"
             >
               ログイン
@@ -63,6 +63,8 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 120px;
+  background-color: ${Colors.MAIN};
+  padding: 48px 0;
 `;
 const StyledWrapper = styled.div`
   margin: 0 auto;

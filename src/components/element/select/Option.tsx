@@ -1,3 +1,3 @@
 import { Select } from 'antd';
 
-export const Option = Select;
+export const Option = Select.Option;

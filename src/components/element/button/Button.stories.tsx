@@ -1,5 +1,3 @@
-// Button.stories.js or Button.stories.tsx (TypeScriptの場合)
-
 import { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
 

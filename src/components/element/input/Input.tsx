@@ -1,26 +1,31 @@
-import React from 'react';
-import { Input as AntDInput } from 'antd';
+import React, { forwardRef } from 'react';
+import { Input as AntDInput, InputProps, InputRef } from 'antd';
 import styled from 'styled-components';
 
-type TProps = {
+type TProps = InputProps & {
   defaultValue?: string | number;
-  placeholder: string;
+  placeholder?: string;
   width?: number;
+  style?: React.CSSProperties;
 };
 
-export const Input = ({
-  defaultValue,
-  placeholder,
-  width
-}: TProps): React.JSX.Element => {
-  return (
-    <StyledAntDInput
-      defaultValue={defaultValue}
-      placeholder={placeholder}
-      width={width}
-    />
-  );
-};
+export const Input = forwardRef<InputRef, TProps>(
+  (
+    { defaultValue, placeholder, width, style, ...props }: TProps,
+    ref
+  ): React.JSX.Element => {
+    return (
+      <StyledAntDInput
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        width={width}
+        ref={ref}
+        style={style}
+        {...props}
+      />
+    );
+  }
+);
 
 const StyledAntDInput = styled(AntDInput)`
   width: ${({ width }) => (width ? `${width}px` : '100px')};

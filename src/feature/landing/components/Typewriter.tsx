@@ -1,6 +1,7 @@
 // Typewriter.jsx
 import React from 'react';
 import { styled } from 'styled-components';
+import { Colors } from '../../../constant/Colors';
 
 type TProps = {
   text: string;
@@ -16,6 +17,7 @@ export const Typewriter = ({ text }: TProps): React.JSX.Element => {
 const StyledTypewriterContainer = styled.div`
   display: flex;
   align-items: center;
+  color: ${Colors.TEXT};
 `;
 const StyledTypewriter = styled.div<{ totalSteps: number }>`
   width: ${({ totalSteps }) =>
