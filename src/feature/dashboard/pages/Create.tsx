@@ -87,14 +87,14 @@ export const Create = (): React.JSX.Element => {
   };
 
   const mutation = useMutation(createProject, {
-    onSuccess: () => {
+    onSuccess: (res) => {
       notification.success({
         message: 'プロジェクト作成成功',
         description: '新しいプロジェクトが正常に作成されました。',
         duration: 4.5 // 通知が表示される時間（秒）
       });
       queryClient.invalidateQueries('projects');
-      navigate('/dashboard');
+      navigate(`/${res._id}/dashboard`);
     },
     onError: (error) => {
       console.log(error);

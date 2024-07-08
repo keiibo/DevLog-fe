@@ -1,9 +1,10 @@
 import { Image, Menu, MenuProps } from 'antd';
 import { Header as AntDHeader } from 'antd/es/layout/layout';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { TGetProjectRes } from '../../feature/dashboard/types/TProject';
+import { LayoutNum } from '../../constant/LayoutNum';
 // import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenuItem = Required<MenuProps>['items'][number];
@@ -20,6 +21,23 @@ export const GlobalHeader = ({
   setProject
 }: TProps): React.JSX.Element => {
   const navigate = useNavigate();
+
+  // URLクエリパラメータを解析
+  const { id: projectId } = useParams();
+
+  useEffect(() => {
+    if (projectId) {
+      const selectedProject = projectList.find(
+        (project) => project._id === projectId
+      );
+      if (selectedProject) {
+        setProject(selectedProject);
+      } else {
+        setProject(projectList[0]);
+      }
+    }
+  }, [projectId, projectList, setProject]);
+
   const items: TMenuItem[] = [
     { key: '1', label: 'menu1' },
     {
@@ -36,13 +54,20 @@ export const GlobalHeader = ({
   ];
 
   const handleMenuClick = (e: { key: string }) => {
-    if (e.key === '1' || e.key === '2' || e.key === '3') {
-      return;
+    switch (e.key) {
+      case '1':
+      case '2':
+        break;
+      case '3':
+        navigate(`/login`);
+        break;
+      default:
+        const selectedKey = e.key;
+        const project = projectList.find((p) => p._id === selectedKey);
+        setProject(project ? project : null);
+        navigate(`/${project?._id}/dashboard`);
+        break;
     }
-    const selectedKey = e.key;
-    const project = projectList.find((p) => p._id === selectedKey);
-    setProject(project ? project : null);
-    navigate(`/dashboard?id=${project?._id}`);
   };
 
   return (
@@ -71,7 +96,7 @@ export const GlobalHeader = ({
 
 const StyledAntDHeader = styled(AntDHeader)`
   width: 100%;
-  height: 80px;
+  height: ${LayoutNum.HEADER_HEIGHT}px;
   display: flex;
   align-items: center;
   justify-content: space-between;

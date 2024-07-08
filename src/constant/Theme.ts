@@ -18,7 +18,13 @@ export const Theme = {
       algorithm: true
     },
     Menu: {
-      colorBgContainer: Colors.MAIN
+      colorBgContainer: Colors.MAIN,
+      itemBorderRadius: 8,
+      iconSize: 24,
+      itemMarginInline: 0,
+      itemMarginBlock: 16,
+      itemSelectedBg: Colors.MAIN_LIGHT,
+      itemSelectedColor: Colors.WHITE
     }
   }
 };

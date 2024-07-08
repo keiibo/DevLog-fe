@@ -9,7 +9,11 @@ export const Dashboard = (): React.JSX.Element => {
   if (!project) {
     return <div>Load</div>;
   }
-  return <StyledDashboardContainer>{project.detail}</StyledDashboardContainer>;
+  return (
+    <StyledDashboardContainer>
+      {project.detail ?? '詳細がありません'}
+    </StyledDashboardContainer>
+  );
 };
 
 const StyledDashboardContainer = styled.div`
