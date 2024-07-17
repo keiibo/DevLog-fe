@@ -1,9 +1,19 @@
 // CustomDatePicker.stories.tsx
-import { DatePicker } from './DatePicker';
+import { Colors } from '../../../constant/Colors';
+import DatePicker from './DatePicker';
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'elements/DatePicker',
+  parameters: {
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
+    }
+  },
   component: DatePicker
 } satisfies Meta<typeof DatePicker>;
 export default meta;

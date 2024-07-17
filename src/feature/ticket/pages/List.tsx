@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Ticket = (): React.JSX.Element => {
+export const List = (): React.JSX.Element => {
   return <div>チケット</div>;
 };

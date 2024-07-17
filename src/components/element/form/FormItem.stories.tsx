@@ -1,15 +1,23 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Input } from 'antd';
 import { FormItem } from './FormItem'; // FormItem コンポーネントのパスを適切に設定してください。
+import { Colors } from '../../../constant/Colors';
 
 const meta: Meta<typeof FormItem> = {
   title: 'elements/FormItem',
-  component: FormItem,
   parameters: {
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
+    },
     controls: {
       include: ['label', 'help', 'required', 'validateStatus', 'hasFeedback']
     }
   },
+  component: FormItem,
   argTypes: {
     label: { control: 'text' },
     help: { control: 'text' },

@@ -1,3 +1,5 @@
+import { TValueOf } from '../lib/type';
+
 export const Colors = {
   MAIN: '#22272E',
   MAIN_LIGHT: '#3C4550',
@@ -9,4 +11,6 @@ export const Colors = {
   WHITE: '#F4F5F7',
   PURPLE: '#AA5E84',
   RED: '#F14040'
-};
+} as const;
+
+export type TColors = TValueOf<typeof Colors>;

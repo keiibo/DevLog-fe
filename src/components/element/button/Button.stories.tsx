@@ -1,10 +1,20 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
+import { Colors } from '../../../constant/Colors';
 
 // Storybookの設定
 const meta = {
   title: 'elements/Button', // StorybookのUIに表示されるタイトル
   component: Button, // どのコンポーネントのストーリーかを指定
+  parameters: {
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
+    }
+  },
   argTypes: {
     // コンポーネントのpropsの制御
     onClick: { action: 'clicked' },

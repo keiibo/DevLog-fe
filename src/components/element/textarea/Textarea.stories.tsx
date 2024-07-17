@@ -1,10 +1,18 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Textarea } from './Textarea';
+import { Colors } from '../../../constant/Colors';
 
 const meta: Meta<typeof Textarea> = {
   title: 'elements/Textarea',
   component: Textarea,
   parameters: {
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
+    },
     controls: {
       include: ['placeholder', 'autoSize', 'disabled', 'value']
     }

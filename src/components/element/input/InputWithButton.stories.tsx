@@ -1,10 +1,19 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { InputWithButton } from './InputWithButton';
+import { Colors } from '../../../constant/Colors';
 
 const meta = {
   title: 'elements/InputWithButton',
   component: InputWithButton,
-  parameters: {},
+  parameters: {
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
+    }
+  },
   argTypes: {
     defaultValue: { control: 'text' },
     placeholder: { control: 'text' },

@@ -1,12 +1,17 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Tab } from './Tab';
+import { Colors } from '../../../constant/Colors';
 
 const meta: Meta<typeof Tab> = {
   title: 'elements/Tabs',
   component: Tab,
   parameters: {
-    controls: {
-      include: []
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
     }
   },
   tags: ['autodocs']

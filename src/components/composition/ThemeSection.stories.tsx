@@ -1,9 +1,19 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ThemeSection } from './ThemeSection';
+import { Colors } from '../../constant/Colors';
 
 const meta = {
   title: 'composition/ThemeSection',
   component: ThemeSection,
+  parameters: {
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
+    }
+  },
   tags: ['autodocs']
 } satisfies Meta<typeof ThemeSection>;
 

@@ -2,15 +2,20 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Input } from 'antd';
 import { Form } from './Form';
 import { FormItem } from './FormItem';
+import { Colors } from '../../../constant/Colors';
 
 const meta: Meta<typeof Form> = {
   title: 'elements/Form',
-  component: Form,
   parameters: {
-    controls: {
-      include: []
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
     }
   },
+  component: Form,
   tags: ['autodocs']
 };
 

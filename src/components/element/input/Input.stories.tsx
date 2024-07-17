@@ -1,11 +1,20 @@
+import { Colors } from '../../../constant/Colors';
 import { Input } from './Input';
 
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'elements/Input',
+  parameters: {
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
+    }
+  },
   component: Input,
-  parameters: {},
   argTypes: {
     defaultValue: {
       control: 'text',

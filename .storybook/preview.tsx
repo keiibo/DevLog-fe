@@ -8,11 +8,12 @@ import GlobalStyle from '../src/constant/GlobalStyle';
 
 export const preview: Preview = {
   parameters: {
+    // TODO.適用されてない
     backgrounds: {
-      default: 'main', // デフォルトの背景色を設定
+      default: 'white',
       values: [
-        { name: 'initial', value: '#ffffff' },
-        { name: 'main', value: Colors.MAIN }
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
       ]
     },
     actions: { argTypeRegex: '^on[A-Z].*' },

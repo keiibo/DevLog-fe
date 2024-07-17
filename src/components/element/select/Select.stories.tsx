@@ -1,13 +1,18 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
 import { Option } from './Option';
+import { Colors } from '../../../constant/Colors';
 
 const meta: Meta<typeof Select> = {
   title: 'elements/Select',
   component: Select,
   parameters: {
-    controls: {
-      include: []
+    backgrounds: {
+      default: 'main',
+      values: [
+        { name: 'main', value: Colors.MAIN },
+        { name: 'white', value: Colors.WHITE }
+      ]
     }
   },
   tags: ['autodocs']
