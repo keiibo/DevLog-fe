@@ -15,6 +15,10 @@ export const Theme = {
       siderBg: Colors.TEXT_DARK
     },
     Button: {
+      colorPrimary: Colors.PURPLE,
+      defaultBg: Colors.PURPLE,
+      defaultHoverBg: Colors.PURPLE,
+      defaultHoverBorderColor: Colors.WHITE,
       algorithm: true
     },
     Menu: {

@@ -3,6 +3,7 @@ import { Priority as PriorityEnum, TPriority } from '../../types/TTicket';
 import { styled } from 'styled-components';
 import { Colors } from '../../../../constant/Colors';
 import { Flex } from 'antd';
+import { mixinNormalFontSize12px } from '../../../../constant/Mixin';
 
 type TProps = {
   priority: TPriority;
@@ -39,7 +40,7 @@ const getPriorityColor = (priority: TPriority): string => {
 };
 
 const Styled12px = styled(Flex)`
-  font-size: 12px;
+  ${mixinNormalFontSize12px}
 `;
 const StyledSpan = styled.span<{ priority: TPriority }>`
   color: ${(props) => getPriorityColor(props.priority)};

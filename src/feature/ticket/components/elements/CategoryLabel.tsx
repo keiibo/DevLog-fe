@@ -3,6 +3,12 @@ import styled from 'styled-components';
 import { Colors } from '../../../../constant/Colors';
 import { Flex } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import {
+  mixinBgWhite,
+  mixinBoldFontSize24px,
+  mixinBorderRadius12px,
+  mixinMainText
+} from '../../../../constant/Mixin';
 
 type TProps = {
   label: string;
@@ -28,17 +34,18 @@ export const CategoryLabel = ({ label }: TProps): React.JSX.Element => {
 };
 
 const StyledCategoryLabel = styled.div`
-  background-color: ${Colors.WHITE};
   padding: 8px 24px;
   border-left: 12px solid ${Colors.PURPLE};
-  border-radius: 8px 12px;
   box-shadow: 4px 4px 4px 0 ${Colors.TEXT};
   cursor: pointer;
+
+  ${mixinMainText}
+  ${mixinBgWhite}
+  ${mixinBorderRadius12px}
 `;
 
 const StyledLabel = styled.div`
-  font-weight: 600;
-  font-size: 24px;
+  ${mixinBoldFontSize24px}
 `;
 
 type TStyledIconProps = {

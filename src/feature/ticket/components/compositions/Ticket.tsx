@@ -7,6 +7,14 @@ import { Colors } from '../../../../constant/Colors';
 import { Priority } from '../elements/Priority';
 import { Id } from '../elements/Id';
 import { LimitDate } from '../elements/LimitDate';
+import {
+  mixinBgWhite,
+  mixinBorderRadius8px,
+  mixinMainText,
+  mixinMargin0,
+  mixinNormalFontSize16px,
+  mixinPadding8px
+} from '../../../../constant/Mixin';
 
 type TProps = {
   ticket: TTicket;
@@ -24,7 +32,7 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
   } = ticket;
 
   return (
-    <StyledTicketFlexContainer borderColor={labelColorType}>
+    <StyledTicketFlexContainer vertical borderColor={labelColorType}>
       <StyledFlex align="center" justify="space-between">
         <Flex align="center" gap={8}>
           <Id id={id} />
@@ -60,13 +68,13 @@ const getBorderColor = (borderColor: TLabelColorType): string => {
 const StyledTicketFlexContainer = styled(Flex)<{
   borderColor: TLabelColorType;
 }>`
-  background-color: ${Colors.WHITE};
-  flex-direction: column;
-
-  padding: 8px;
-  border-radius: 8px;
   border-left: 12px solid ${(props) => getBorderColor(props.borderColor)};
   box-shadow: 4px 4px 4px 0 ${Colors.TEXT};
+
+  ${mixinBgWhite}
+  ${mixinMainText}
+  ${mixinBorderRadius8px}
+  ${mixinPadding8px}
 `;
 
 const StyledFlex = styled(Flex)`
@@ -74,11 +82,11 @@ const StyledFlex = styled(Flex)`
 `;
 
 const StyledTitle = styled.h4`
-  font-size: 18px;
-  margin: 0;
+  ${mixinNormalFontSize16px}
+  ${mixinMargin0}
 `;
 
 const StyledIcon = styled.div`
-  font-size: 18px;
+  ${mixinNormalFontSize16px}
   cursor: pointer;
 `;

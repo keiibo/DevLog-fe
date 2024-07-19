@@ -8,6 +8,7 @@ export type TTicket = {
   limitStartYm?: string;
   limitEndYm?: string;
   priority: TPriority;
+  status: TStatus;
 };
 
 export const LabelColorType = {
@@ -24,3 +25,10 @@ export const Priority = {
   LOW: 'low'
 };
 export type TPriority = TValueOf<typeof Priority>;
+
+export const Status = {
+  NOT_STARTED: 'notStarted',
+  UNDER_CONSTRUCTION: 'underConstruction',
+  COMPLETED: 'completed'
+};
+export type TStatus = TValueOf<typeof Status>;

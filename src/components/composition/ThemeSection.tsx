@@ -1,8 +1,17 @@
 import { Flex, Image } from 'antd';
 import React from 'react';
 import { styled } from 'styled-components';
-import { Colors } from '../../constant/Colors';
 import { MultiLineText } from './MultiLineText';
+import {
+  mixinBgMainLight,
+  mixinBoldFontSize40px,
+  mixinBorderRadius8px,
+  mixinMargin0,
+  mixinNormalFontSize16px,
+  mixinPadding8px,
+  mixinTextText,
+  mixinWhiteText
+} from '../../constant/Mixin';
 
 type TProps = {
   imageUrl: string;
@@ -19,7 +28,7 @@ export const ThemeSection = ({
 }: TProps): React.JSX.Element => {
   return (
     <Flex align="center" gap={56}>
-      <StyledImageContainer>
+      <StyledImageContainer align="center" justify="center">
         <Image
           preview={false}
           src={imageUrl}
@@ -38,27 +47,24 @@ export const ThemeSection = ({
   );
 };
 
-const StyledImageContainer = styled.div`
+const StyledImageContainer = styled(Flex)`
   min-width: 200px;
   min-height: 200px;
-  display: flex;
-  background-color: ${Colors.MAIN_LIGHT};
-  border-radius: 8px;
   text-align: center;
-  justify-content: center;
-  align-items: center;
+
+  ${mixinBgMainLight}
+  ${mixinBorderRadius8px}
 `;
 
 const StyledTitle = styled.h2`
-  color: ${Colors.WHITE};
-  font-size: 40px;
-  font-weight: bold;
-  padding: 8px;
-  margin: 0;
+  ${mixinBoldFontSize40px}
+  ${mixinMargin0}
+  ${mixinWhiteText}
+  ${mixinPadding8px}
 `;
 const StyledDescription = styled.p`
-  color: ${Colors.TEXT};
-  font-size: 16px;
-  padding: 8px;
-  margin: 0;
+  ${mixinNormalFontSize16px}
+  ${mixinMargin0}
+  ${mixinTextText}
+  ${mixinPadding8px}
 `;

@@ -10,6 +10,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { TGetProjectRes } from './feature/dashboard/types/TProject';
+import { mixinBorderRadius12px, mixinBorderRadius24px } from './constant/Mixin';
 
 type TMenuItem = Required<MenuProps>['items'][number];
 
@@ -54,11 +55,13 @@ const StyledSider = styled(Sider)`
     flex-direction: column;
   }
   width: 200px;
-  border-radius: 24px;
   height: 100%;
+
+  ${mixinBorderRadius24px}
 `;
 
 const StyledMenu = styled(Menu)`
-  border-radius: 12px;
   flex: 9;
+
+  ${mixinBorderRadius12px}
 `;

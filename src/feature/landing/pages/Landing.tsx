@@ -2,12 +2,18 @@ import React from 'react';
 import { ThemeSection } from '../../../components/composition/ThemeSection';
 import { styled } from 'styled-components';
 import { themeSectionData } from '../../../constant/ThemeSectionData';
-import { Image } from 'antd';
+import { Flex, Image } from 'antd';
 import { Colors } from '../../../constant/Colors';
 import { Button } from '../../../components/element/button/Button';
 import { InputWithButton } from '../../../components/element/input/InputWithButton';
 import { Typewriter } from '../components/Typewriter';
 import { useNavigate } from 'react-router-dom';
+import {
+  mixinBgMain,
+  mixinBoldFontSize40px,
+  mixinMargin0,
+  mixinWhiteText
+} from '../../../constant/Mixin';
 
 /**
  * LP画面
@@ -15,16 +21,16 @@ import { useNavigate } from 'react-router-dom';
 export const Landing = (): React.JSX.Element => {
   const navigate = useNavigate();
   return (
-    <StyledContainer>
-      <StyledWrapper>
-        <StyledTitleContainer>
-          <StyledTitleWrapper>
+    <StyledContainer vertical gap={120}>
+      <StyledWrapper vertical gap={120}>
+        <Flex align="center" gap={234}>
+          <Flex vertical gap={24}>
             <Image preview={false} src="src/assets/Develog.svg" />
             <Typewriter text="コーディングの旅を記録し、シェアしよう。" />
-          </StyledTitleWrapper>
+          </Flex>
           <Image preview={false} src="src/assets/files.png" />
-        </StyledTitleContainer>
-        <StyledThemeSectionContainer>
+        </Flex>
+        <Flex vertical gap={64}>
           {themeSectionData.map((theme) => (
             <ThemeSection
               imageUrl={theme.imageUrl}
@@ -33,12 +39,12 @@ export const Landing = (): React.JSX.Element => {
               description={theme.description}
             />
           ))}
-        </StyledThemeSectionContainer>
-        <StyledResistContainer>
+        </Flex>
+        <Flex vertical gap={24}>
           <StyledH2>
             さぁ、<span>仲間</span>を探す旅に出かけよう
           </StyledH2>
-          <StyledInputContainer>
+          <StyledInputContainer vertical gap={12}>
             <InputWithButton
               placeholder={'メールアドレス'}
               width={720}
@@ -53,54 +59,23 @@ export const Landing = (): React.JSX.Element => {
               ログイン
             </Button>
           </StyledInputContainer>
-        </StyledResistContainer>
+        </Flex>
       </StyledWrapper>
     </StyledContainer>
   );
 };
 
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 120px;
-  background-color: ${Colors.MAIN};
+const StyledContainer = styled(Flex)`
   padding: 48px 0;
+
+  ${mixinBgMain}
 `;
-const StyledWrapper = styled.div`
+const StyledWrapper = styled(Flex)`
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 120px;
-`;
-const StyledThemeSectionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 64px;
-`;
-
-const StyledTitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 234px;
-`;
-
-const StyledTitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-const StyledResistContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 `;
 
 const StyledH2 = styled.h2`
-  font-size: 64px;
-  font-weight: bolder;
   letter-spacing: 4%;
-  color: ${Colors.WHITE};
-  margin: 0;
   span {
     background: linear-gradient(
       to right,
@@ -111,12 +86,13 @@ const StyledH2 = styled.h2`
     background-clip: text;
     color: transparent;
   }
+
+  ${mixinBoldFontSize40px}
+  ${mixinMargin0}
+  ${mixinWhiteText}
 `;
 
-const StyledInputContainer = styled.div`
-  display: flex;
-  gap: 12px;
-  align-items: center;
+const StyledInputContainer = styled(Flex)`
   height: 100px;
   padding: 20px 12px;
 `;

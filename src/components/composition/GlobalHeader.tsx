@@ -1,4 +1,4 @@
-import { Image, Menu, MenuProps } from 'antd';
+import { Flex, Image, Menu, MenuProps } from 'antd';
 import { Header as AntDHeader } from 'antd/es/layout/layout';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -72,7 +72,7 @@ export const GlobalHeader = ({
 
   return (
     <StyledAntDHeader>
-      <StyledImageContainer>
+      <Flex align="center">
         <StyledLink to={'#'}>
           <Image
             preview={false}
@@ -81,7 +81,7 @@ export const GlobalHeader = ({
             width={152}
           />
         </StyledLink>
-      </StyledImageContainer>
+      </Flex>
       <Menu
         mode="horizontal"
         items={items}
@@ -104,11 +104,6 @@ const StyledAntDHeader = styled(AntDHeader)`
 `;
 
 const StyledLink = styled(Link)`
-  display: flex;
-  align-items: center;
-`;
-
-const StyledImageContainer = styled.div`
   display: flex;
   align-items: center;
 `;

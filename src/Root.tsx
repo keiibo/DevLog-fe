@@ -5,11 +5,17 @@ import { Outlet } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Content } from 'antd/es/layout/layout';
 import { LayoutNum } from './constant/LayoutNum';
-import { Colors } from './constant/Colors';
 import { useQuery } from 'react-query';
 import { TGetProjectRes } from './feature/dashboard/types/TProject';
 import { getProjects } from './feature/dashboard/api/dashboard';
 import { SideMenu } from './SideMenu';
+import {
+  mixinBgTextDark,
+  mixinBorderRadius12px,
+  mixinBorderRadius24px,
+  mixinPadding12px,
+  mixinPadding24px
+} from './constant/Mixin';
 
 export const Root = (): React.JSX.Element => {
   const { data: projectList } = useQuery('projects', getProjects);
@@ -45,17 +51,22 @@ export const Root = (): React.JSX.Element => {
 };
 
 const StyledMainLayout = styled(Layout)`
-  padding: 12px;
-  background-color: ${Colors.TEXT_DARK};
   height: calc(100vh - ${LayoutNum.HEADER_HEIGHT}px);
+
+  ${mixinBgTextDark}
+  ${mixinPadding12px}
 `;
+
 const StyledLayout = styled(Layout)`
-  border-radius: 12px;
   margin-left: 12px;
+
+  ${mixinBorderRadius12px}
 `;
+
 const StyledContent = styled(Content)`
   height: 100%;
-  padding: 24px;
-  border-radius: 24px;
   overflow-y: auto;
+
+  ${mixinBorderRadius24px}
+  ${mixinPadding24px}
 `;

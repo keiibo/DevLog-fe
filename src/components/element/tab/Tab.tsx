@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs as AntDTabs } from 'antd';
 import { TabsProps } from 'antd/es/tabs';
 import { styled } from 'styled-components';
+import { mixinBoldFontSize24px, mixinMargin0 } from '../../../constant/Mixin';
 
 type TProps = TabsProps;
 export const Tab = ({ ...props }: TProps): React.JSX.Element => {
@@ -10,8 +11,7 @@ export const Tab = ({ ...props }: TProps): React.JSX.Element => {
 
 const StyledAntDTabs = styled(AntDTabs)`
   .ant-tabs-nav {
-    margin: 0;
-
+    ${mixinMargin0}
     &:before {
       border: none;
     }
@@ -26,8 +26,7 @@ const StyledAntDTabs = styled(AntDTabs)`
     min-height: 64px;
     justify-content: center;
     border: none !important;
-    font-weight: bold;
-    font-size: 24px !important;
     letter-spacing: 1px;
+    ${mixinBoldFontSize24px}
   }
 `;

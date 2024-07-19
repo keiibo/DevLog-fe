@@ -14,8 +14,14 @@ import { useMutation, useQueryClient } from 'react-query';
 import { createProject } from '../api/dashboard';
 import { TCreateProjectReq } from '../types/TProject';
 import { useNavigate } from 'react-router-dom';
-import { notification } from 'antd';
+import { Flex, notification } from 'antd';
 import DatePicker from '../../../components/element/datepicker/DatePicker';
+import {
+  mixinBoldFontSize40px,
+  mixinMargin0,
+  mixinNormalFontSize16px,
+  mixinNormalFontSize24px
+} from '../../../constant/Mixin';
 
 export const Create = (): React.JSX.Element => {
   const queryClient = useQueryClient();
@@ -168,7 +174,7 @@ export const Create = (): React.JSX.Element => {
   return (
     <StyledCreateContainer>
       <StyledScrollContainer>
-        <StyledBackContainer>
+        <StyledBackContainer gap={8}>
           {currentQuestionIndex > 0 && (
             <StyledBackButton onClick={goToPreviousQuestion}>
               <ArrowUpOutlined />
@@ -185,7 +191,7 @@ export const Create = (): React.JSX.Element => {
         <Form form={form}>
           {showConfirmation ? (
             <>
-              <StyledConfirmItemContainer>
+              <StyledConfirmItemContainer vertical gap={24}>
                 <div>
                   タイトル：
                   <StyledConfirmText>
@@ -231,38 +237,38 @@ const StyledCreateContainer = styled.div`
   text-align: center;
   height: 100%;
 `;
-const StyledBackContainer = styled.div`
+const StyledBackContainer = styled(Flex)`
   text-align: left;
-  font-size: 32px;
-  display: flex;
-  gap: 8px;
   min-height: 32px;
+  ${mixinNormalFontSize24px}
 `;
 
 const StyledBackButton = styled.div`
   cursor: pointer;
 `;
 const StyledQuestionTitle = styled.h1`
-  font-size: 36px;
-  font-weight: bold;
   padding: 80px;
-  margin: 0;
+
+  ${mixinBoldFontSize40px}
+  ${mixinMargin0}
 `;
 
 const StyledScrollContainer = styled.div``;
 
 const StyledInput = styled(Input)`
-  font-size: 32px;
   width: 60%;
   border: none;
   border-bottom: 1px solid ${Colors.WHITE};
   border-radius: 0;
+
+  ${mixinNormalFontSize24px}
 `;
 
 const StyledTextarea = styled(Textarea)`
-  font-size: 24px;
   width: 60%;
   border-bottom: 1px solid ${Colors.WHITE};
+
+  ${mixinNormalFontSize24px}
 `;
 
 // 質問コンテナのスタイルを定義
@@ -271,18 +277,16 @@ const StyledQuestionFormItem = styled(FormItem)`
   align-items: center;
 `;
 
-const StyledConfirmItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+const StyledConfirmItemContainer = styled(Flex)`
   text-align: left;
-  font-size: 18px;
   margin: 0 80px;
+
+  ${mixinNormalFontSize16px}
 `;
 
 const StyledConfirmText = styled.div`
-  font-size: 32px;
   margin-left: 24px;
+  ${mixinNormalFontSize24px}
 `;
 
 const StyledButtonContainer = styled.div`
@@ -296,5 +300,5 @@ const StyledMultiLineText = styled(MultiLineText)`
 const StyledDatePicker = styled(DatePicker)`
   width: 50%;
   height: 80px;
-  font-size: 32px;
+  ${mixinNormalFontSize24px}
 `;

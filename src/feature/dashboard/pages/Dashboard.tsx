@@ -1,7 +1,7 @@
 import React from 'react';
-import { styled } from 'styled-components';
 import { useOutletContext } from 'react-router-dom';
 import { TGetProjectRes } from '../types/TProject';
+import { Flex } from 'antd';
 
 export const Dashboard = (): React.JSX.Element => {
   const project = useOutletContext<TGetProjectRes>();
@@ -10,14 +10,8 @@ export const Dashboard = (): React.JSX.Element => {
     return <div>Load</div>;
   }
   return (
-    <StyledDashboardContainer>
+    <Flex vertical gap={56}>
       {project.detail ?? '詳細がありません'}
-    </StyledDashboardContainer>
+    </Flex>
   );
 };
-
-const StyledDashboardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 56px;
-`;

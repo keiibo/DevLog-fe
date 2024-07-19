@@ -2,6 +2,7 @@ import { Flex } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import { styled } from 'styled-components';
+import { mixinNormalFontSize12px } from '../../../../constant/Mixin';
 
 type TProps = {
   limitStartYm?: string;
@@ -22,5 +23,5 @@ export const LimitDate = ({
   );
 };
 const Styled12px = styled(Flex)`
-  font-size: 12px;
+  ${mixinNormalFontSize12px}
 `;

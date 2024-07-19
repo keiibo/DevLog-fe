@@ -7,7 +7,7 @@ type TProps = {
   children: React.ReactNode; // ボタンに表示する内容
   width?: string; // ボタンの幅
   height?: string;
-  type?: 'primary' | 'default' | 'dashed' | 'link' | 'text';
+  type: 'primary' | 'default' | 'dashed' | 'link' | 'text';
 };
 
 export const Button = ({

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, FormItemProps } from 'antd';
 import { styled } from 'styled-components';
-import { Colors } from '../../../constant/Colors';
+import { mixinTextText } from '../../../constant/Mixin';
 
 type TProps = FormItemProps & {
   children: React.ReactNode;
@@ -12,6 +12,6 @@ export const FormItem = ({ children, ...props }: TProps): React.JSX.Element => {
 };
 const StyledFormItem = styled(Form.Item)`
   .ant-form-item-label > label {
-    color: ${Colors.TEXT};
+    ${mixinTextText}
   }
 `;

@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Ticket } from './Ticket';
 import { Colors } from '../../../../constant/Colors';
+import { Priority, Status } from '../../types/TTicket';
 
 const meta = {
   title: 'feature/ticket/compositions/Ticket',
@@ -35,7 +36,8 @@ export const Default: TStory = {
       isDeletable: true,
       limitStartYm: '2022-01',
       limitEndYm: '2022-12',
-      priority: 'high'
+      priority: Priority.HIGH,
+      status: Status.UNDER_CONSTRUCTION
     }
   }
 };
@@ -49,7 +51,8 @@ export const CantDelete: TStory = {
       isDeletable: false,
       limitStartYm: '2022-01-01',
       limitEndYm: '2022-12-02',
-      priority: 'high'
+      priority: Priority.HIGH,
+      status: Status.NOT_STARTED
     }
   }
 };
