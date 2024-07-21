@@ -12,12 +12,17 @@ import {
 
 type TProps = {
   label: string;
+  onClick: () => void;
 };
 
-export const CategoryLabel = ({ label }: TProps): React.JSX.Element => {
+export const CategoryLabel = ({
+  label,
+  onClick
+}: TProps): React.JSX.Element => {
   const [isOpened, setIsOpened] = useState(false);
 
   const toggleAccordion = () => {
+    onClick();
     setIsOpened(!isOpened);
   };
 

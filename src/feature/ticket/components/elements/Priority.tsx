@@ -25,7 +25,7 @@ export const Priority = ({ priority }: TProps): React.JSX.Element => {
   return (
     <Styled12px gap={4}>
       優先度:
-      <StyledSpan priority={priority}>{getPriorityLabel(priority)}</StyledSpan>
+      <StyledSpan $priority={priority}>{getPriorityLabel(priority)}</StyledSpan>
     </Styled12px>
   );
 };
@@ -42,6 +42,6 @@ const getPriorityColor = (priority: TPriority): string => {
 const Styled12px = styled(Flex)`
   ${mixinNormalFontSize12px}
 `;
-const StyledSpan = styled.span<{ priority: TPriority }>`
-  color: ${(props) => getPriorityColor(props.priority)};
+const StyledSpan = styled.span<{ $priority: TPriority }>`
+  color: ${(props) => getPriorityColor(props.$priority)};
 `;

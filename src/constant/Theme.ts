@@ -29,6 +29,14 @@ export const Theme = {
       itemMarginBlock: 16,
       itemSelectedBg: Colors.MAIN_LIGHT,
       itemSelectedColor: Colors.WHITE
+    },
+    Modal: {
+      colorText: Colors.MAIN,
+      titleColor: Colors.MAIN,
+      titleFontSize: '24px',
+      headerBg: Colors.WHITE,
+      contentBg: Colors.WHITE,
+      footerBg: Colors.WHITE
     }
   }
 };

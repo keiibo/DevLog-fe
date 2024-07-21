@@ -5,7 +5,7 @@ import styled from 'styled-components';
 type TProps = InputProps & {
   defaultValue?: string | number;
   placeholder?: string;
-  width?: number;
+  width?: number | string;
   style?: React.CSSProperties;
 };
 

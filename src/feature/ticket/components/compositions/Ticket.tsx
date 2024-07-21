@@ -32,7 +32,7 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
   } = ticket;
 
   return (
-    <StyledTicketFlexContainer vertical borderColor={labelColorType}>
+    <StyledTicketFlexContainer vertical $borderColor={labelColorType}>
       <StyledFlex align="center" justify="space-between">
         <Flex align="center" gap={8}>
           <Id id={id} />
@@ -66,10 +66,9 @@ const getBorderColor = (borderColor: TLabelColorType): string => {
 };
 
 const StyledTicketFlexContainer = styled(Flex)<{
-  borderColor: TLabelColorType;
+  $borderColor: TLabelColorType;
 }>`
-  border-left: 12px solid ${(props) => getBorderColor(props.borderColor)};
-  box-shadow: 4px 4px 4px 0 ${Colors.TEXT};
+  border-left: 12px solid ${(props) => getBorderColor(props.$borderColor)};
 
   ${mixinBgWhite}
   ${mixinMainText}
