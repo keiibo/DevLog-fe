@@ -30,7 +30,8 @@ type TStory = StoryObj<typeof meta>;
 export const Default: TStory = {
   args: {
     ticket: {
-      id: 1,
+      _id: 1,
+      projectId: '100',
       labelColorType: 'blue',
       title: 'Example Ticket Title',
       isDeletable: true,
@@ -45,7 +46,8 @@ export const Default: TStory = {
 export const CantDelete: TStory = {
   args: {
     ticket: {
-      id: 1,
+      _id: 1,
+      projectId: '100',
       labelColorType: 'blue',
       title: 'Example Ticket Title',
       isDeletable: false,

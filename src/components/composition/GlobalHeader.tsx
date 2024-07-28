@@ -39,7 +39,7 @@ export const GlobalHeader = ({
   }, [projectId, projectList, setProject]);
 
   const items: TMenuItem[] = [
-    { key: '1', label: 'menu1' },
+    { key: '3', label: 'ログイン' },
     {
       key: '2',
       label: selectedProjectName,
@@ -50,7 +50,7 @@ export const GlobalHeader = ({
         };
       })
     },
-    { key: '3', label: 'ログイン' }
+    { key: '1', label: 'menu1' }
   ];
 
   const handleMenuClick = (e: { key: string }) => {
@@ -86,7 +86,8 @@ export const GlobalHeader = ({
         mode="horizontal"
         items={items}
         style={{
-          marginLeft: 'auto'
+          width: '100%',
+          direction: 'rtl'
         }}
         onClick={handleMenuClick}
       />

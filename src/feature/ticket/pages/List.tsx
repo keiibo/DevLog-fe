@@ -1,94 +1,22 @@
 import React, { useState } from 'react';
-import { Priority, Status, TStatus, TTicket } from '../types/TTicket';
+import { Status, TStatus } from '../types/TTicket';
 import { Flex } from 'antd';
 import { Button } from '../../../components/element/button/Button';
 import { CategoryLabel } from '../components/elements/CategoryLabel';
 import { Ticket } from '../components/compositions/Ticket';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
+import { getTickets } from '../api/ticket';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 
 export const List = (): React.JSX.Element => {
-  const dummyData: TTicket[] = [
-    {
-      id: 1,
-      labelColorType: 'red',
-      title: '完了1つ目のチケット',
-      isDeletable: false,
-      priority: Priority.HIGH,
-      limitStartYm: '2024-01-01',
-      status: Status.COMPLETED
-    },
-    {
-      id: 2,
-      labelColorType: 'blue',
-      title: '未着手2つ目のチケット',
-      isDeletable: true,
-      priority: Priority.MEDIUM,
-      limitEndYm: '2024-01-01',
-      status: Status.NOT_STARTED
-    },
-    {
-      id: 3,
-      labelColorType: 'white',
-      title: '着手中3つ目のチケット',
-      isDeletable: true,
-      priority: Priority.LOW,
-      limitStartYm: '2024-01-01',
-      limitEndYm: '2024-01-06',
-      status: Status.UNDER_CONSTRUCTION
-    },
-    {
-      id: 4,
-      labelColorType: 'white',
-      title: '着手中4つ目のチケット',
-      isDeletable: true,
-      priority: Priority.LOW,
-      limitStartYm: '2024-01-01',
-      limitEndYm: '2024-01-06',
-      status: Status.UNDER_CONSTRUCTION
-    },
-    {
-      id: 5,
-      labelColorType: 'white',
-      title: '着手中4つ目のチケット',
-      isDeletable: true,
-      priority: Priority.LOW,
-      limitStartYm: '2024-01-01',
-      limitEndYm: '2024-01-06',
-      status: Status.UNDER_CONSTRUCTION
-    },
-    {
-      id: 6,
-      labelColorType: 'white',
-      title: '着手中4つ目のチケット',
-      isDeletable: true,
-      priority: Priority.LOW,
-      limitStartYm: '2024-01-01',
-      limitEndYm: '2024-01-06',
-      status: Status.UNDER_CONSTRUCTION
-    },
-    {
-      id: 7,
-      labelColorType: 'white',
-      title: '着手中4つ目のチケット',
-      isDeletable: true,
-      priority: Priority.LOW,
-      limitStartYm: '2024-01-01',
-      limitEndYm: '2024-01-06',
-      status: Status.UNDER_CONSTRUCTION
-    },
-    {
-      id: 8,
-      labelColorType: 'white',
-      title: '着手中4つ目のチケット',
-      isDeletable: true,
-      priority: Priority.LOW,
-      limitStartYm: '2024-01-01',
-      limitEndYm: '2024-01-06',
-      status: Status.UNDER_CONSTRUCTION
-    }
-  ];
+  const { id: projectId } = useParams();
+  if (!projectId) {
+    return <>ff</>;
+  }
 
+  const { data: tickets } = useQuery('tickets', () => getTickets(projectId));
   const [isOpenedNewCreateModal, setIsOpenedNewCreateModal] =
     useState<boolean>(false);
 
@@ -141,22 +69,30 @@ export const List = (): React.JSX.Element => {
             <CategoryLabel
               label={'未着手'}
               onClick={() => toggleCategory(Status.NOT_STARTED)}
+              defaultOpenState={
+                (tickets &&
+                  tickets.filter(
+                    (ticket) => ticket.status === Status.NOT_STARTED
+                  ).length > 0) ||
+                false
+              }
             />
             <StyledTicketList
               vertical
               gap={4}
               $show={showNotStarted}
               $height={
-                dummyData.filter(
-                  (ticket) => ticket.status === Status.NOT_STARTED
-                ).length
+                (tickets &&
+                  tickets.filter(
+                    (ticket) => ticket.status === Status.NOT_STARTED
+                  ).length) ||
+                0
               }
             >
-              {dummyData
-                .filter((ticket) => ticket.status === Status.NOT_STARTED)
-                .map((ticket) => (
-                  <Ticket ticket={ticket} key={ticket.id} />
-                ))}
+              {tickets &&
+                tickets
+                  .filter((ticket) => ticket.status === Status.NOT_STARTED)
+                  .map((ticket) => <Ticket ticket={ticket} key={ticket._id} />)}
             </StyledTicketList>
           </Flex>
           {/* 着手中*/}
@@ -164,22 +100,32 @@ export const List = (): React.JSX.Element => {
             <CategoryLabel
               label={'着手中'}
               onClick={() => toggleCategory(Status.UNDER_CONSTRUCTION)}
+              defaultOpenState={
+                (tickets &&
+                  tickets.filter(
+                    (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
+                  ).length > 0) ||
+                false
+              }
             />
             <StyledTicketList
               vertical
               gap={4}
               $show={showUnderConstruction}
               $height={
-                dummyData.filter(
-                  (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
-                ).length
+                (tickets &&
+                  tickets.filter(
+                    (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
+                  ).length) ||
+                0
               }
             >
-              {dummyData
-                .filter((ticket) => ticket.status === Status.UNDER_CONSTRUCTION)
-                .map((ticket) => (
-                  <Ticket ticket={ticket} key={ticket.id} />
-                ))}
+              {tickets &&
+                tickets
+                  .filter(
+                    (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
+                  )
+                  .map((ticket) => <Ticket ticket={ticket} key={ticket._id} />)}
             </StyledTicketList>
           </Flex>
           {/* 完了 */}
@@ -187,27 +133,35 @@ export const List = (): React.JSX.Element => {
             <CategoryLabel
               label={'完了'}
               onClick={() => toggleCategory(Status.COMPLETED)}
+              defaultOpenState={
+                (tickets &&
+                  tickets.filter((ticket) => ticket.status === Status.COMPLETED)
+                    .length > 0) ||
+                false
+              }
             />
             <StyledTicketList
               vertical
               gap={4}
               $show={showCompleted}
               $height={
-                dummyData.filter((ticket) => ticket.status === Status.COMPLETED)
-                  .length
+                (tickets &&
+                  tickets.filter((ticket) => ticket.status === Status.COMPLETED)
+                    .length) ||
+                0
               }
             >
-              {dummyData
-                .filter((ticket) => ticket.status === Status.COMPLETED)
-                .map((ticket) => (
-                  <Ticket ticket={ticket} key={ticket.id} />
-                ))}
+              {tickets &&
+                tickets
+                  .filter((ticket) => ticket.status === Status.COMPLETED)
+                  .map((ticket) => <Ticket ticket={ticket} key={ticket._id} />)}
             </StyledTicketList>
           </Flex>
         </Flex>
       </Flex>
       <CreateModal
         isOpenedNewCreateModal={isOpenedNewCreateModal}
+        setIsOpenedNewCreateModal={setIsOpenedNewCreateModal}
         handleCancel={handleCancel}
       />
     </>

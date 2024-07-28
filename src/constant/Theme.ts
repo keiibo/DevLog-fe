@@ -3,16 +3,18 @@ import { Colors } from './Colors';
 export const Theme = {
   token: {
     colorTextBase: Colors.TEXT,
-    colorBgBase: Colors.MAIN,
     colorBgLayout: Colors.MAIN,
     colorTextPlaceholder: Colors.TEXT_DARK,
-    colorBgContainer: Colors.WHITE
+    colorBgContainer: Colors.WHITE,
+    colorPrimary: Colors.PURPLE,
+    colorText: Colors.MAIN
   },
   components: {
     Layout: {
       headerBg: Colors.MAIN,
       bodyBg: Colors.MAIN,
-      siderBg: Colors.TEXT_DARK
+      siderBg: Colors.TEXT_DARK,
+      colorText: Colors.TEXT
     },
     Button: {
       colorPrimary: Colors.PURPLE,
@@ -22,6 +24,7 @@ export const Theme = {
       algorithm: true
     },
     Menu: {
+      colorText: Colors.TEXT,
       colorBgContainer: Colors.MAIN,
       itemBorderRadius: 8,
       iconSize: 24,

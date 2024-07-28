@@ -44,7 +44,7 @@ export const Landing = (): React.JSX.Element => {
           <StyledH2>
             さぁ、<span>仲間</span>を探す旅に出かけよう
           </StyledH2>
-          <StyledInputContainer vertical gap={12}>
+          <StyledInputContainer gap={12} align="center">
             <InputWithButton
               placeholder={'メールアドレス'}
               width={720}
@@ -92,7 +92,4 @@ const StyledH2 = styled.h2`
   ${mixinWhiteText}
 `;
 
-const StyledInputContainer = styled(Flex)`
-  height: 100px;
-  padding: 20px 12px;
-`;
+const StyledInputContainer = styled(Flex)``;

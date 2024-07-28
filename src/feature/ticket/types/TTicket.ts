@@ -1,7 +1,8 @@
 import { TValueOf } from '../../../lib/type';
 
 export type TTicket = {
-  id: number;
+  _id: number;
+  projectId: string;
   labelColorType: TLabelColorType;
   title: string;
   isDeletable: boolean;
@@ -32,3 +33,7 @@ export const Status = {
   COMPLETED: 'completed'
 };
 export type TStatus = TValueOf<typeof Status>;
+
+export type TGetTicketRes = TTicket;
+
+export type TCreateTicketReq = Omit<TTicket, '_id'>;

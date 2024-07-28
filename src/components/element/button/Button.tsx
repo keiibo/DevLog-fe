@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button as AntDButton } from 'antd';
 import styled from 'styled-components';
+import { ButtonHTMLType } from 'antd/es/button';
 
 type TProps = {
   onClick?: () => void; // クリックイベントの型定義
   children: React.ReactNode; // ボタンに表示する内容
   width?: string; // ボタンの幅
   height?: string;
+  htmlType?: ButtonHTMLType;
   type: 'primary' | 'default' | 'dashed' | 'link' | 'text';
 };
 
@@ -15,10 +17,17 @@ export const Button = ({
   children,
   width,
   height,
+  htmlType,
   type = 'default' // デフォルトタイプを'default'に設定
 }: TProps): React.JSX.Element => {
   return (
-    <StyledButton onClick={onClick} type={type} width={width} height={height}>
+    <StyledButton
+      onClick={onClick}
+      htmlType={htmlType}
+      type={type}
+      width={width}
+      height={height}
+    >
       {children}
     </StyledButton>
   );
