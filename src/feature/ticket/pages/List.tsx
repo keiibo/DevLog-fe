@@ -27,10 +27,6 @@ export const List = (): React.JSX.Element => {
   // 完了
   const [showCompleted, setShowCompleted] = useState(true);
 
-  // モーダルキャンセル時
-  const handleCancel = (): void => {
-    setIsOpenedNewCreateModal(false);
-  };
   // 新規作成ボタン押下時にモーダルを開く
   const handleNewCreateClick = (): void => {
     setIsOpenedNewCreateModal(true);
@@ -162,7 +158,6 @@ export const List = (): React.JSX.Element => {
       <CreateModal
         isOpenedNewCreateModal={isOpenedNewCreateModal}
         setIsOpenedNewCreateModal={setIsOpenedNewCreateModal}
-        handleCancel={handleCancel}
       />
     </>
   );

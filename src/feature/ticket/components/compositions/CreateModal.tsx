@@ -24,13 +24,11 @@ import { useParams } from 'react-router-dom';
 type TProps = {
   isOpenedNewCreateModal: boolean;
   setIsOpenedNewCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handleCancel: () => void;
 };
 
 export const CreateModal = ({
   isOpenedNewCreateModal,
-  setIsOpenedNewCreateModal,
-  handleCancel
+  setIsOpenedNewCreateModal
 }: TProps): React.JSX.Element => {
   const queryClient = useQueryClient();
   const [form] = useForm();
@@ -102,6 +100,12 @@ export const CreateModal = ({
     }
   });
 
+  // モーダルキャンセル時
+  const handleCancel = (): void => {
+    form.resetFields();
+    setIsOpenedNewCreateModal(false);
+  };
+
   return (
     <Modal
       open={isOpenedNewCreateModal}
@@ -115,7 +119,16 @@ export const CreateModal = ({
         <Flex vertical gap={18}>
           <Flex vertical>
             <StyledLabel>タイトル:</StyledLabel>
-            <FormItem noStyle name={'title'}>
+            <FormItem
+              noStyle
+              name={'title'}
+              rules={[
+                {
+                  required: true,
+                  message: '必須項目です'
+                }
+              ]}
+            >
               <Input width={'100%'} />
             </FormItem>
           </Flex>
@@ -132,7 +145,16 @@ export const CreateModal = ({
           <Flex gap={18} justify="space-between">
             <Flex flex={5} align="center" justify="space-between">
               <StyledLabel>優先度:</StyledLabel>
-              <FormItem noStyle name={'priority'}>
+              <FormItem
+                noStyle
+                name={'priority'}
+                rules={[
+                  {
+                    required: true,
+                    message: '必須項目です'
+                  }
+                ]}
+              >
                 <StyledSelect>
                   {priorityOption.map((priority) => {
                     return (
@@ -146,7 +168,16 @@ export const CreateModal = ({
             </Flex>
             <Flex flex={5} align="center" justify="space-between">
               <StyledLabel>ステータス:</StyledLabel>
-              <FormItem noStyle name={'status'}>
+              <FormItem
+                noStyle
+                name={'status'}
+                rules={[
+                  {
+                    required: true,
+                    message: '必須項目です'
+                  }
+                ]}
+              >
                 <StyledSelect>
                   {statusOption.map((status) => {
                     return (
@@ -174,7 +205,16 @@ export const CreateModal = ({
             </Flex>
             <Flex flex={5} align="center" justify="space-between">
               <StyledLabel>ラベルカラー:</StyledLabel>
-              <FormItem noStyle name={'labelColorType'}>
+              <FormItem
+                noStyle
+                name={'labelColorType'}
+                rules={[
+                  {
+                    required: true,
+                    message: '必須項目です'
+                  }
+                ]}
+              >
                 <StyledSelect>
                   {labelColorTypeOption.map((labelColorType) => {
                     return (
