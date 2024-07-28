@@ -56,6 +56,9 @@ export const CreateModal = ({
     { label: '白', value: LabelColorType.WHITE }
   ];
 
+  /**
+   * チケットの新規作成送信処理
+   */
   const handleSubmit = () => {
     console.log(form.getFieldsValue());
     const reqBody: TCreateTicketReq = {
@@ -74,6 +77,10 @@ export const CreateModal = ({
     };
     mutation.mutate(reqBody);
   };
+
+  /**
+   * postMutation
+   */
   const mutation = useMutation(createTicket, {
     onSuccess: (res) => {
       notification.success({
