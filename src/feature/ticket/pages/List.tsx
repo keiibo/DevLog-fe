@@ -88,7 +88,9 @@ export const List = (): React.JSX.Element => {
               {tickets &&
                 tickets
                   .filter((ticket) => ticket.status === Status.NOT_STARTED)
-                  .map((ticket) => <Ticket ticket={ticket} key={ticket._id} />)}
+                  .map((ticket) => (
+                    <Ticket ticket={ticket} key={ticket.ticketId} />
+                  ))}
             </StyledTicketList>
           </Flex>
           {/* 着手中*/}
@@ -121,7 +123,9 @@ export const List = (): React.JSX.Element => {
                   .filter(
                     (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
                   )
-                  .map((ticket) => <Ticket ticket={ticket} key={ticket._id} />)}
+                  .map((ticket) => (
+                    <Ticket ticket={ticket} key={ticket.ticketId} />
+                  ))}
             </StyledTicketList>
           </Flex>
           {/* 完了 */}
@@ -150,7 +154,9 @@ export const List = (): React.JSX.Element => {
               {tickets &&
                 tickets
                   .filter((ticket) => ticket.status === Status.COMPLETED)
-                  .map((ticket) => <Ticket ticket={ticket} key={ticket._id} />)}
+                  .map((ticket) => (
+                    <Ticket ticket={ticket} key={ticket.ticketId} />
+                  ))}
             </StyledTicketList>
           </Flex>
         </Flex>

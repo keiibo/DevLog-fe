@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { mixinTextText } from '../../../../constant/Mixin';
 
 type TProps = {
-  id: number;
+  id: string;
 };
 
 export const Id = ({ id }: TProps): React.JSX.Element => {

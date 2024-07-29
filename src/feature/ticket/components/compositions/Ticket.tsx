@@ -22,7 +22,7 @@ type TProps = {
 
 export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
   const {
-    _id,
+    ticketId,
     title,
     isDeletable,
     priority,
@@ -35,7 +35,7 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
     <StyledTicketFlexContainer vertical $borderColor={labelColorType}>
       <StyledFlex align="center" justify="space-between">
         <Flex align="center" gap={8}>
-          <Id id={_id} />
+          <Id id={ticketId} />
           <Flex gap={8}>
             <StyledTitle>{title}</StyledTitle>
             <StyledIcon>{isDeletable && <DeleteOutlined />}</StyledIcon>

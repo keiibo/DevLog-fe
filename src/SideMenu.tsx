@@ -31,7 +31,7 @@ export const SideMenu = ({ project }: TProps): React.JSX.Element => {
   ];
 
   const handleMenuClick = (e: { key: string }) => {
-    navigate(`/${project?._id}/${e.key}`);
+    navigate(`/${project?.projectId}/${e.key}`);
   };
   return (
     <StyledSider>

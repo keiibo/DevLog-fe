@@ -28,7 +28,7 @@ export const GlobalHeader = ({
   useEffect(() => {
     if (projectId) {
       const selectedProject = projectList.find(
-        (project) => project._id === projectId
+        (project) => project.projectId === projectId
       );
       if (selectedProject) {
         setProject(selectedProject);
@@ -45,7 +45,7 @@ export const GlobalHeader = ({
       label: selectedProjectName,
       children: projectList.map((project) => {
         return {
-          key: project._id,
+          key: project.projectId,
           label: project.name
         };
       })
@@ -54,6 +54,8 @@ export const GlobalHeader = ({
   ];
 
   const handleMenuClick = (e: { key: string }) => {
+    console.log(e);
+
     switch (e.key) {
       case '1':
       case '2':
@@ -62,10 +64,11 @@ export const GlobalHeader = ({
         navigate(`/login`);
         break;
       default:
-        const selectedKey = e.key;
-        const project = projectList.find((p) => p._id === selectedKey);
+        console.log(projectList);
+
+        const project = projectList.find((p) => p.projectId === e.key);
         setProject(project ? project : null);
-        navigate(`/${project?._id}/dashboard`);
+        navigate(`/${e.key}/dashboard`);
         break;
     }
   };

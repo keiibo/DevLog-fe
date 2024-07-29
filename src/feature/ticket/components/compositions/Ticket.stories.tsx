@@ -31,6 +31,7 @@ export const Default: TStory = {
   args: {
     ticket: {
       _id: 1,
+      ticketId: 'TestPJ-1',
       projectId: '100',
       labelColorType: 'blue',
       title: 'Example Ticket Title',
@@ -47,6 +48,7 @@ export const CantDelete: TStory = {
   args: {
     ticket: {
       _id: 1,
+      ticketId: 'TestPJ-1',
       projectId: '100',
       labelColorType: 'blue',
       title: 'Example Ticket Title',

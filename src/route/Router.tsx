@@ -15,11 +15,11 @@ export const AppRouter = (): React.JSX.Element => {
     <Router>
       <Routes>
         <Route path="/about" element={<Landing />} />
+        <Route path="/create" element={<Create />} />
         <Route path="/" element={<Root />}>
           <Route path="login" element={<Login />} />
           <Route path="/:id/detail" element={<Detail />} />
           <Route path="/:id/dashboard" element={<Dashboard />} />
-          <Route path="/:id/dashboard/create" element={<Create />} />
           <Route path="/:id/ticket" element={<List />} />
           <Route path="/:id/diary" element={<Diary />} />
         </Route>

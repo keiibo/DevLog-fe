@@ -45,6 +45,16 @@ export const Create = (): React.JSX.Element => {
       key: 'limitDate',
       question: 'いつまでにプロジェクトを完成させますか？',
       inputType: 'date'
+    },
+    {
+      key: 'projectId',
+      question: (
+        <MultiLineText
+          text="最後にプロジェクトを象徴するIDを作成しましょう！
+          ※アルファベット大文字5文字まで"
+        />
+      ),
+      inputType: 'id'
     }
   ];
   const navigate = useNavigate();
@@ -85,7 +95,7 @@ export const Create = (): React.JSX.Element => {
     console.log(currentQuestionIndex);
 
     if (currentQuestionIndex > 0) {
-      if (currentQuestionIndex === 3) {
+      if (currentQuestionIndex === 4) {
         setShowConfirmation(false);
       }
       setCurrentQuestionIndex(currentQuestionIndex - 1);
@@ -100,7 +110,7 @@ export const Create = (): React.JSX.Element => {
         duration: 4.5 // 通知が表示される時間（秒）
       });
       queryClient.invalidateQueries('projects');
-      navigate(`/${res._id}/dashboard`);
+      navigate(`/${res.projectId}/dashboard`);
     },
     onError: (error) => {
       console.log(error);
@@ -120,9 +130,24 @@ export const Create = (): React.JSX.Element => {
     const req: TCreateProjectReq = {
       name: form.getFieldValue('name'),
       detail: form.getFieldValue('detail'),
-      limitDate: form.getFieldValue('limitDate')
+      limitDate: form.getFieldValue('limitDate'),
+      projectId: form.getFieldValue('projectId')
     };
     mutation.mutate(req);
+  };
+
+  const validateInput = (_: any, value: string) => {
+    if (!value) return Promise.resolve(); // 値が空の場合は検証をスキップ
+    const uppercasePattern = /^[A-Z]+$/; // 大文字のみを許可する正規表現
+    if (value.length > 5) {
+      return Promise.reject(
+        new Error('You can enter up to 5 uppercase letters.')
+      );
+    }
+    if (!uppercasePattern.test(value)) {
+      return Promise.reject(new Error('Only uppercase letters are allowed.'));
+    }
+    return Promise.resolve();
   };
 
   const renderInputField = (inputType: string) => {
@@ -164,6 +189,15 @@ export const Create = (): React.JSX.Element => {
             rules={[{ required: true, message: '選択してください' }]}
           >
             <StyledDatePicker format={'YYYY/MM/DD'} />
+          </StyledQuestionFormItem>
+        );
+      case 'id':
+        return (
+          <StyledQuestionFormItem
+            name="projectId"
+            rules={[{ validator: validateInput }]}
+          >
+            <StyledInput type="text" placeholder="ABCDE" maxLength={5} />
           </StyledQuestionFormItem>
         );
       default:
@@ -210,6 +244,12 @@ export const Create = (): React.JSX.Element => {
                     {dayjs(form.getFieldValue('limitDate')).format(
                       'YYYY/MM/DD'
                     )}
+                  </StyledConfirmText>
+                </div>
+                <div>
+                  プロジェクトID：
+                  <StyledConfirmText>
+                    {form.getFieldValue('projectId')}
                   </StyledConfirmText>
                 </div>
               </StyledConfirmItemContainer>

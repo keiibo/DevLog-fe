@@ -2,6 +2,7 @@ import { TValueOf } from '../../../lib/type';
 
 export type TTicket = {
   _id: number;
+  ticketId: string;
   projectId: string;
   labelColorType: TLabelColorType;
   title: string;
@@ -35,5 +36,4 @@ export const Status = {
 export type TStatus = TValueOf<typeof Status>;
 
 export type TGetTicketRes = TTicket;
-
-export type TCreateTicketReq = Omit<TTicket, '_id'>;
+export type TCreateTicketReq = Omit<TTicket, '_id' | 'ticketId'>;
