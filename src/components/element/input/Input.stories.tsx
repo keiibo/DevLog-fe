@@ -1,4 +1,4 @@
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 import { Input } from './Input';
 
 import { Meta, StoryObj } from '@storybook/react';

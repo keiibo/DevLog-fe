@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
 import { Option } from './Option';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta: Meta<typeof Select> = {
   title: 'elements/Select',

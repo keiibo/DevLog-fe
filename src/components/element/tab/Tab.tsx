@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs as AntDTabs } from 'antd';
 import { TabsProps } from 'antd/es/tabs';
 import { styled } from 'styled-components';
-import { mixinBoldFontSize24px, mixinMargin0 } from '../../../constant/Mixin';
+import { mixinBoldFontSize24px, mixinMargin0 } from '../../../style/Mixin';
 
 type TProps = TabsProps;
 export const Tab = ({ ...props }: TProps): React.JSX.Element => {

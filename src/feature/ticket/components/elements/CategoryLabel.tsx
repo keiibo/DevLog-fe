@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Colors } from '../../../../constant/Colors';
+import { Colors } from '../../../../style/Colors';
 import { Flex } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import {
   mixinBgWhite,
   mixinBoldFontSize24px,
   mixinBorderRadius12px,
-  mixinMainText
-} from '../../../../constant/Mixin';
+  mixinMainColor
+} from '../../../../style/Mixin';
 
 type TProps = {
   label: string;
@@ -46,7 +46,7 @@ const StyledCategoryLabel = styled.div`
   box-shadow: 4px 4px 4px 0 ${Colors.TEXT};
   cursor: pointer;
 
-  ${mixinMainText}
+  ${mixinMainColor}
   ${mixinBgWhite}
   ${mixinBorderRadius12px}
 `;

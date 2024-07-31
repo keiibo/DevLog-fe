@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Tab } from './Tab';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta: Meta<typeof Tab> = {
   title: 'elements/Tabs',

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Textarea } from './Textarea';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta: Meta<typeof Textarea> = {
   title: 'elements/Textarea',

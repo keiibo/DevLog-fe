@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Input } from '../../../components/element/input/Input';
 import { Button } from '../../../components/element/button/Button';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { Textarea } from '../../../components/element/textarea/Textarea';
 import { MultiLineText } from '../../../components/composition/MultiLineText';
@@ -21,7 +21,7 @@ import {
   mixinMargin0,
   mixinNormalFontSize16px,
   mixinNormalFontSize24px
-} from '../../../constant/Mixin';
+} from '../../../style/Mixin';
 
 export const Create = (): React.JSX.Element => {
   const queryClient = useQueryClient();

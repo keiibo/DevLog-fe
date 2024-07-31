@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Priority } from './Priority';
 import { Priority as PriorityEnum } from '../../types/TTicket';
-import { Colors } from '../../../../constant/Colors';
+import { Colors } from '../../../../style/Colors';
 
 const meta = {
   title: 'feature/ticket/elements/Priority',

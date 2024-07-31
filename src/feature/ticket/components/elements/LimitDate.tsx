@@ -2,7 +2,7 @@ import { Flex } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import { styled } from 'styled-components';
-import { mixinNormalFontSize12px } from '../../../../constant/Mixin';
+import { mixinNormalFontSize12px } from '../../../../style/Mixin';
 
 type TProps = {
   limitStartYm?: string;

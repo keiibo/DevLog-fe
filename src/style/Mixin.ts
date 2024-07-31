@@ -2,16 +2,16 @@ import { css } from 'styled-components';
 import { Colors } from './Colors';
 
 // Text
-export const mixinMainText = css`
+export const mixinMainColor = css`
   color: ${Colors.MAIN};
 `;
-export const mixinTextText = css`
+export const mixinTextColor = css`
   color: ${Colors.TEXT};
 `;
-export const mixinTextDarkText = css`
+export const mixinTextDarkColor = css`
   color: ${Colors.TEXT_DARK};
 `;
-export const mixinWhiteText = css`
+export const mixinWhiteColor = css`
   color: ${Colors.WHITE};
 `;
 
@@ -44,6 +44,9 @@ export const mixinBorderRadius24px = css`
 `;
 
 // padding
+export const mixinPadding4px = css`
+  padding: 4px;
+`;
 export const mixinPadding8px = css`
   padding: 8px;
 `;

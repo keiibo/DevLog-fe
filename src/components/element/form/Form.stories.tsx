@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Input } from 'antd';
 import { Form } from './Form';
 import { FormItem } from './FormItem';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta: Meta<typeof Form> = {
   title: 'elements/Form',

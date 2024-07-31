@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Colors } from '../../../../constant/Colors';
+import { Colors } from '../../../../style/Colors';
 import { LimitDate } from './LimitDate';
 
 const meta = {

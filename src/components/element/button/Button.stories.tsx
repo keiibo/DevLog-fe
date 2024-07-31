@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 
 // Storybookの設定
 const meta = {

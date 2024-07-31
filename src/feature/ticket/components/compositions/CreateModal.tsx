@@ -11,7 +11,7 @@ import {
   Status,
   TCreateTicketReq
 } from '../../types/TTicket';
-import { mixinNormalFontSize24px } from '../../../../constant/Mixin';
+import { mixinNormalFontSize24px } from '../../../../style/Mixin';
 import { Select } from '../../../../components/element/select/Select';
 import { Option } from '../../../../components/element/select/Option';
 import { styled } from 'styled-components';
@@ -20,12 +20,16 @@ import { useMutation, useQueryClient } from 'react-query';
 import { createTicket } from '../../api/ticket';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
+import { getLabelColorStr } from '../../lib/labelColor';
+import { getStatusStr } from '../../lib/status';
+import { getPriorityStr } from '../../lib/priority';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
   setIsOpenedNewCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+// TODO 詳細と共通のコンポジションにできる
 export const CreateModal = ({
   isOpenedNewCreateModal,
   setIsOpenedNewCreateModal
@@ -38,20 +42,31 @@ export const CreateModal = ({
   }
 
   const priorityOption = [
-    { label: '高', value: Priority.HIGH },
-    { label: '中', value: Priority.MEDIUM },
-    { label: '低', value: Priority.LOW }
+    { label: getPriorityStr(Priority.HIGH), value: Priority.HIGH },
+    { label: getPriorityStr(Priority.MEDIUM), value: Priority.MEDIUM },
+    { label: getPriorityStr(Priority.LOW), value: Priority.LOW }
   ];
   const statusOption = [
-    { label: '未着手', value: Status.NOT_STARTED },
-    { label: '着手中', value: Status.UNDER_CONSTRUCTION },
-    { label: '完了', value: Status.COMPLETED }
+    { label: getStatusStr(Status.NOT_STARTED), value: Status.NOT_STARTED },
+    {
+      label: getStatusStr(Status.UNDER_CONSTRUCTION),
+      value: Status.UNDER_CONSTRUCTION
+    },
+    { label: getStatusStr(Status.COMPLETED), value: Status.COMPLETED }
   ];
   const labelColorTypeOption = [
-    { label: '青', value: LabelColorType.BLUE },
-    { label: '赤', value: LabelColorType.RED },
-    { label: '水色', value: LabelColorType.LIGHT_BLUE },
-    { label: '白', value: LabelColorType.WHITE }
+    {
+      label: getLabelColorStr(LabelColorType.BLUE),
+      value: LabelColorType.BLUE
+    },
+    {
+      label: getLabelColorStr(LabelColorType.LIGHT_BLUE),
+      value: LabelColorType.LIGHT_BLUE
+    },
+    {
+      label: getLabelColorStr(LabelColorType.WHITE),
+      value: LabelColorType.WHITE
+    }
   ];
 
   /**
@@ -63,6 +78,7 @@ export const CreateModal = ({
       projectId,
       labelColorType: form.getFieldValue('labelColorType'),
       title: form.getFieldValue('title'),
+      detail: form.getFieldValue('detail'),
       isDeletable: form.getFieldValue('status') === Status.COMPLETED || false,
       limitStartYm: form.getFieldValue('limitStartYm')
         ? form.getFieldValue('limitStartYm').format('YYYY-MM-DD')

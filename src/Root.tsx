@@ -11,11 +11,9 @@ import { getProjects } from './feature/dashboard/api/dashboard';
 import { SideMenu } from './SideMenu';
 import {
   mixinBgTextDark,
-  mixinBorderRadius12px,
-  mixinBorderRadius24px,
-  mixinPadding12px,
-  mixinPadding24px
-} from './constant/Mixin';
+  mixinPadding24px,
+  mixinPadding4px
+} from './style/Mixin';
 
 export const Root = (): React.JSX.Element => {
   const { data: projectList } = useQuery('projects', getProjects);
@@ -54,19 +52,16 @@ const StyledMainLayout = styled(Layout)`
   height: calc(100vh - ${LayoutNum.HEADER_HEIGHT}px);
 
   ${mixinBgTextDark}
-  ${mixinPadding12px}
+  ${mixinPadding4px}
 `;
 
 const StyledLayout = styled(Layout)`
-  margin-left: 12px;
-
-  ${mixinBorderRadius12px}
+  margin-left: 4px;
 `;
 
 const StyledContent = styled(Content)`
   height: 100%;
   overflow-y: auto;
 
-  ${mixinBorderRadius24px}
   ${mixinPadding24px}
 `;

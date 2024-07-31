@@ -2,7 +2,6 @@ import { Colors } from './Colors';
 
 export const Theme = {
   token: {
-    colorTextBase: Colors.TEXT,
     colorBgLayout: Colors.MAIN,
     colorTextPlaceholder: Colors.TEXT_DARK,
     colorBgContainer: Colors.WHITE,
@@ -13,8 +12,7 @@ export const Theme = {
     Layout: {
       headerBg: Colors.MAIN,
       bodyBg: Colors.MAIN,
-      siderBg: Colors.TEXT_DARK,
-      colorText: Colors.TEXT
+      siderBg: Colors.TEXT_DARK
     },
     Button: {
       colorPrimary: Colors.PURPLE,
@@ -26,7 +24,7 @@ export const Theme = {
     Menu: {
       colorText: Colors.TEXT,
       colorBgContainer: Colors.MAIN,
-      itemBorderRadius: 8,
+      itemBorderRadius: 0,
       iconSize: 24,
       itemMarginInline: 0,
       itemMarginBlock: 16,

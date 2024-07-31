@@ -1,7 +1,7 @@
 // Typewriter.jsx
 import React from 'react';
 import { styled } from 'styled-components';
-import { mixinTextText } from '../../../constant/Mixin';
+import { mixinTextColor } from '../../../style/Mixin';
 import { Flex } from 'antd';
 
 type TProps = {
@@ -16,7 +16,7 @@ export const Typewriter = ({ text }: TProps): React.JSX.Element => {
   );
 };
 const StyledTypewriterContainer = styled(Flex)`
-  ${mixinTextText}
+  ${mixinTextColor}
 `;
 const StyledTypewriter = styled.div<{ totalSteps: number }>`
   width: ${({ totalSteps }) =>

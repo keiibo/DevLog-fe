@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { InputWithButton } from './InputWithButton';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta = {
   title: 'elements/InputWithButton',

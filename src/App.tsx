@@ -1,8 +1,8 @@
 import { ConfigProvider } from 'antd';
 import React from 'react';
-import { Theme } from './constant/Theme';
+import { Theme } from './style/Theme';
 import { AppRouter } from './route/Router';
-import GlobalStyle from './constant/GlobalStyle';
+import GlobalStyle from './style/GlobalStyle';
 
 export const App = (): React.JSX.Element => {
   return (

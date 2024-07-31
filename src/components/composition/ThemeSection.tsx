@@ -9,9 +9,9 @@ import {
   mixinMargin0,
   mixinNormalFontSize16px,
   mixinPadding8px,
-  mixinTextText,
-  mixinWhiteText
-} from '../../constant/Mixin';
+  mixinTextColor,
+  mixinWhiteColor
+} from '../../style/Mixin';
 
 type TProps = {
   imageUrl: string;
@@ -59,12 +59,12 @@ const StyledImageContainer = styled(Flex)`
 const StyledTitle = styled.h2`
   ${mixinBoldFontSize40px}
   ${mixinMargin0}
-  ${mixinWhiteText}
+  ${mixinWhiteColor}
   ${mixinPadding8px}
 `;
 const StyledDescription = styled.p`
   ${mixinNormalFontSize16px}
   ${mixinMargin0}
-  ${mixinTextText}
+  ${mixinTextColor}
   ${mixinPadding8px}
 `;

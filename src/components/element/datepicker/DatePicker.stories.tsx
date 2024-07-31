@@ -1,5 +1,5 @@
 // CustomDatePicker.stories.tsx
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 import DatePicker from './DatePicker';
 import { Meta, StoryObj } from '@storybook/react';
 

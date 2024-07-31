@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { CategoryLabel } from './CategoryLabel';
-import { Colors } from '../../../../constant/Colors';
+import { Colors } from '../../../../style/Colors';
 
 const meta = {
   title: 'feature/ticket/elements/CategoryLabel',

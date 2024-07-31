@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { GlobalHeader } from './GlobalHeader';
-import { Colors } from '../../constant/Colors';
+import { Colors } from '../../style/Colors';
 
 const meta = {
   title: 'composition/GlobalHeader',

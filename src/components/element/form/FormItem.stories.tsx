@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Input } from 'antd';
 import { FormItem } from './FormItem'; // FormItem コンポーネントのパスを適切に設定してください。
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta: Meta<typeof FormItem> = {
   title: 'elements/FormItem',

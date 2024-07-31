@@ -2,6 +2,8 @@ import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { TGetProjectRes } from '../types/TProject';
 import { Flex } from 'antd';
+import styled from 'styled-components';
+import { mixinBgText } from '../../../style/Mixin';
 
 export const Dashboard = (): React.JSX.Element => {
   const project = useOutletContext<TGetProjectRes>();
@@ -10,8 +12,12 @@ export const Dashboard = (): React.JSX.Element => {
     return <div>Load</div>;
   }
   return (
-    <Flex vertical gap={56}>
+    <StyledFlex vertical gap={56}>
       {project.detail ?? '詳細がありません'}
-    </Flex>
+    </StyledFlex>
   );
 };
+
+const StyledFlex = styled(Flex)`
+  ${mixinBgText}
+`;

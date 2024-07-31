@@ -3,7 +3,7 @@ import { ThemeSection } from '../../../components/composition/ThemeSection';
 import { styled } from 'styled-components';
 import { themeSectionData } from '../../../constant/ThemeSectionData';
 import { Flex, Image } from 'antd';
-import { Colors } from '../../../constant/Colors';
+import { Colors } from '../../../style/Colors';
 import { Button } from '../../../components/element/button/Button';
 import { InputWithButton } from '../../../components/element/input/InputWithButton';
 import { Typewriter } from '../components/Typewriter';
@@ -12,8 +12,8 @@ import {
   mixinBgMain,
   mixinBoldFontSize40px,
   mixinMargin0,
-  mixinWhiteText
-} from '../../../constant/Mixin';
+  mixinWhiteColor
+} from '../../../style/Mixin';
 
 /**
  * LP画面
@@ -89,7 +89,7 @@ const StyledH2 = styled.h2`
 
   ${mixinBoldFontSize40px}
   ${mixinMargin0}
-  ${mixinWhiteText}
+  ${mixinWhiteColor}
 `;
 
 const StyledInputContainer = styled(Flex)``;

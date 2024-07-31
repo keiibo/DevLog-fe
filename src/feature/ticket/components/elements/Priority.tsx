@@ -1,9 +1,9 @@
 import React from 'react';
 import { Priority as PriorityEnum, TPriority } from '../../types/TTicket';
 import { styled } from 'styled-components';
-import { Colors } from '../../../../constant/Colors';
+import { Colors } from '../../../../style/Colors';
 import { Flex } from 'antd';
-import { mixinNormalFontSize12px } from '../../../../constant/Mixin';
+import { mixinNormalFontSize12px } from '../../../../style/Mixin';
 
 type TProps = {
   priority: TPriority;
