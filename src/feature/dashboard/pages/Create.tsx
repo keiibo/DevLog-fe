@@ -22,6 +22,7 @@ import {
   mixinNormalFontSize16px,
   mixinNormalFontSize24px
 } from '../../../style/Mixin';
+import { DateFormat } from '../../../constant/DateFormat';
 
 export const Create = (): React.JSX.Element => {
   const queryClient = useQueryClient();
@@ -67,8 +68,6 @@ export const Create = (): React.JSX.Element => {
    * 次へ、完了
    */
   const handleAnswer = () => {
-    console.log(form.getFieldsValue());
-
     const currentKey = questions[currentQuestionIndex].key;
 
     // 現在の質問のフィールドのみをバリデート
@@ -92,8 +91,6 @@ export const Create = (): React.JSX.Element => {
    * 戻るボタン
    */
   const goToPreviousQuestion = () => {
-    console.log(currentQuestionIndex);
-
     if (currentQuestionIndex > 0) {
       if (currentQuestionIndex === 4) {
         setShowConfirmation(false);
@@ -112,8 +109,7 @@ export const Create = (): React.JSX.Element => {
       queryClient.invalidateQueries('projects');
       navigate(`/${res.projectId}/dashboard`);
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       // エラー処理
       notification.error({
         message: 'プロジェクト作成失敗',
@@ -188,7 +184,7 @@ export const Create = (): React.JSX.Element => {
             name="limitDate"
             rules={[{ required: true, message: '選択してください' }]}
           >
-            <StyledDatePicker format={'YYYY/MM/DD'} />
+            <StyledDatePicker format={DateFormat.YYYYMMDD} />
           </StyledQuestionFormItem>
         );
       case 'id':
@@ -242,7 +238,7 @@ export const Create = (): React.JSX.Element => {
                   完了日：
                   <StyledConfirmText>
                     {dayjs(form.getFieldValue('limitDate')).format(
-                      'YYYY/MM/DD'
+                      DateFormat.YYYYMMDD
                     )}
                   </StyledConfirmText>
                 </div>

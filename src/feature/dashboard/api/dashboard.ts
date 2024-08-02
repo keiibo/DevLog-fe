@@ -15,8 +15,6 @@ export const getProjects = async (): Promise<TGetProjectRes[]> => {
 export const getProject = async (
   projectId: string
 ): Promise<TGetProjectRes> => {
-  console.log(projectId);
-
   const response = await axios.get(
     `http://localhost:4001/api/project/${projectId}`
   );

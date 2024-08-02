@@ -4,6 +4,7 @@ export type TTicket = {
   _id: number;
   ticketId: string;
   projectId: string;
+  detail: string;
   labelColorType: TLabelColorType;
   title: string;
   isDeletable: boolean;
@@ -16,8 +17,7 @@ export type TTicket = {
 export const LabelColorType = {
   WHITE: 'white',
   LIGHT_BLUE: 'lightBlue',
-  BLUE: 'blue',
-  RED: 'red'
+  BLUE: 'blue'
 };
 export type TLabelColorType = TValueOf<typeof LabelColorType>;
 
@@ -37,3 +37,4 @@ export type TStatus = TValueOf<typeof Status>;
 
 export type TGetTicketRes = TTicket;
 export type TCreateTicketReq = Omit<TTicket, '_id' | 'ticketId'>;
+export type TPutTicketReq = Omit<TTicket, '_id' | 'ticketId'>;

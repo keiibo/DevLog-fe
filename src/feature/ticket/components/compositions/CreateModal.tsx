@@ -1,28 +1,17 @@
 import React from 'react';
 import { Flex, Modal, notification } from 'antd';
-import DatePicker from '../../../../components/element/datepicker/DatePicker';
 import { FormItem } from '../../../../components/element/form/FormItem';
 import { Input } from '../../../../components/element/input/Input';
 import { Button } from '../../../../components/element/button/Button';
-import { Textarea } from '../../../../components/element/textarea/Textarea';
-import {
-  LabelColorType,
-  Priority,
-  Status,
-  TCreateTicketReq
-} from '../../types/TTicket';
+import { Status, TCreateTicketReq } from '../../types/TTicket';
 import { mixinNormalFontSize24px } from '../../../../style/Mixin';
-import { Select } from '../../../../components/element/select/Select';
-import { Option } from '../../../../components/element/select/Option';
 import { styled } from 'styled-components';
 import { Form } from '../../../../components/element/form/Form';
 import { useMutation, useQueryClient } from 'react-query';
 import { createTicket } from '../../api/ticket';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
-import { getLabelColorStr } from '../../lib/labelColor';
-import { getStatusStr } from '../../lib/status';
-import { getPriorityStr } from '../../lib/priority';
+import { TicketProperty } from './TicketProperty';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
@@ -41,39 +30,10 @@ export const CreateModal = ({
     return <div>Loading</div>;
   }
 
-  const priorityOption = [
-    { label: getPriorityStr(Priority.HIGH), value: Priority.HIGH },
-    { label: getPriorityStr(Priority.MEDIUM), value: Priority.MEDIUM },
-    { label: getPriorityStr(Priority.LOW), value: Priority.LOW }
-  ];
-  const statusOption = [
-    { label: getStatusStr(Status.NOT_STARTED), value: Status.NOT_STARTED },
-    {
-      label: getStatusStr(Status.UNDER_CONSTRUCTION),
-      value: Status.UNDER_CONSTRUCTION
-    },
-    { label: getStatusStr(Status.COMPLETED), value: Status.COMPLETED }
-  ];
-  const labelColorTypeOption = [
-    {
-      label: getLabelColorStr(LabelColorType.BLUE),
-      value: LabelColorType.BLUE
-    },
-    {
-      label: getLabelColorStr(LabelColorType.LIGHT_BLUE),
-      value: LabelColorType.LIGHT_BLUE
-    },
-    {
-      label: getLabelColorStr(LabelColorType.WHITE),
-      value: LabelColorType.WHITE
-    }
-  ];
-
   /**
    * チケットの新規作成送信処理
    */
   const handleSubmit = () => {
-    console.log(form.getFieldsValue());
     const reqBody: TCreateTicketReq = {
       projectId,
       labelColorType: form.getFieldValue('labelColorType'),
@@ -104,9 +64,9 @@ export const CreateModal = ({
       });
       setIsOpenedNewCreateModal(false);
       queryClient.invalidateQueries('tickets');
+      form.resetFields();
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       // エラー処理
       notification.error({
         message: 'チケット作成失敗',
@@ -148,104 +108,8 @@ export const CreateModal = ({
               <Input width={'100%'} />
             </FormItem>
           </Flex>
-          <Flex vertical>
-            <StyledLabel>詳細:</StyledLabel>
-            <FormItem noStyle name={'detail'}>
-              <Textarea
-                autoSize={{
-                  minRows: 12
-                }}
-              />
-            </FormItem>
-          </Flex>
-          <Flex gap={18} justify="space-between">
-            <Flex flex={5} align="center" justify="space-between">
-              <StyledLabel>優先度:</StyledLabel>
-              <FormItem
-                noStyle
-                name={'priority'}
-                rules={[
-                  {
-                    required: true,
-                    message: '必須項目です'
-                  }
-                ]}
-              >
-                <StyledSelect>
-                  {priorityOption.map((priority) => {
-                    return (
-                      <Option key={priority.value} value={priority.value}>
-                        {priority.label}
-                      </Option>
-                    );
-                  })}
-                </StyledSelect>
-              </FormItem>
-            </Flex>
-            <Flex flex={5} align="center" justify="space-between">
-              <StyledLabel>ステータス:</StyledLabel>
-              <FormItem
-                noStyle
-                name={'status'}
-                rules={[
-                  {
-                    required: true,
-                    message: '必須項目です'
-                  }
-                ]}
-              >
-                <StyledSelect>
-                  {statusOption.map((status) => {
-                    return (
-                      <Option key={status.value} value={status.value}>
-                        {status.label}
-                      </Option>
-                    );
-                  })}
-                </StyledSelect>
-              </FormItem>
-            </Flex>
-          </Flex>
-          <Flex gap={18} justify="space-between">
-            <Flex flex={5} align="center" justify="space-between">
-              <StyledLabel>期限日:</StyledLabel>
-              <Flex gap={4} align="center">
-                <FormItem noStyle name={'limitStartYm'}>
-                  <DatePicker format={'YYYY/MM/DD'} />
-                </FormItem>
-                ~
-                <FormItem noStyle name={'limitEndYm'}>
-                  <DatePicker format={'YYYY/MM/DD'} />
-                </FormItem>
-              </Flex>
-            </Flex>
-            <Flex flex={5} align="center" justify="space-between">
-              <StyledLabel>ラベルカラー:</StyledLabel>
-              <FormItem
-                noStyle
-                name={'labelColorType'}
-                rules={[
-                  {
-                    required: true,
-                    message: '必須項目です'
-                  }
-                ]}
-              >
-                <StyledSelect>
-                  {labelColorTypeOption.map((labelColorType) => {
-                    return (
-                      <Option
-                        key={labelColorType.value}
-                        value={labelColorType.value}
-                      >
-                        {labelColorType.label}
-                      </Option>
-                    );
-                  })}
-                </StyledSelect>
-              </FormItem>
-            </Flex>
-          </Flex>
+          <TicketProperty isEditMode={true} ticket={null} />
+
           <Flex justify="center">
             <Button htmlType={'submit'} type="primary">
               作成
@@ -259,8 +123,4 @@ export const CreateModal = ({
 
 const StyledLabel = styled.div`
   ${mixinNormalFontSize24px}
-`;
-
-const StyledSelect = styled(Select)`
-  width: 200px;
 `;

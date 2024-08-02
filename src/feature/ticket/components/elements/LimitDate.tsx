@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { styled } from 'styled-components';
 import { mixinNormalFontSize12px } from '../../../../style/Mixin';
+import { DateFormat } from '../../../../constant/DateFormat';
 
 type TProps = {
   limitStartYm?: string;
@@ -15,9 +16,9 @@ export const LimitDate = ({
 }: TProps): React.JSX.Element => {
   return (
     <Styled12px gap={4}>
-      {limitStartYm && dayjs(limitStartYm).format('YYYY/MM/DD')}
+      {limitStartYm && dayjs(limitStartYm).format(DateFormat.YYYYMMDD)}
       {(limitStartYm || limitEndYm) && <span>~</span>}
-      {limitEndYm && dayjs(limitEndYm).format('YYYY/MM/DD')}
+      {limitEndYm && dayjs(limitEndYm).format(DateFormat.YYYYMMDD)}
       {!limitStartYm && !limitEndYm && <span>期限日なし</span>}
     </Styled12px>
   );

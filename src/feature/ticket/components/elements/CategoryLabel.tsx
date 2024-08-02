@@ -32,7 +32,7 @@ export const CategoryLabel = ({
     <StyledCategoryLabel onClick={toggleAccordion}>
       <Flex justify="space-between" align="center">
         <StyledLabel>{label}</StyledLabel>
-        <StyledIcon rotate={isOpened ? 180 : 0}>
+        <StyledIcon rotate={isOpened ? 0 : 180}>
           <DownOutlined />
         </StyledIcon>
       </Flex>

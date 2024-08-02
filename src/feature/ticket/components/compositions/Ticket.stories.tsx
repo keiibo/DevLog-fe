@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Ticket } from './Ticket';
-import { Colors } from '../../../../constant/Colors';
+import { Colors } from '../../../../style/Colors';
 import { Priority, Status } from '../../types/TTicket';
 
 const meta = {

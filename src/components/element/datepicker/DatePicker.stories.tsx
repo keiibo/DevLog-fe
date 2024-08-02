@@ -1,4 +1,5 @@
 // CustomDatePicker.stories.tsx
+import { DateFormat } from '../../../constant/DateFormat';
 import { Colors } from '../../../style/Colors';
 import DatePicker from './DatePicker';
 import { Meta, StoryObj } from '@storybook/react';
@@ -21,6 +22,6 @@ type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
   args: {
-    format: 'YYYY/MM/DD'
+    format: DateFormat.YYYYMMDD
   }
 };

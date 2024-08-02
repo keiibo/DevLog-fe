@@ -54,8 +54,6 @@ export const GlobalHeader = ({
   ];
 
   const handleMenuClick = (e: { key: string }) => {
-    console.log(e);
-
     switch (e.key) {
       case '1':
       case '2':
@@ -64,8 +62,6 @@ export const GlobalHeader = ({
         navigate(`/login`);
         break;
       default:
-        console.log(projectList);
-
         const project = projectList.find((p) => p.projectId === e.key);
         setProject(project ? project : null);
         navigate(`/${e.key}/dashboard`);
