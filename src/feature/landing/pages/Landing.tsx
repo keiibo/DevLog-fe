@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeSection } from '../../../components/composition/ThemeSection';
+import { ThemeSection } from '../../../components/composition/themeSection/ThemeSection';
 import { styled } from 'styled-components';
 import { themeSectionData } from '../../../constant/ThemeSectionData';
 import { Flex, Image } from 'antd';

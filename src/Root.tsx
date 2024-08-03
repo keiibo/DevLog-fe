@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GlobalHeader } from './components/composition/GlobalHeader';
+import { GlobalHeader } from './components/composition/header/GlobalHeader';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 import { styled } from 'styled-components';

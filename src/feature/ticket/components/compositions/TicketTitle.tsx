@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { Id } from '../elements/Id';
 import { mixinMargin0 } from '../../../../style/Mixin';
 import { styled } from 'styled-components';
@@ -8,6 +8,7 @@ import { TLabelColorType } from '../../types/TTicket';
 import { getTitleTextColor } from '../../lib/labelColor';
 import { Input } from '../../../../components/element/input/Input';
 import FormItem from 'antd/es/form/FormItem';
+import { ConfirmDeleteModal } from '../../../../components/composition/modal/ConfirmDeleteModal';
 
 type TProps = {
   id: string;
@@ -18,6 +19,7 @@ type TProps = {
   isEditable?: boolean;
   isEditMode?: boolean;
   setIsEditMode?: React.Dispatch<React.SetStateAction<boolean>>;
+  handleDelete?: () => void;
 };
 
 export const TicketTitle = ({
@@ -28,48 +30,75 @@ export const TicketTitle = ({
   labelColorType,
   isEditable = false,
   isEditMode = false,
-  setIsEditMode
+  setIsEditMode,
+  handleDelete
 }: TProps): React.JSX.Element => {
+  const [isDeleteModalOpened, setIsDeleteModalOpened] =
+    useState<boolean>(false);
+
   const handleClickEditButton = (): void => {
     if (setIsEditMode) {
       setIsEditMode(true);
     }
   };
+
+  const deleteTicket = () => {
+    if (handleDelete) {
+      handleDelete();
+    }
+  };
+
   return (
-    <StyledFlex $mode={mode} align="center" justify="space-between" gap={8}>
-      <StyledLeftFlex gap={8} align="center">
-        <StyledId id={id} />
-        <StyledTitleContainer gap={8}>
-          {isEditMode ? (
-            <FormItem
-              noStyle
-              initialValue={title}
-              name={'title'}
-              rules={[
-                {
-                  required: true,
-                  message: '必須項目です'
-                }
-              ]}
-            >
-              <StyledInput />
-            </FormItem>
-          ) : (
-            <StyledTitle $mode={mode} $labelColorType={labelColorType}>
-              {title}
-            </StyledTitle>
-          )}
-        </StyledTitleContainer>
-      </StyledLeftFlex>
-      <Flex gap={8}>
-        <StyledIcon>{isDeletable && <DeleteOutlined />}</StyledIcon>
-        {isEditable && (
-          <StyledIcon onClick={handleClickEditButton}>
-            <EditOutlined />
+    <>
+      <StyledFlex $mode={mode} align="center" justify="space-between" gap={8}>
+        <StyledLeftFlex gap={8} align="center">
+          <StyledId id={id} />
+          <StyledTitleContainer gap={8}>
+            {isEditMode ? (
+              <FormItem
+                noStyle
+                initialValue={title}
+                name={'title'}
+                rules={[
+                  {
+                    required: true,
+                    message: '必須項目です'
+                  }
+                ]}
+              >
+                <StyledInput />
+              </FormItem>
+            ) : (
+              <StyledTitle $mode={mode} $labelColorType={labelColorType}>
+                {title}
+              </StyledTitle>
+            )}
+          </StyledTitleContainer>
+        </StyledLeftFlex>
+        <Flex gap={8}>
+          <StyledIcon>
+            {isDeletable && (
+              <DeleteOutlined onClick={() => setIsDeleteModalOpened(true)} />
+            )}
           </StyledIcon>
-        )}
-      </Flex>
-    </StyledFlex>
+          {isEditable && (
+            <StyledIcon onClick={handleClickEditButton}>
+              <EditOutlined />
+            </StyledIcon>
+          )}
+        </Flex>
+      </StyledFlex>
+      {isDeleteModalOpened && (
+        <ConfirmDeleteModal
+          isOpened={isDeleteModalOpened}
+          confirmMessage={'チケットを削除してよろしいですか？'}
+          handleClose={() => setIsDeleteModalOpened(false)}
+          handleCancel={() => setIsDeleteModalOpened(false)}
+          handleDelete={deleteTicket}
+          width={'640px'}
+        />
+      )}
+    </>
   );
 };
 

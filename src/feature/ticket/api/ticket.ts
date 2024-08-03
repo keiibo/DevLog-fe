@@ -52,3 +52,14 @@ export const updateTicket = async ({
   );
   return response.data;
 };
+/**
+ * チケットの削除
+ */
+export const deleteTicket = async (
+  ticketId: string
+): Promise<TGetTicketRes> => {
+  const response = await axios.delete(
+    `http://localhost:4001/api/tickets/${ticketId}`
+  );
+  return response.data;
+};

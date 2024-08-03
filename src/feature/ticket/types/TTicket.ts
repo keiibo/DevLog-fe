@@ -4,7 +4,7 @@ export type TTicket = {
   _id: number;
   ticketId: string;
   projectId: string;
-  detail: string;
+  detail: string | null;
   labelColorType: TLabelColorType;
   title: string;
   isDeletable: boolean;

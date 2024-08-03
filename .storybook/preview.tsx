@@ -1,10 +1,10 @@
 import type { Preview } from '@storybook/react';
 import { ConfigProvider } from 'antd';
 import React from 'react';
-import { Theme } from '../src/constant/Theme';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Colors } from '../src/constant/Colors';
-import GlobalStyle from '../src/constant/GlobalStyle';
+import { Colors } from '../src/style/Colors';
+import { Theme } from '../src/style/Theme';
+import GlobalStyle from '../src/style/GlobalStyle';
 
 export const preview: Preview = {
   parameters: {

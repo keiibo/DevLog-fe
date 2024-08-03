@@ -34,11 +34,13 @@ export const CreateModal = ({
    * チケットの新規作成送信処理
    */
   const handleSubmit = () => {
+    console.log(form.getFieldValue('detail'));
+
     const reqBody: TCreateTicketReq = {
       projectId,
       labelColorType: form.getFieldValue('labelColorType'),
       title: form.getFieldValue('title'),
-      detail: form.getFieldValue('detail'),
+      detail: form.getFieldValue('detail') || null,
       isDeletable: form.getFieldValue('status') === Status.COMPLETED || false,
       limitStartYm: form.getFieldValue('limitStartYm')
         ? form.getFieldValue('limitStartYm').format('YYYY-MM-DD')

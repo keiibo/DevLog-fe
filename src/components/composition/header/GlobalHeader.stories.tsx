@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { GlobalHeader } from './GlobalHeader';
-import { Colors } from '../../style/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta = {
   title: 'composition/GlobalHeader',
@@ -28,13 +28,15 @@ export const Default: TStory = {
         _id: '1',
         name: 'プロジェクト1',
         detail: '',
-        limitDate: ''
+        limitDate: '',
+        projectId: ''
       },
       {
         _id: '2',
         name: 'プロジェクト2',
         detail: '',
-        limitDate: ''
+        limitDate: '',
+        projectId: ''
       }
     ],
     setProject: () => {}

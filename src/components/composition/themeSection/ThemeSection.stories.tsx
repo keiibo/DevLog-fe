@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ThemeSection } from './ThemeSection';
-import { Colors } from '../../style/Colors';
+import { Colors } from '../../../style/Colors';
 
 const meta = {
   title: 'composition/ThemeSection',

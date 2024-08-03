@@ -22,7 +22,6 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
   const {
     ticketId,
     title,
-    isDeletable,
     priority,
     limitStartYm,
     limitEndYm,
@@ -44,7 +43,7 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
         <TicketTitle
           id={ticketId}
           title={title}
-          isDeletable={isDeletable}
+          isDeletable={false}
           mode="list"
           labelColorType={labelColorType}
         />

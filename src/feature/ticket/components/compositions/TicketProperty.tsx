@@ -162,7 +162,11 @@ export const TicketProperty = ({
                 ''
               )}
             </FormItem>
-            ~
+            {isEditMode || ticket?.limitStartYm || ticket?.limitEndYm ? (
+              <span>~</span>
+            ) : (
+              <span>期限日無し</span>
+            )}
             <FormItem
               noStyle
               name={'limitEndYm'}

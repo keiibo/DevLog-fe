@@ -3,8 +3,8 @@ import { Header as AntDHeader } from 'antd/es/layout/layout';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { TGetProjectRes } from '../../feature/dashboard/types/TProject';
-import { LayoutNum } from '../../constant/LayoutNum';
+import { TGetProjectRes } from '../../../feature/dashboard/types/TProject';
+import { LayoutNum } from '../../../constant/LayoutNum';
 // import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenuItem = Required<MenuProps>['items'][number];

@@ -34,7 +34,7 @@ export const Theme = {
     Modal: {
       colorText: Colors.MAIN,
       titleColor: Colors.MAIN,
-      titleFontSize: '24px',
+      titleFontSize: 24,
       headerBg: Colors.WHITE,
       contentBg: Colors.WHITE,
       footerBg: Colors.WHITE

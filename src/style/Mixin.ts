@@ -14,6 +14,9 @@ export const mixinTextDarkColor = css`
 export const mixinWhiteColor = css`
   color: ${Colors.WHITE};
 `;
+export const mixinDangerColor = css`
+  color: ${Colors.RED};
+`;
 
 // Bg
 export const mixinBgMain = css`

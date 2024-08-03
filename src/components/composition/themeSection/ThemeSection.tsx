@@ -1,7 +1,7 @@
 import { Flex, Image } from 'antd';
 import React from 'react';
 import { styled } from 'styled-components';
-import { MultiLineText } from './MultiLineText';
+import { MultiLineText } from '../MultiLineText';
 import {
   mixinBgMainLight,
   mixinBoldFontSize40px,
@@ -11,7 +11,7 @@ import {
   mixinPadding8px,
   mixinTextColor,
   mixinWhiteColor
-} from '../../style/Mixin';
+} from '../../../style/Mixin';
 
 type TProps = {
   imageUrl: string;
