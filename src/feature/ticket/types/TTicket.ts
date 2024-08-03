@@ -17,7 +17,10 @@ export type TTicket = {
 export const LabelColorType = {
   WHITE: 'white',
   LIGHT_BLUE: 'lightBlue',
-  BLUE: 'blue'
+  BLUE: 'blue',
+  RED: 'red',
+  GREEN: 'green',
+  PURPLE: 'purple'
 };
 export type TLabelColorType = TValueOf<typeof LabelColorType>;
 

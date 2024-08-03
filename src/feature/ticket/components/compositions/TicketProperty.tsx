@@ -51,6 +51,14 @@ export const TicketProperty = ({
   ];
   const labelColorTypeOption = [
     {
+      label: getLabelColorStr(LabelColorType.WHITE),
+      value: LabelColorType.WHITE
+    },
+    {
+      label: getLabelColorStr(LabelColorType.RED),
+      value: LabelColorType.RED
+    },
+    {
       label: getLabelColorStr(LabelColorType.BLUE),
       value: LabelColorType.BLUE
     },
@@ -59,8 +67,12 @@ export const TicketProperty = ({
       value: LabelColorType.LIGHT_BLUE
     },
     {
-      label: getLabelColorStr(LabelColorType.WHITE),
-      value: LabelColorType.WHITE
+      label: getLabelColorStr(LabelColorType.GREEN),
+      value: LabelColorType.GREEN
+    },
+    {
+      label: getLabelColorStr(LabelColorType.PURPLE),
+      value: LabelColorType.PURPLE
     }
   ];
 
