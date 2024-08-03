@@ -95,8 +95,6 @@ export const Detail = (): React.JSX.Element => {
    * 更新ボタン押下時、putリクエストを投げる
    */
   const handleEditFinish = () => {
-    console.log(form.getFieldsValue());
-
     const req: TPutTicketReq = {
       title: form.getFieldValue('title'),
       isDeletable: form.getFieldValue('status') === Status.COMPLETED,

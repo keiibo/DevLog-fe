@@ -34,8 +34,6 @@ export const CreateModal = ({
    * チケットの新規作成送信処理
    */
   const handleSubmit = () => {
-    console.log(form.getFieldValue('detail'));
-
     const reqBody: TCreateTicketReq = {
       projectId,
       labelColorType: form.getFieldValue('labelColorType'),

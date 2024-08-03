@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
 import { Colors } from '../../../style/Colors';
+import { action } from '@storybook/addon-actions';
 
 // Storybookの設定
 const meta = {
@@ -35,7 +36,7 @@ type TStory = StoryObj<typeof meta>;
 export const Default: TStory = {
   args: {
     type: 'primary',
-    onClick: () => console.log('Clicked!'),
+    onClick: () => action('Click'),
     children: 'Default Button'
   }
 };
@@ -45,16 +46,17 @@ export const Primary: TStory = {
   args: {
     type: 'primary',
     children: 'Primary Button',
-    onClick: () => console.log('Clicked!')
+    onClick: () => action('Click')
   }
 };
 
 // カスタム幅のButton
 export const CustomWidth: TStory = {
   args: {
+    type: 'primary',
     width: '200px',
     children: 'Wide Button',
-    onClick: () => console.log('Clicked!')
+    onClick: () => action('Click')
   }
 };
 
@@ -63,7 +65,7 @@ export const TextButton: TStory = {
   args: {
     type: 'text',
     children: 'Text Button',
-    onClick: () => console.log('Clicked!')
+    onClick: () => action('Click')
   }
 };
 
@@ -72,7 +74,7 @@ export const DashedButton: TStory = {
   args: {
     type: 'dashed',
     children: 'Dashed Button',
-    onClick: () => console.log('Clicked!')
+    onClick: () => action('Click')
   }
 };
 
@@ -81,6 +83,6 @@ export const LinkButton: TStory = {
   args: {
     type: 'link',
     children: 'Link Button',
-    onClick: () => console.log('Clicked!')
+    onClick: () => action('Click')
   }
 };
