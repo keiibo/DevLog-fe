@@ -22,6 +22,6 @@ type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
   args: {
-    format: DateFormat.YYYYMMDD
+    format: DateFormat.SLASH
   }
 };

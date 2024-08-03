@@ -17,6 +17,7 @@ import { TicketProperty } from '../components/compositions/TicketProperty';
 import { Form } from '../../../components/element/form/Form';
 import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
+import { DateFormat } from '../../../constant/DateFormat';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId, ticketId } = useParams();
@@ -101,10 +102,10 @@ export const Detail = (): React.JSX.Element => {
       labelColorType: form.getFieldValue('labelColorType'),
       projectId,
       limitStartYm: form.getFieldValue('limitStartYm')
-        ? form.getFieldValue('limitStartYm').format('YYYY-MM-DD')
+        ? form.getFieldValue('limitStartYm').format(DateFormat.HYPHEN)
         : null,
       limitEndYm: form.getFieldValue('limitEndYm')
-        ? form.getFieldValue('limitEndYm').format('YYYY-MM-DD')
+        ? form.getFieldValue('limitEndYm').format(DateFormat.HYPHEN)
         : null,
       detail: form.getFieldValue('detail'),
       priority: form.getFieldValue('priority'),

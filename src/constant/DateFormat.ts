@@ -1,3 +1,4 @@
 export const DateFormat = {
-  YYYYMMDD: 'YYYY/MM/DD'
+  SLASH: 'YYYY/MM/DD',
+  HYPHEN: 'YYYY-MM-DD'
 };

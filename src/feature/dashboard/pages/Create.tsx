@@ -184,7 +184,7 @@ export const Create = (): React.JSX.Element => {
             name="limitDate"
             rules={[{ required: true, message: '選択してください' }]}
           >
-            <StyledDatePicker format={DateFormat.YYYYMMDD} />
+            <StyledDatePicker format={DateFormat.SLASH} />
           </StyledQuestionFormItem>
         );
       case 'id':
@@ -238,7 +238,7 @@ export const Create = (): React.JSX.Element => {
                   完了日：
                   <StyledConfirmText>
                     {dayjs(form.getFieldValue('limitDate')).format(
-                      DateFormat.YYYYMMDD
+                      DateFormat.SLASH
                     )}
                   </StyledConfirmText>
                 </div>

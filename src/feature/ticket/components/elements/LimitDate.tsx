@@ -16,9 +16,9 @@ export const LimitDate = ({
 }: TProps): React.JSX.Element => {
   return (
     <Styled12px gap={4}>
-      {limitStartYm && dayjs(limitStartYm).format(DateFormat.YYYYMMDD)}
+      {limitStartYm && dayjs(limitStartYm).format(DateFormat.SLASH)}
       {(limitStartYm || limitEndYm) && <span>~</span>}
-      {limitEndYm && dayjs(limitEndYm).format(DateFormat.YYYYMMDD)}
+      {limitEndYm && dayjs(limitEndYm).format(DateFormat.SLASH)}
       {!limitStartYm && !limitEndYm && <span>期限日なし</span>}
     </Styled12px>
   );

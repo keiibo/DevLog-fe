@@ -167,9 +167,9 @@ export const TicketProperty = ({
               }
             >
               {isEditMode ? (
-                <DatePicker format={DateFormat.YYYYMMDD} />
+                <DatePicker format={DateFormat.SLASH} />
               ) : ticket?.limitStartYm ? (
-                dayjs(ticket.limitStartYm).format(DateFormat.YYYYMMDD)
+                dayjs(ticket.limitStartYm).format(DateFormat.SLASH)
               ) : (
                 ''
               )}
@@ -187,9 +187,9 @@ export const TicketProperty = ({
               }
             >
               {isEditMode ? (
-                <DatePicker format={DateFormat.YYYYMMDD} />
+                <DatePicker format={DateFormat.SLASH} />
               ) : ticket?.limitEndYm ? (
-                dayjs(ticket.limitEndYm).format(DateFormat.YYYYMMDD)
+                dayjs(ticket.limitEndYm).format(DateFormat.SLASH)
               ) : (
                 ''
               )}

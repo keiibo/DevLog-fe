@@ -12,6 +12,7 @@ import { createTicket } from '../../api/ticket';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
 import { TicketProperty } from './TicketProperty';
+import { DateFormat } from '../../../../constant/DateFormat';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
@@ -41,10 +42,10 @@ export const CreateModal = ({
       detail: form.getFieldValue('detail') || null,
       isDeletable: form.getFieldValue('status') === Status.COMPLETED || false,
       limitStartYm: form.getFieldValue('limitStartYm')
-        ? form.getFieldValue('limitStartYm').format('YYYY-MM-DD')
+        ? form.getFieldValue('limitStartYm').format(DateFormat.HYPHEN)
         : null,
       limitEndYm: form.getFieldValue('limitEndYm')
-        ? form.getFieldValue('limitEndYm').format('YYYY-MM-DD')
+        ? form.getFieldValue('limitEndYm').format(DateFormat.HYPHEN)
         : null,
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status')
