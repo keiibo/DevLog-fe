@@ -71,20 +71,14 @@ export const Create = (): React.JSX.Element => {
     const currentKey = questions[currentQuestionIndex].key;
 
     // 現在の質問のフィールドのみをバリデート
-    form
-      .validateFields([currentKey])
-      .then(() => {
-        // バリデーションが成功した場合
-        if (currentQuestionIndex === questions.length - 1) {
-          setShowConfirmation(true); // 最後の質問であれば確認画面を表示
-        } else {
-          setCurrentQuestionIndex(currentQuestionIndex + 1); // 次の質問へ
-        }
-      })
-      .catch((errorInfo) => {
-        // バリデーションが失敗した場合、ここで処理を行う
-        console.error('Validation Error:', errorInfo);
-      });
+    form.validateFields([currentKey]).then(() => {
+      // バリデーションが成功した場合
+      if (currentQuestionIndex === questions.length - 1) {
+        setShowConfirmation(true); // 最後の質問であれば確認画面を表示
+      } else {
+        setCurrentQuestionIndex(currentQuestionIndex + 1); // 次の質問へ
+      }
+    });
   };
 
   /**
