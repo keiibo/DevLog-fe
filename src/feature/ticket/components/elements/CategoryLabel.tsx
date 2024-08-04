@@ -6,7 +6,7 @@ import { DownOutlined } from '@ant-design/icons';
 import {
   mixinBgWhite,
   mixinBoldFontSize24px,
-  mixinBorderRadius12px,
+  mixinBorderRadius4px,
   mixinMainColor
 } from '../../../../style/Mixin';
 
@@ -43,12 +43,12 @@ export const CategoryLabel = ({
 const StyledCategoryLabel = styled.div`
   padding: 8px 24px;
   border-left: 12px solid ${Colors.PURPLE};
-  box-shadow: 4px 4px 4px 0 ${Colors.TEXT};
+  box-shadow: 4px 4px 4px 0 ${Colors.TEXT_DARK};
   cursor: pointer;
 
   ${mixinMainColor}
-  ${mixinBgWhite}
-  ${mixinBorderRadius12px}
+  ${mixinBgWhite} 
+  ${mixinBorderRadius4px}
 `;
 
 const StyledLabel = styled.div`

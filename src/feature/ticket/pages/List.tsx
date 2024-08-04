@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
-import { Status, TStatus } from '../types/TTicket';
+import { Status, TStatus, TTicket } from '../types/TTicket';
 import { Flex } from 'antd';
 import { Button } from '../../../components/element/button/Button';
 import { CategoryLabel } from '../components/elements/CategoryLabel';
 import { Ticket } from '../components/compositions/Ticket';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
-import { getTickets } from '../api/ticket';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+type TProps = {
+  ticketList: TTicket[];
+};
 
-export const List = (): React.JSX.Element => {
-  const { id: projectId } = useParams();
-  if (!projectId) {
-    return <>ff</>;
-  }
-
-  const { data: tickets } = useQuery('tickets', () => getTickets(projectId));
+export const List = ({ ticketList }: TProps): React.JSX.Element => {
   const [isOpenedNewCreateModal, setIsOpenedNewCreateModal] =
     useState<boolean>(false);
 
@@ -66,8 +60,8 @@ export const List = (): React.JSX.Element => {
               label={'未着手'}
               onClick={() => toggleCategory(Status.NOT_STARTED)}
               defaultOpenState={
-                (tickets &&
-                  tickets.filter(
+                (ticketList &&
+                  ticketList.filter(
                     (ticket) => ticket.status === Status.NOT_STARTED
                   ).length > 0) ||
                 false
@@ -75,18 +69,18 @@ export const List = (): React.JSX.Element => {
             />
             <StyledTicketList
               vertical
-              gap={4}
+              gap={2}
               $show={showNotStarted}
               $height={
-                (tickets &&
-                  tickets.filter(
+                (ticketList &&
+                  ticketList.filter(
                     (ticket) => ticket.status === Status.NOT_STARTED
                   ).length) ||
                 0
               }
             >
-              {tickets &&
-                tickets
+              {ticketList &&
+                ticketList
                   .filter((ticket) => ticket.status === Status.NOT_STARTED)
                   .map((ticket) => (
                     <Ticket ticket={ticket} key={ticket.ticketId} />
@@ -99,8 +93,8 @@ export const List = (): React.JSX.Element => {
               label={'着手中'}
               onClick={() => toggleCategory(Status.UNDER_CONSTRUCTION)}
               defaultOpenState={
-                (tickets &&
-                  tickets.filter(
+                (ticketList &&
+                  ticketList.filter(
                     (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
                   ).length > 0) ||
                 false
@@ -111,15 +105,15 @@ export const List = (): React.JSX.Element => {
               gap={4}
               $show={showUnderConstruction}
               $height={
-                (tickets &&
-                  tickets.filter(
+                (ticketList &&
+                  ticketList.filter(
                     (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
                   ).length) ||
                 0
               }
             >
-              {tickets &&
-                tickets
+              {ticketList &&
+                ticketList
                   .filter(
                     (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
                   )
@@ -134,9 +128,10 @@ export const List = (): React.JSX.Element => {
               label={'完了'}
               onClick={() => toggleCategory(Status.COMPLETED)}
               defaultOpenState={
-                (tickets &&
-                  tickets.filter((ticket) => ticket.status === Status.COMPLETED)
-                    .length > 0) ||
+                (ticketList &&
+                  ticketList.filter(
+                    (ticket) => ticket.status === Status.COMPLETED
+                  ).length > 0) ||
                 false
               }
             />
@@ -145,14 +140,15 @@ export const List = (): React.JSX.Element => {
               gap={4}
               $show={showCompleted}
               $height={
-                (tickets &&
-                  tickets.filter((ticket) => ticket.status === Status.COMPLETED)
-                    .length) ||
+                (ticketList &&
+                  ticketList.filter(
+                    (ticket) => ticket.status === Status.COMPLETED
+                  ).length) ||
                 0
               }
             >
-              {tickets &&
-                tickets
+              {ticketList &&
+                ticketList
                   .filter((ticket) => ticket.status === Status.COMPLETED)
                   .map((ticket) => (
                     <Ticket ticket={ticket} key={ticket.ticketId} />

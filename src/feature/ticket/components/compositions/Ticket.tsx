@@ -6,7 +6,7 @@ import { Priority } from '../elements/Priority';
 import { LimitDate } from '../elements/LimitDate';
 import {
   mixinBgWhite,
-  mixinBorderRadius8px,
+  mixinBorderRadius4px,
   mixinMainColor,
   mixinPadding8px
 } from '../../../../style/Mixin';
@@ -64,7 +64,7 @@ const StyledTicketFlexContainer = styled(Flex)<{
 
   ${mixinBgWhite}
   ${mixinMainColor}
-  ${mixinBorderRadius8px}
+  ${mixinBorderRadius4px}
   ${mixinPadding8px}
 `;
 

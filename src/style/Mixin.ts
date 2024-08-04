@@ -36,6 +36,9 @@ export const mixinBgWhite = css`
 `;
 
 // border-radius
+export const mixinBorderRadius4px = css`
+  border-radius: 4px;
+`;
 export const mixinBorderRadius8px = css`
   border-radius: 8px;
 `;

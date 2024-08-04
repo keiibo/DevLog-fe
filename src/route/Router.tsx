@@ -6,10 +6,10 @@ import { Landing } from '../feature/landing/pages/Landing';
 import { Login } from '../feature/auth/pages/Login';
 import { Dashboard } from '../feature/dashboard/pages/Dashboard';
 import { Create } from '../feature/dashboard/pages/Create';
-import { List } from '../feature/ticket/pages/List';
 import { Diary } from '../feature/diary/pages/Diary';
 import { Detail } from '../feature/detail/pages/Detail';
 import { Detail as TicketDetail } from '../feature/ticket/pages/Detail';
+import { TicketRoot } from '../feature/ticket/pages/TicketRoot';
 
 export const AppRouter = (): React.JSX.Element => {
   return (
@@ -21,7 +21,7 @@ export const AppRouter = (): React.JSX.Element => {
           <Route path="login" element={<Login />} />
           <Route path="/:id/detail" element={<Detail />} />
           <Route path="/:id/dashboard" element={<Dashboard />} />
-          <Route path="/:id/ticket" element={<List />} />
+          <Route path="/:id/ticket" element={<TicketRoot />} />
           <Route path="/:id/ticket/:ticketId" element={<TicketDetail />} />
           <Route path="/:id/diary" element={<Diary />} />
         </Route>
