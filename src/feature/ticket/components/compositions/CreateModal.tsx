@@ -13,6 +13,7 @@ import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
 import { TicketProperty } from './TicketProperty';
 import { DateFormat } from '../../../../constant/DateFormat';
+import { Loading } from '../../../../components/element/loading/Loading';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
@@ -28,7 +29,7 @@ export const CreateModal = ({
   const [form] = useForm();
   const { id: projectId } = useParams();
   if (!projectId) {
-    return <div>Loading</div>;
+    return <Loading />;
   }
 
   /**

@@ -14,6 +14,7 @@ import {
   mixinPadding24px,
   mixinPadding4px
 } from './style/Mixin';
+import { Loading } from './components/element/loading/Loading';
 
 export const Root = (): React.JSX.Element => {
   const { data: projectList } = useQuery('projects', getProjects);
@@ -22,7 +23,7 @@ export const Root = (): React.JSX.Element => {
   );
 
   if (!projectList) {
-    return <div>プロジェクト一覧がロードできません</div>;
+    return <Loading />;
   }
 
   return (
