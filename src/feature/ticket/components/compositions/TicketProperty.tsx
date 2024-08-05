@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import { Textarea } from '../../../../components/element/textarea/Textarea';
 import {
   LabelColorType,
@@ -36,6 +36,9 @@ export const TicketProperty = ({
   ticket,
   setLabelColor
 }: TProps): React.JSX.Element => {
+  const [starYm, setStartYm] = useState(
+    ticket ? dayjs(ticket.limitStartYm) : undefined
+  );
   const priorityOption = [
     { label: getPriorityStr(Priority.HIGH), value: Priority.HIGH },
     { label: getPriorityStr(Priority.MEDIUM), value: Priority.MEDIUM },
@@ -167,7 +170,10 @@ export const TicketProperty = ({
               }
             >
               {isEditMode ? (
-                <DatePicker format={DateFormat.SLASH} />
+                <DatePicker
+                  format={DateFormat.SLASH}
+                  onChange={(value) => setStartYm(value)}
+                />
               ) : ticket?.limitStartYm ? (
                 dayjs(ticket.limitStartYm).format(DateFormat.SLASH)
               ) : (
@@ -187,7 +193,7 @@ export const TicketProperty = ({
               }
             >
               {isEditMode ? (
-                <DatePicker format={DateFormat.SLASH} />
+                <DatePicker format={DateFormat.SLASH} minDate={starYm} />
               ) : ticket?.limitEndYm ? (
                 dayjs(ticket.limitEndYm).format(DateFormat.SLASH)
               ) : (
