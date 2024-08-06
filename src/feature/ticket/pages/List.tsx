@@ -6,6 +6,7 @@ import { CategoryLabel } from '../components/elements/CategoryLabel';
 import { Ticket } from '../components/compositions/Ticket';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
+import { mixinTextColor } from '../../../style/Mixin';
 type TProps = {
   ticketList: TTicket[];
 };
@@ -45,13 +46,29 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
 
   return (
     <>
-      <Flex vertical gap={16}>
-        <Flex justify="space-between">
-          <div>aaa</div>
+      <StyledListFlexContainer vertical gap={16}>
+        <StyledListDataFlex justify="space-between" align="center">
+          <Flex gap={8}>
+            未着手{' '}
+            {ticketList &&
+              ticketList.filter(
+                (ticket) => ticket.status === Status.NOT_STARTED
+              ).length}
+            件 着手中{'  '}
+            {ticketList &&
+              ticketList.filter(
+                (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
+              ).length}
+            件 完了{'  '}
+            {ticketList &&
+              ticketList.filter((ticket) => ticket.status === Status.COMPLETED)
+                .length}
+            件 / 全{ticketList && ticketList.length}件
+          </Flex>
           <Button type="primary" onClick={handleNewCreateClick}>
             新規作成
           </Button>
-        </Flex>
+        </StyledListDataFlex>
 
         <Flex vertical gap={24}>
           {/* 未着手 */}
@@ -156,7 +173,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
             </StyledTicketList>
           </Flex>
         </Flex>
-      </Flex>
+      </StyledListFlexContainer>
       <CreateModal
         isOpenedNewCreateModal={isOpenedNewCreateModal}
         setIsOpenedNewCreateModal={setIsOpenedNewCreateModal}
@@ -164,6 +181,12 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
     </>
   );
 };
+
+const StyledListFlexContainer = styled(Flex)``;
+
+const StyledListDataFlex = styled(Flex)`
+  ${mixinTextColor}
+`;
 
 const StyledTicketList = styled(Flex)<{ $show: boolean; $height: number }>`
   padding-left: 32px;

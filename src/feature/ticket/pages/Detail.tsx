@@ -6,7 +6,9 @@ import { getLabelColor } from '../lib/labelColor';
 import {
   mixinBgWhite,
   mixinBorderRadius12px,
-  mixinPadding12px
+  mixinNormalFontSize16px,
+  mixinPadding12px,
+  mixinTextColor
 } from '../../../style/Mixin';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -18,6 +20,8 @@ import { Form } from '../../../components/element/form/Form';
 import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
 import { DateFormat } from '../../../constant/DateFormat';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Loading } from '../../../components/element/loading/Loading';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId, ticketId } = useParams();
@@ -89,8 +93,7 @@ export const Detail = (): React.JSX.Element => {
     });
   }, [ticket]);
 
-  if (!ticketId || !projectId || isLoading || !ticket)
-    return <div>Loading</div>;
+  if (!ticketId || !projectId || isLoading || !ticket) return <Loading />;
 
   /**
    * 更新ボタン押下時、putリクエストを投げる
@@ -121,8 +124,19 @@ export const Detail = (): React.JSX.Element => {
     deleteMutation.mutate(ticketId);
   };
 
+  /**
+   * 戻るボタン押下で一覧に戻る
+   */
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <StyledDetailContainer>
+    <Flex vertical gap={16}>
+      <StyledBackFlex gap={8} onClick={handleBack}>
+        <ArrowLeftOutlined />
+        戻る
+      </StyledBackFlex>
       <Form onFinish={handleEditFinish} form={form}>
         <StyledTicketContainer vertical gap={16} $labelColor={labelColor || ''}>
           <TicketTitle
@@ -152,11 +166,16 @@ export const Detail = (): React.JSX.Element => {
           </Flex>
         </StyledTicketContainer>
       </Form>
-    </StyledDetailContainer>
+    </Flex>
   );
 };
 
-const StyledDetailContainer = styled.div``;
+const StyledBackFlex = styled(Flex)`
+  width: fit-content;
+  cursor: pointer;
+  ${mixinTextColor}
+  ${mixinNormalFontSize16px}
+`;
 
 const StyledTicketContainer = styled(Flex)<{
   $labelColor: TLabelColorType;
