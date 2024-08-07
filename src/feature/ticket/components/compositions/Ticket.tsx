@@ -61,7 +61,6 @@ const StyledTicketFlexContainer = styled(Flex)<{
 }>`
   border-left: 12px solid ${(props) => getLabelColor(props.$borderColor)};
   cursor: pointer;
-
   ${mixinBgWhite}
   ${mixinMainColor}
   ${mixinBorderRadius4px}

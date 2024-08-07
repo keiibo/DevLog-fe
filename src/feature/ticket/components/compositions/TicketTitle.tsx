@@ -118,6 +118,14 @@ const StyledTitle = styled.h4<{
 }>`
   color: ${({ $mode, $labelColorType }) =>
     getTitleTextColor($mode, $labelColorType)};
+  ${({ $mode }) =>
+    $mode === 'list' &&
+    `
+    max-width: 500px; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;  
+  `}
   ${mixinMargin0};
 `;
 

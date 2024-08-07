@@ -182,7 +182,9 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   );
 };
 
-const StyledListFlexContainer = styled(Flex)``;
+const StyledListFlexContainer = styled(Flex)`
+  max-width: 800px;
+`;
 
 const StyledListDataFlex = styled(Flex)`
   ${mixinTextColor}
