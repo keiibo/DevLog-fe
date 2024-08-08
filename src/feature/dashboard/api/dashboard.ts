@@ -4,8 +4,12 @@ import { TCreateProjectReq, TGetProjectRes } from '../types/TProject';
 /**
  * プロジェクト一覧の取得
  */
-export const getProjects = async (): Promise<TGetProjectRes[]> => {
-  const response = await axios.get('http://localhost:4001/api/project');
+export const getProjects = async (
+  userId: string
+): Promise<TGetProjectRes[]> => {
+  const response = await axios.get(
+    `http://localhost:4001/api/project/all/${userId}`
+  );
   return response.data;
 };
 

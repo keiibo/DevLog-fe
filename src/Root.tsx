@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GlobalHeader } from './components/composition/header/GlobalHeader';
 import { Layout } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Content } from 'antd/es/layout/layout';
 import { LayoutNum } from './constant/LayoutNum';
@@ -15,11 +15,20 @@ import {
   mixinPadding4px
 } from './style/Mixin';
 import { Loading } from './components/element/loading/Loading';
+import { useSelector } from 'react-redux';
+import { selectAuth } from './store/slice/auth/authSlice';
 
 export const Root = (): React.JSX.Element => {
-  const { data: projectList } = useQuery('projects', getProjects);
+  const auth = useSelector(selectAuth);
+  // storeに保存されたユーザー情報からuserIdを取得し、reqに使う
+  const { data: projectList } = useQuery('projects', () =>
+    getProjects(auth.userId)
+  );
+  const { id: projectId } = useParams();
   const [project, setProject] = useState<TGetProjectRes | null>(
-    projectList ? projectList[0] : null
+    projectList
+      ? projectList.find((p) => p.projectId === projectId) || null
+      : null
   );
 
   if (!projectList) {
@@ -32,6 +41,7 @@ export const Root = (): React.JSX.Element => {
         projectList={projectList}
         setProject={setProject}
         selectedProjectName={project ? project.name : '未選択'}
+        auth={auth}
       />
       {project ? (
         <StyledMainLayout>

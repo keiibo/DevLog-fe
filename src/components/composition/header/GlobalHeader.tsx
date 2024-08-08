@@ -1,10 +1,13 @@
-import { Flex, Image, Menu, MenuProps } from 'antd';
+import { Flex, Image, Menu, MenuProps, notification } from 'antd';
 import { Header as AntDHeader } from 'antd/es/layout/layout';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { TGetProjectRes } from '../../../feature/dashboard/types/TProject';
 import { LayoutNum } from '../../../constant/LayoutNum';
+import { TPostLoginRes } from '../../../feature/auth/types/TLogin';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../store/slice/auth/authSlice';
 // import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenuItem = Required<MenuProps>['items'][number];
@@ -13,14 +16,17 @@ type TProps = {
   selectedProjectName: string;
   projectList: TGetProjectRes[];
   setProject: React.Dispatch<React.SetStateAction<TGetProjectRes | null>>;
+  auth: TPostLoginRes;
 };
 
 export const GlobalHeader = ({
   selectedProjectName,
   projectList,
-  setProject
+  setProject,
+  auth
 }: TProps): React.JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // URLクエリパラメータを解析
   const { id: projectId } = useParams();
@@ -39,7 +45,16 @@ export const GlobalHeader = ({
   }, [projectId, projectList, setProject]);
 
   const items: TMenuItem[] = [
-    { key: '3', label: 'ログイン' },
+    {
+      key: '3',
+      label: `${auth.userName}さん`,
+      children: [
+        {
+          key: 'ログアウト',
+          label: 'ログアウト'
+        }
+      ]
+    },
     {
       key: '2',
       label: selectedProjectName,
@@ -60,6 +75,15 @@ export const GlobalHeader = ({
         break;
       case '3':
         navigate(`/login`);
+        break;
+      case 'ログアウト':
+        dispatch(logout());
+        navigate('/login');
+        notification.success({
+          message: 'ログアウトしました',
+          description: `お疲れ様でした`,
+          duration: 3 // 通知が表示される時間（秒）
+        });
         break;
       default:
         const project = projectList.find((p) => p.projectId === e.key);
