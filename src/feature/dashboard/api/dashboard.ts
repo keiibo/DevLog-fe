@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TCreateProjectReq, TGetProjectRes } from '../types/TProject';
+import { setConfig } from '../../auth/api/auth';
 
 /**
  * プロジェクト一覧の取得
@@ -8,7 +9,8 @@ export const getProjects = async (
   userId: string
 ): Promise<TGetProjectRes[]> => {
   const response = await axios.get(
-    `http://localhost:4001/api/project/all/${userId}`
+    `http://localhost:4001/api/project/all/${userId}`,
+    setConfig()
   );
   return response.data;
 };
@@ -20,7 +22,8 @@ export const getProject = async (
   projectId: string
 ): Promise<TGetProjectRes> => {
   const response = await axios.get(
-    `http://localhost:4001/api/project/${projectId}`
+    `http://localhost:4001/api/project/${projectId}`,
+    setConfig()
   );
   return response.data;
 };
@@ -33,7 +36,8 @@ export const createProject = async (
 ): Promise<TGetProjectRes> => {
   const response = await axios.post<TGetProjectRes>(
     'http://localhost:4001/api/project',
-    req
+    req,
+    setConfig()
   );
   return response.data;
 };

@@ -11,3 +11,34 @@ export const login = async (req: TPostLoginReq): Promise<TPostLoginRes> => {
   );
   return response.data;
 };
+
+/**
+ *  ME
+ */
+export const me = async (): Promise<TPostLoginRes> => {
+  try {
+    const response = await axios.get<TPostLoginRes>(
+      'http://localhost:4001/api/me',
+      setConfig()
+    );
+    return response.data;
+  } catch (error) {
+    throw error; // エラーを再スローして呼び出し元でキャッチ可能にする
+  }
+};
+
+/**
+ * Bearerの設定を付与する
+ */
+export const setConfig = (): {} => {
+  const token = localStorage.getItem('token');
+  if (token === '') {
+    // eslint-disable-next-line no-console
+    console.error('tokenが空です');
+  }
+  return {
+    headers: {
+      Authorization: `Bearer ${token}` // トークンをBearerスキームで設定
+    }
+  };
+};

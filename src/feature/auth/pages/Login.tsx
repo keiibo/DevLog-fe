@@ -32,7 +32,16 @@ export const Login = (): React.JSX.Element => {
         description: `おかえりなさい、${res.userName}さん`,
         duration: 3 // 通知が表示される時間（秒）
       });
-      dispatch(login(res));
+      // ユーザー情報をstoreに保存
+      dispatch(
+        login({
+          userId: res.userId,
+          userName: res.userName,
+          email: res.email,
+          projectIds: res.projectIds
+        })
+      );
+      localStorage.setItem('token', res.token);
       if (res.projectIds.length > 0) {
         navigate(`/${res.projectIds[0]}/dashboard`);
       } else {

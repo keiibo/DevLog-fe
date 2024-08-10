@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TPostLoginRes } from '../../../feature/auth/types/TLogin';
 import { TRootState } from '../../store';
 
+export type TAuthSliceType = Omit<TPostLoginRes, 'token'>;
+
 // 初期状態
-const initialState: TPostLoginRes = {
+const initialState: TAuthSliceType = {
   userId: '',
   userName: '',
   email: '',
@@ -14,7 +16,7 @@ const loginSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<TPostLoginRes>) => {
+    login: (state, action: PayloadAction<TAuthSliceType>) => {
       // action.payloadから受け取ったデータでstateを更新
       state.userId = action.payload.userId;
       state.userName = action.payload.userName;

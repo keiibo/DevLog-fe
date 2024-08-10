@@ -5,9 +5,8 @@ import styled from 'styled-components';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { TGetProjectRes } from '../../../feature/dashboard/types/TProject';
 import { LayoutNum } from '../../../constant/LayoutNum';
-import { TPostLoginRes } from '../../../feature/auth/types/TLogin';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../../store/slice/auth/authSlice';
+import { logout, TAuthSliceType } from '../../../store/slice/auth/authSlice';
 // import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenuItem = Required<MenuProps>['items'][number];
@@ -16,7 +15,7 @@ type TProps = {
   selectedProjectName: string;
   projectList: TGetProjectRes[];
   setProject: React.Dispatch<React.SetStateAction<TGetProjectRes | null>>;
-  auth: TPostLoginRes;
+  auth: TAuthSliceType;
 };
 
 export const GlobalHeader = ({
@@ -78,6 +77,7 @@ export const GlobalHeader = ({
         break;
       case 'ログアウト':
         dispatch(logout());
+        localStorage.removeItem('token');
         navigate('/login');
         notification.success({
           message: 'ログアウトしました',

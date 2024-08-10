@@ -20,6 +20,7 @@ import { selectAuth } from './store/slice/auth/authSlice';
 
 export const Root = (): React.JSX.Element => {
   const auth = useSelector(selectAuth);
+
   // storeに保存されたユーザー情報からuserIdを取得し、reqに使う
   const { data: projectList } = useQuery('projects', () =>
     getProjects(auth.userId)
