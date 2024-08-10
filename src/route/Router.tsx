@@ -38,17 +38,17 @@ export const AppRouter = (): React.JSX.Element => {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
     const location = useLocation();
-    const { data } = useQuery('me', me);
+    const { data, error, isLoading } = useQuery('me', me);
+    if (isLoading) {
+      return <Loading />;
+    }
 
-    if (!token) {
+    if (!token || error) {
       // ログインしていない場合は、ログインページにリダイレクト
       // 現在の場所を state に保存して、ログイン後に元の場所に戻れるようにする
       return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    if (!data) {
-      return <Loading />;
-    }
     dispatch(
       login({
         userId: data?.userId || '',

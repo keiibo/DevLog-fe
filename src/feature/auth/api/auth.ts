@@ -23,7 +23,7 @@ export const me = async (): Promise<TPostLoginRes> => {
     );
     return response.data;
   } catch (error) {
-    throw error; // エラーを再スローして呼び出し元でキャッチ可能にする
+    throw error; // その他のエラーは再スロー
   }
 };
 
