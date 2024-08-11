@@ -14,6 +14,7 @@ import DatePicker from '../../../../components/element/datepicker/DatePicker';
 import { DateFormat } from '../../../../constant/DateFormat';
 import { styled } from 'styled-components';
 import {
+  mixinDangerColor,
   mixinNormalFontSize24px,
   mixinPadding8px
 } from '../../../../style/Mixin';
@@ -24,6 +25,7 @@ import { getPriorityStr } from '../../lib/priority';
 import { Colors } from '../../../../style/Colors';
 import { getLabelColorStr } from '../../lib/labelColor';
 import { getStatusStr } from '../../lib/status';
+import { isOverLimitDate } from '../../lib/limitDate';
 
 type TProps = {
   isEditMode: boolean;
@@ -36,7 +38,7 @@ export const TicketProperty = ({
   ticket,
   setLabelColor
 }: TProps): React.JSX.Element => {
-  const [starYm, setStartYm] = useState(
+  const [startYm, setStartYm] = useState(
     ticket ? dayjs(ticket.limitStartYm) : undefined
   );
   const priorityOption = [
@@ -175,7 +177,9 @@ export const TicketProperty = ({
                   onChange={(value) => setStartYm(value)}
                 />
               ) : ticket?.limitStartYm ? (
-                dayjs(ticket.limitStartYm).format(DateFormat.SLASH)
+                <StyledSpan $isToday={isOverLimitDate(ticket.limitEndYm)}>
+                  {dayjs(ticket.limitStartYm).format(DateFormat.SLASH)}
+                </StyledSpan>
               ) : (
                 ''
               )}
@@ -193,9 +197,14 @@ export const TicketProperty = ({
               }
             >
               {isEditMode ? (
-                <DatePicker format={DateFormat.SLASH} minDate={starYm} />
+                <DatePicker
+                  format={DateFormat.SLASH}
+                  minDate={startYm ? startYm.add(-1, 'day') : undefined}
+                />
               ) : ticket?.limitEndYm ? (
-                dayjs(ticket.limitEndYm).format(DateFormat.SLASH)
+                <StyledSpan $isToday={isOverLimitDate(ticket.limitEndYm)}>
+                  {dayjs(ticket.limitEndYm).format(DateFormat.SLASH)}
+                </StyledSpan>
               ) : (
                 ''
               )}
@@ -249,4 +258,8 @@ const StyledLabel = styled.div`
 
 const StyledSelect = styled(Select)`
   width: 200px;
+`;
+
+const StyledSpan = styled.span<{ $isToday: boolean }>`
+  ${({ $isToday }) => ($isToday ? mixinDangerColor : '')}
 `;
