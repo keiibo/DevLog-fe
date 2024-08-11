@@ -23,6 +23,7 @@ import {
   mixinNormalFontSize24px
 } from '../../../style/Mixin';
 import { DateFormat } from '../../../constant/DateFormat';
+import { NOTIFICATION_TIME } from '../../../constant/Notification';
 
 export const Create = (): React.JSX.Element => {
   const queryClient = useQueryClient();
@@ -98,7 +99,7 @@ export const Create = (): React.JSX.Element => {
       notification.success({
         message: 'プロジェクト作成成功',
         description: '新しいプロジェクトが正常に作成されました。',
-        duration: 4.5 // 通知が表示される時間（秒）
+        duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
       queryClient.invalidateQueries('projects');
       navigate(`/${res.projectId}/dashboard`);
@@ -108,7 +109,7 @@ export const Create = (): React.JSX.Element => {
       notification.error({
         message: 'プロジェクト作成失敗',
         description: 'プロジェクトの作成に失敗しました。再試行してください。',
-        duration: 4.5
+        duration: NOTIFICATION_TIME.ERROR
       });
     }
   });

@@ -22,6 +22,7 @@ import dayjs from 'dayjs';
 import { DateFormat } from '../../../constant/DateFormat';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Loading } from '../../../components/element/loading/Loading';
+import { NOTIFICATION_TIME } from '../../../constant/Notification';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId, ticketId } = useParams();
@@ -42,7 +43,7 @@ export const Detail = (): React.JSX.Element => {
     onSuccess: () => {
       notification.success({
         message: 'チケットを更新しました',
-        duration: 3 // 通知が表示される時間（秒）
+        duration: NOTIFICATION_TIME.SUCCESS
       });
       queryClient.invalidateQueries('ticketDetail');
       setIsEditMode(false);
@@ -52,7 +53,7 @@ export const Detail = (): React.JSX.Element => {
       notification.error({
         message: 'チケット更新失敗',
         description: 'チケットの更新に失敗しました。再試行してください。',
-        duration: 3
+        duration: NOTIFICATION_TIME.ERROR
       });
     }
   });
@@ -64,7 +65,7 @@ export const Detail = (): React.JSX.Element => {
     onSuccess: () => {
       notification.success({
         message: 'チケットを削除しました',
-        duration: 3 // 通知が表示される時間（秒）
+        duration: NOTIFICATION_TIME.SUCCESS
       });
       queryClient.invalidateQueries('ticketDetail');
       navigate(`/${projectId}/ticket`);
@@ -74,7 +75,7 @@ export const Detail = (): React.JSX.Element => {
       notification.error({
         message: 'チケット削除失敗',
         description: 'チケットの削除に失敗しました。再試行してください。',
-        duration: 3
+        duration: NOTIFICATION_TIME.ERROR
       });
     }
   });

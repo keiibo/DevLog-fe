@@ -16,6 +16,7 @@ import { Rule } from 'antd/es/form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { createAccount } from '../api/auth';
+import { NOTIFICATION_TIME } from '../../../constant/Notification';
 
 export const CreateAccount = (): React.JSX.Element => {
   const [mode, setMode] = useState<'form' | 'confirm'>('form');
@@ -94,7 +95,7 @@ export const CreateAccount = (): React.JSX.Element => {
         message: `ようこそ！${res.userName}さん！`,
         description:
           'DeveLogにログインして、あなたのプロジェクトを促進させましょう',
-        duration: 3 // 通知が表示される時間（秒）
+        duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
       navigate(`/login`);
     },
@@ -103,7 +104,7 @@ export const CreateAccount = (): React.JSX.Element => {
       notification.error({
         message: 'プロジェクト作成失敗',
         description: 'プロジェクトの作成に失敗しました。再試行してください。',
-        duration: 4.5
+        duration: NOTIFICATION_TIME.ERROR
       });
     }
   });

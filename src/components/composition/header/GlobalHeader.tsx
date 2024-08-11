@@ -7,6 +7,7 @@ import { TGetProjectRes } from '../../../feature/dashboard/types/TProject';
 import { LayoutNum } from '../../../constant/LayoutNum';
 import { useDispatch } from 'react-redux';
 import { logout, TAuthSliceType } from '../../../store/slice/auth/authSlice';
+import { NOTIFICATION_TIME } from '../../../constant/Notification';
 // import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenuItem = Required<MenuProps>['items'][number];
@@ -82,7 +83,7 @@ export const GlobalHeader = ({
         notification.success({
           message: 'ログアウトしました',
           description: `お疲れ様でした`,
-          duration: 3 // 通知が表示される時間（秒）
+          duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
         });
         break;
       default:

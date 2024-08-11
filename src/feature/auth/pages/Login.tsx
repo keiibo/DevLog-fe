@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../../store/slice/auth/authSlice';
 import { Link } from '../../../components/element/Link/Link';
 import { BaseLayout } from '../../../components/element/layout/BaseLayout';
+import { NOTIFICATION_TIME } from '../../../constant/Notification';
 
 export const Login = (): React.JSX.Element => {
   const [form] = useForm();
@@ -32,7 +33,7 @@ export const Login = (): React.JSX.Element => {
       notification.success({
         message: 'ログイン成功',
         description: `おかえりなさい、${res.userName}さん`,
-        duration: 3 // 通知が表示される時間（秒）
+        duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
       // ユーザー情報をstoreに保存
       dispatch(
@@ -55,7 +56,7 @@ export const Login = (): React.JSX.Element => {
       notification.error({
         message: 'ログイン失敗',
         description: 'ユーザーIDまたはパスワードを再確認してください',
-        duration: 3
+        duration: NOTIFICATION_TIME.ERROR
       });
     }
   });

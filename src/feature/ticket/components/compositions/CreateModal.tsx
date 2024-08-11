@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import { TicketProperty } from './TicketProperty';
 import { DateFormat } from '../../../../constant/DateFormat';
 import { Loading } from '../../../../components/element/loading/Loading';
+import { NOTIFICATION_TIME } from '../../../../constant/Notification';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
@@ -62,7 +63,7 @@ export const CreateModal = ({
       notification.success({
         message: 'チケットを作成しました',
         description: `タイトル: ${res.title}`,
-        duration: 3 // 通知が表示される時間（秒）
+        duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
       setIsOpenedNewCreateModal(false);
       queryClient.invalidateQueries('tickets');
@@ -73,7 +74,7 @@ export const CreateModal = ({
       notification.error({
         message: 'チケット作成失敗',
         description: 'チケットの作成に失敗しました。再試行してください。',
-        duration: 3
+        duration: NOTIFICATION_TIME.ERROR
       });
     }
   });
