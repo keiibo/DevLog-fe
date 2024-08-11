@@ -17,6 +17,7 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { createAccount } from '../api/auth';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
+import { AxiosError } from 'axios';
 
 export const CreateAccount = (): React.JSX.Element => {
   const [mode, setMode] = useState<'form' | 'confirm'>('form');
@@ -99,11 +100,11 @@ export const CreateAccount = (): React.JSX.Element => {
       });
       navigate(`/login`);
     },
-    onError: () => {
+    onError: (error: AxiosError) => {
       // エラー処理
       notification.error({
-        message: 'プロジェクト作成失敗',
-        description: 'プロジェクトの作成に失敗しました。再試行してください。',
+        message: 'アカウントの作成ができませんでした',
+        description: error.response?.data as string,
         duration: NOTIFICATION_TIME.ERROR
       });
     }
@@ -209,9 +210,14 @@ export const CreateAccount = (): React.JSX.Element => {
                       入力内容の確認
                     </Button>
                   ) : (
-                    <Button type="primary" onClick={handleSubmit}>
-                      新規作成
-                    </Button>
+                    <Flex gap={16}>
+                      <Button type="primary" onClick={() => setMode('form')}>
+                        戻る
+                      </Button>
+                      <Button type="primary" onClick={handleSubmit}>
+                        新規作成
+                      </Button>
+                    </Flex>
                   )}
                 </Flex>
               </Form>
