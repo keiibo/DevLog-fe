@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GlobalHeader } from './components/composition/header/GlobalHeader';
 import { Layout } from 'antd';
 import { Outlet, useParams } from 'react-router-dom';
@@ -22,7 +22,7 @@ export const Root = (): React.JSX.Element => {
   const auth = useSelector(selectAuth);
 
   // storeに保存されたユーザー情報からuserIdを取得し、reqに使う
-  const { data: projectList } = useQuery('projects', () =>
+  const { data: projectList, refetch } = useQuery('projects', () =>
     getProjects(auth.userId)
   );
   const { id: projectId } = useParams();
@@ -31,6 +31,9 @@ export const Root = (): React.JSX.Element => {
       ? projectList.find((p) => p.projectId === projectId) || null
       : null
   );
+  useEffect(() => {
+    refetch();
+  }, [auth]);
 
   if (!projectList) {
     return <Loading />;

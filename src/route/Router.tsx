@@ -20,6 +20,7 @@ import { login, logout } from '../store/slice/auth/authSlice';
 import { me } from '../feature/auth/api/auth';
 import { useQuery } from 'react-query';
 import { Loading } from '../components/element/loading/Loading';
+import { CreateAccount } from '../feature/auth/pages/CreateAccount';
 
 export const AppRouter = (): React.JSX.Element => {
   // ログイン画面に強制リダイレクトさせるコンポーネント
@@ -65,6 +66,7 @@ export const AppRouter = (): React.JSX.Element => {
       <Routes>
         <Route path="/about" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<CreateAccount />} />
         <Route
           path="/"
           element={
@@ -73,7 +75,7 @@ export const AppRouter = (): React.JSX.Element => {
             </RequireAuth>
           }
         >
-          <Route path="/:id/create" element={<Create />} />
+          <Route path="/create" element={<Create />} />
           <Route path="/:id/detail" element={<Detail />} />
           <Route path="/:id/dashboard" element={<Dashboard />} />
           <Route path="/:id/ticket" element={<TicketRoot />} />

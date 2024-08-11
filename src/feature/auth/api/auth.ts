@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TPostLoginReq, TPostLoginRes } from '../types/TLogin';
+import { TPostCreateAccountReq, TPostCreateAccountRes, TPostLoginReq, TPostLoginRes } from '../types/TAuth';
 
 /**
  * ログイン
@@ -19,6 +19,24 @@ export const me = async (): Promise<TPostLoginRes> => {
   try {
     const response = await axios.get<TPostLoginRes>(
       'http://localhost:4001/api/me',
+      setConfig()
+    );
+    return response.data;
+  } catch (error) {
+    throw error; // その他のエラーは再スロー
+  }
+};
+
+/**
+ * POST:ユーザー新規作成
+ */
+export const createAccount = async (
+  req: TPostCreateAccountReq
+): Promise<TPostCreateAccountRes> => {
+  try {
+    const response = await axios.post<TPostCreateAccountRes>(
+      'http://localhost:4001/api/user',
+      req,
       setConfig()
     );
     return response.data;

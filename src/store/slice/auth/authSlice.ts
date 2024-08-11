@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TPostLoginRes } from '../../../feature/auth/types/TLogin';
+import { TPostLoginRes } from '../../../feature/auth/types/TAuth';
 import { TRootState } from '../../store';
 
 export type TAuthSliceType = Omit<TPostLoginRes, 'token'>;

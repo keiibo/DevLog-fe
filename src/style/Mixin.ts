@@ -17,6 +17,9 @@ export const mixinWhiteColor = css`
 export const mixinDangerColor = css`
   color: ${Colors.RED};
 `;
+export const mixinPurpleColor = css`
+  color: ${Colors.PURPLE};
+`;
 
 // Bg
 export const mixinBgMain = css`

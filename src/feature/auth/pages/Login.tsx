@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Flex, Image, notification } from 'antd';
 
 import {
-  mixinBgMain,
   mixinBorderRadius24px,
+  mixinPurpleColor,
   mixinTextColor
 } from '../../../style/Mixin';
 import { Colors } from '../../../style/Colors';
@@ -14,12 +14,14 @@ import { Form } from '../../../components/element/form/Form';
 import { FormItem } from '../../../components/element/form/FormItem';
 import { Button } from '../../../components/element/button/Button';
 import { useForm } from 'antd/es/form/Form';
-import { TPostLoginReq } from '../types/TLogin';
+import { TPostLoginReq } from '../types/TAuth';
 import { useMutation } from 'react-query';
 import { login as postLogin } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../store/slice/auth/authSlice';
+import { Link } from '../../../components/element/Link/Link';
+import { BaseLayout } from '../../../components/element/layout/BaseLayout';
 
 export const Login = (): React.JSX.Element => {
   const [form] = useForm();
@@ -69,7 +71,7 @@ export const Login = (): React.JSX.Element => {
   };
 
   return (
-    <StyledLoginContainer justify="center" align="center">
+    <BaseLayout center>
       <StyledBox vertical gap={32}>
         <Image
           preview={false}
@@ -107,24 +109,21 @@ export const Login = (): React.JSX.Element => {
                 placeholder="パスワード"
               ></Input>
             </FormItem>
-            <Flex justify="center">
+            <Flex justify="center" align="center" gap={8} vertical>
               <Button type={'primary'} htmlType="submit">
                 ログイン
               </Button>
+              <StyledFlex gap={4}>
+                または
+                <StyledLink to={'/account'}>新規作成</StyledLink>
+              </StyledFlex>
             </Flex>
           </StyledForm>
         </Flex>
       </StyledBox>
-    </StyledLoginContainer>
+    </BaseLayout>
   );
 };
-
-const StyledLoginContainer = styled(Flex)`
-  height: 100vh;
-  width: 100vw;
-  ${mixinBgMain}
-  ${mixinTextColor}
-`;
 
 const StyledBox = styled(Flex)`
   border: 4px solid ${Colors.TEXT};
@@ -134,4 +133,17 @@ const StyledBox = styled(Flex)`
 
 const StyledForm = styled(Form)`
   margin: 0 auto;
+`;
+
+const StyledFlex = styled(Flex)`
+  ${mixinTextColor}
+`;
+
+const StyledLink = styled(Link)`
+  ${mixinPurpleColor}
+
+  &:hover {
+    ${mixinPurpleColor}
+    filter: brightness(2.2);
+  }
 `;

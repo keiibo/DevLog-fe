@@ -38,6 +38,9 @@ export const Theme = {
       headerBg: Colors.WHITE,
       contentBg: Colors.WHITE,
       footerBg: Colors.WHITE
+    },
+    Link: {
+      colorText: Colors.MAIN
     }
   }
 };
