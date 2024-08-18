@@ -5,6 +5,7 @@ import { Flex, Image, notification } from 'antd';
 
 import {
   mixinBorderRadius24px,
+  mixinDangerColor,
   mixinPurpleColor,
   mixinTextColor
 } from '../../../style/Mixin';
@@ -111,6 +112,7 @@ export const Login = (): React.JSX.Element => {
               ></Input>
             </FormItem>
             <Flex justify="center" align="center" gap={8} vertical>
+            <StyledForgotLink to={'#'}>パスワードを忘れた場合</StyledForgotLink>
               <Button type={'primary'} htmlType="submit">
                 ログイン
               </Button>
@@ -145,6 +147,15 @@ const StyledLink = styled(Link)`
 
   &:hover {
     ${mixinPurpleColor}
+    filter: brightness(2.2);
+  }
+`;
+
+const StyledForgotLink = styled(Link)`
+  ${mixinDangerColor}
+
+  &:hover {
+    ${mixinDangerColor}
     filter: brightness(2.2);
   }
 `;
