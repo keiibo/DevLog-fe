@@ -139,33 +139,39 @@ export const Detail = (): React.JSX.Element => {
         戻る
       </StyledBackFlex>
       <Form onFinish={handleEditFinish} form={form}>
-        <StyledTicketContainer vertical gap={16} $labelColor={labelColor || ''}>
-          <TicketTitle
-            id={ticket.ticketId}
-            title={ticket.title}
-            isDeletable
-            mode={'detail'}
-            labelColorType={ticket.labelColorType}
-            isEditable
-            isEditMode={isEditMode}
-            setIsEditMode={setIsEditMode}
-            handleDelete={handleDelete}
-          />
-          <TicketProperty
-            isEditMode={isEditMode}
-            ticket={ticket}
-            setLabelColor={setLabelColor}
-          />
-          <Flex justify="center">
-            <Space>
-              {isEditMode && (
-                <Button htmlType={'submit'} type="primary">
-                  更新
-                </Button>
-              )}
-            </Space>
-          </Flex>
-        </StyledTicketContainer>
+        <Flex justify="center">
+          <StyledTicketContainer
+            vertical
+            gap={16}
+            $labelColor={labelColor || ''}
+          >
+            <TicketTitle
+              id={ticket.ticketId}
+              title={ticket.title}
+              isDeletable
+              mode={'detail'}
+              labelColorType={ticket.labelColorType}
+              isEditable
+              isEditMode={isEditMode}
+              setIsEditMode={setIsEditMode}
+              handleDelete={handleDelete}
+            />
+            <TicketProperty
+              isEditMode={isEditMode}
+              ticket={ticket}
+              setLabelColor={setLabelColor}
+            />
+            <Flex justify="center">
+              <Space>
+                {isEditMode && (
+                  <Button htmlType={'submit'} type="primary">
+                    更新
+                  </Button>
+                )}
+              </Space>
+            </Flex>
+          </StyledTicketContainer>
+        </Flex>
       </Form>
     </Flex>
   );
@@ -181,6 +187,7 @@ const StyledBackFlex = styled(Flex)`
 const StyledTicketContainer = styled(Flex)<{
   $labelColor: TLabelColorType;
 }>`
+  width: 95%;
   border-top: 12px solid ${(props) => getLabelColor(props.$labelColor)};
 
   ${mixinPadding12px}
