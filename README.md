@@ -30,7 +30,7 @@ https://nodejs.org/en/download/package-manager
 
 > npm run dev
 
-http://localhost:3000にアクセスできること
+http://localhost:5173にアクセスできること
 
 ### storybookの起動
 
