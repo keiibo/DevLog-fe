@@ -8,6 +8,7 @@ import { LayoutNum } from '../../../constant/LayoutNum';
 import { useDispatch } from 'react-redux';
 import { logout, TAuthSliceType } from '../../../store/slice/auth/authSlice';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
+import { BellFilled } from '@ant-design/icons';
 // import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenuItem = Required<MenuProps>['items'][number];
@@ -45,16 +46,7 @@ export const GlobalHeader = ({
   }, [projectId, projectList, setProject]);
 
   const items: TMenuItem[] = [
-    {
-      key: '3',
-      label: `${auth.userName}さん`,
-      children: [
-        {
-          key: 'ログアウト',
-          label: 'ログアウト'
-        }
-      ]
-    },
+    { key: '1', label: `通知`, icon:<BellFilled style={{fontSize: '16px'}}/>},
     {
       key: '2',
       label: selectedProjectName,
@@ -65,7 +57,16 @@ export const GlobalHeader = ({
         };
       })
     },
-    { key: '1', label: 'menu1' }
+    {
+      key: '3',
+      label: `${auth.userName}さん`,
+      children: [
+        {
+          key: 'ログアウト',
+          label: 'ログアウト'
+        }
+      ]
+    }
   ];
 
   const handleMenuClick = (e: { key: string }) => {
@@ -110,8 +111,8 @@ export const GlobalHeader = ({
         mode="horizontal"
         items={items}
         style={{
-          width: '100%',
-          direction: 'rtl'
+          width: '400px',
+          direction: 'ltr'
         }}
         onClick={handleMenuClick}
       />
