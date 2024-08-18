@@ -215,7 +215,7 @@ export const CreateAccount = (): React.JSX.Element => {
                         戻る
                       </Button>
                       <Button type="primary" onClick={handleSubmit}>
-                        新規作成
+                        登録
                       </Button>
                     </Flex>
                   )}
