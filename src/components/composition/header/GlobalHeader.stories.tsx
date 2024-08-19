@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { GlobalHeader } from './GlobalHeader';
 import { Colors } from '../../../style/Colors';
+import { TAuthSliceType } from '../../../store/slice/auth/authSlice';
 
 const meta = {
   title: 'composition/GlobalHeader',
@@ -19,6 +20,13 @@ const meta = {
 
 export default meta;
 type TStory = StoryObj<typeof meta>;
+
+const auth: TAuthSliceType = {
+  userId: 'abc',
+  userName: 'けいぼー',
+  email: 'test@a.com',
+  projectIds: ['ABC,DEF']
+};
 
 export const Default: TStory = {
   args: {
@@ -39,6 +47,7 @@ export const Default: TStory = {
         projectId: ''
       }
     ],
-    setProject: () => {}
+    setProject: () => {},
+    auth
   }
 };
