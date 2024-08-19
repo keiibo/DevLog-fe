@@ -28,6 +28,8 @@ type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
   args: {
-    label: 'ラベルテキスト'
+    label: 'ラベルテキスト',
+    onClick: () => {},
+    defaultOpenState: true
   }
 };

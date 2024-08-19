@@ -5,6 +5,9 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Colors } from '../src/style/Colors';
 import { Theme } from '../src/style/Theme';
 import GlobalStyle from '../src/style/GlobalStyle';
+import { configureStore } from '@reduxjs/toolkit';
+import loginReducer from '../src/store/slice/auth/authSlice';
+import { Provider } from 'react-redux';
 
 export const preview: Preview = {
   parameters: {
@@ -27,15 +30,24 @@ export const preview: Preview = {
   tags: ['autodocs']
 };
 
+const store = configureStore({
+  reducer: {
+    // loginReducerを独立して使用する場合
+    auth: loginReducer
+  }
+});
+
 export const decorators = [
   (Story) => (
     <ConfigProvider theme={Theme}>
-      <MemoryRouter>
-        <GlobalStyle />
-        <Routes>
-          <Route path="/" element={<Story />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <GlobalStyle />
+          <Routes>
+            <Route path="/" element={<Story />} />
+          </Routes>
+        </MemoryRouter>
+      </Provider>
     </ConfigProvider>
   )
 ];
