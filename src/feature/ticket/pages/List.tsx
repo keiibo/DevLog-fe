@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Status, TStatus, TTicket } from '../types/TTicket';
 import { Flex } from 'antd';
-import { Button } from '../../../components/element/button/Button';
 import { CategoryLabel } from '../components/elements/CategoryLabel';
 import { Ticket } from '../components/compositions/Ticket';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
-import { mixinTextColor } from '../../../style/Mixin';
+import { mixinNormalFontSize24px, mixinTextColor } from '../../../style/Mixin';
+import { PlusCircleFilled, SettingFilled } from '@ant-design/icons';
 type TProps = {
   ticketList: TTicket[];
 };
@@ -65,9 +65,10 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
                 .length}
             件 / 全{ticketList && ticketList.length}件
           </Flex>
-          <Button type="primary" onClick={handleNewCreateClick}>
-            新規作成
-          </Button>
+          <Flex gap={8}>
+            <StyledPlusCircleFilled onClick={handleNewCreateClick} />
+            <StyledSettingFilled />
+          </Flex>
         </StyledListDataFlex>
 
         <Flex vertical gap={24}>
@@ -197,4 +198,12 @@ const StyledTicketList = styled(Flex)<{ $show: boolean; $height: number }>`
   max-height: ${(props) => (props.$show ? `${props.$height * 70}px` : '0')};
   overflow: hidden;
   transition: max-height 0.2s ease-in-out;
+`;
+
+const StyledPlusCircleFilled = styled(PlusCircleFilled)`
+  ${mixinNormalFontSize24px}
+`;
+
+const StyledSettingFilled = styled(SettingFilled)`
+  ${mixinNormalFontSize24px}
 `;

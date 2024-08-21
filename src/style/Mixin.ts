@@ -81,6 +81,9 @@ export const mixinMargin24px = css`
 `;
 
 // font-size
+export const mixinNormalFontSize8px = css`
+  font-size: 8px;
+`;
 export const mixinNormalFontSize12px = css`
   font-size: 12px;
 `;
@@ -92,6 +95,10 @@ export const mixinNormalFontSize24px = css`
 `;
 export const mixinNormalFontSize40px = css`
   font-size: 40px;
+`;
+export const mixinBoldFontSize8px = css`
+  font-size: 8px;
+  font-weight: bold;
 `;
 export const mixinBoldFontSize12px = css`
   font-size: 12px;

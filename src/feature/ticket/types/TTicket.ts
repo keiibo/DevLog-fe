@@ -12,6 +12,7 @@ export type TTicket = {
   limitEndYm?: string;
   priority: TPriority;
   status: TStatus;
+  categories?: TCategory[];
 };
 
 export const LabelColorType = {
@@ -37,6 +38,10 @@ export const Status = {
   COMPLETED: 'completed'
 };
 export type TStatus = TValueOf<typeof Status>;
+
+export type TCategory = {
+  label: string;
+};
 
 export type TGetTicketRes = TTicket;
 export type TCreateTicketReq = Omit<TTicket, '_id' | 'ticketId'>;

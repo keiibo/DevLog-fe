@@ -13,6 +13,7 @@ import {
 import { TicketTitle } from './TicketTitle';
 import { getLabelColor } from '../../lib/labelColor';
 import { useNavigate } from 'react-router-dom';
+import { Category } from '../elements/Category';
 
 type TProps = {
   ticket: TTicket;
@@ -25,7 +26,8 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
     priority,
     limitStartYm,
     limitEndYm,
-    labelColorType
+    labelColorType,
+    categories
   } = ticket;
 
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
 
   return (
     <StyledTicketFlexContainer
+      gap={8}
       vertical
       $borderColor={labelColorType}
       onClick={() => handleTicketClick()}
@@ -49,7 +52,14 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
         />
         <LimitDate limitStartYm={limitStartYm} limitEndYm={limitEndYm} />
       </StyledFlex>
-      <StyledFlex justify="end">
+      <StyledFlex justify="space-between">
+        <StyledCategoryFlex gap={4}>
+          {categories && categories.length > 0 ? (
+            categories.map((category) => <Category label={category.label} />)
+          ) : (
+            <div style={{ flex: 1 }}></div>
+          )}
+        </StyledCategoryFlex>
         <Priority priority={priority}></Priority>
       </StyledFlex>
     </StyledTicketFlexContainer>
@@ -69,4 +79,8 @@ const StyledTicketFlexContainer = styled(Flex)<{
 
 const StyledFlex = styled(Flex)`
   padding: 0 8px;
+`;
+
+const StyledCategoryFlex = styled(Flex)`
+  padding-left: 88px;
 `;
