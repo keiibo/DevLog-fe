@@ -12,13 +12,13 @@ import { TCategory } from '../../types/TTicket';
 
 type TProps = {
   category: TCategory;
-  isDeletable: boolean;
-  setCategories: React.Dispatch<React.SetStateAction<TCategory[]>>;
+  isDeletable?: boolean;
+  setCategories?: React.Dispatch<React.SetStateAction<TCategory[]>>;
 };
 
 export const Category = ({
   category,
-  isDeletable,
+  isDeletable = false,
   setCategories
 }: TProps): React.JSX.Element => {
   return (
@@ -27,9 +27,11 @@ export const Category = ({
       {isDeletable && (
         <StyledDeleteButton
           onClick={() => {
-            setCategories((prev) => {
-              return prev.filter((cate) => cate.uuid !== category.uuid);
-            });
+            if (setCategories) {
+              setCategories((prev) => {
+                return prev.filter((cate) => cate.uuid !== category.uuid);
+              });
+            }
           }}
         />
       )}

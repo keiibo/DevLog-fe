@@ -55,7 +55,7 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
       <StyledFlex justify="space-between">
         <StyledCategoryFlex gap={4}>
           {categories && categories.length > 0 ? (
-            categories.map((category) => <Category label={category.label} />)
+            categories.map((category) => <Category category={category} />)
           ) : (
             <div style={{ flex: 1 }}></div>
           )}
