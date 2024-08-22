@@ -40,7 +40,8 @@ export const Status = {
 export type TStatus = TValueOf<typeof Status>;
 
 export type TCategory = {
-  label: string;
+  uuid:string;
+  label: string; 
 };
 
 export type TGetTicketRes = TTicket;

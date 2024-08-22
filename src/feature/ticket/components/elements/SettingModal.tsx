@@ -20,6 +20,7 @@ import {
 } from '../../../../style/Mixin';
 import { CloseCircleFilled } from '@ant-design/icons';
 import { Colors } from '../../../../style/Colors';
+import { v4 as uuidv4 } from 'uuid';
 
 type TProps = {
   isOpened: boolean;
@@ -39,7 +40,7 @@ export const SettingModal = ({
   const handleClickResistor = () => {
     const newCategory = form.getFieldValue('category');
     setCategories((prev) => {
-      return [...prev, { label: newCategory }];
+      return [...prev, { label: newCategory, uuid: uuidv4() }];
     });
     form.resetFields();
   };
@@ -73,11 +74,17 @@ export const SettingModal = ({
 
         <div>
           <StyledThirdTitle>登録済みのカテゴリー:</StyledThirdTitle>
-          <StyledCategoryFlex gap={4}>
-            {categories.map((category) => (
-              <Category label={category.label} isDeletable />
-            ))}
-          </StyledCategoryFlex>
+          <StyledCategoryContainer>
+            <Flex gap={4}>
+              {categories.map((category) => (
+                <Category
+                  category={category}
+                  isDeletable
+                  setCategories={setCategories}
+                />
+              ))}
+            </Flex>
+          </StyledCategoryContainer>
         </div>
         <Flex justify="center">
           <Button type="primary">保存</Button>
@@ -119,7 +126,7 @@ const StyledInput = styled(Input)`
   min-width: 320px;
 `;
 
-const StyledCategoryFlex = styled(Flex)`
+const StyledCategoryContainer = styled.div`
   min-height: 40px;
   border: 1px solid ${Colors.TEXT};
   ${mixinPadding8px}
