@@ -39,8 +39,21 @@ export const SettingModal = ({
   const [form] = useForm();
   const handleClickResistor = () => {
     const newCategory = form.getFieldValue('category');
+
     setCategories((prev) => {
-      return [...prev, { label: newCategory, uuid: uuidv4() }];
+      // カテゴリーのラベルが既に存在するかを確認
+      const isDuplicate = prev.some(
+        (category) => category.label === newCategory
+      );
+
+      // 重複していなければ新しいカテゴリーを追加
+      if (!isDuplicate) {
+        return [...prev, { label: newCategory, uuid: uuidv4() }];
+      } else {
+        // 重複している場合、警告を表示するか、他の処理を行う
+        alert('このカテゴリーは既に存在しています。');
+        return prev; // 重複している場合は変更しない
+      }
     });
     form.resetFields();
   };
