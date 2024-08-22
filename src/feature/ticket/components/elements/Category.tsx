@@ -8,17 +8,31 @@ import {
   mixinWhiteColor
 } from '../../../../style/Mixin';
 import { CloseCircleFilled } from '@ant-design/icons';
+import { TCategory } from '../../types/TTicket';
 
 type TProps = {
-  label: string;
+  category: TCategory;
   isDeletable: boolean;
+  setCategories: React.Dispatch<React.SetStateAction<TCategory[]>>;
 };
 
-export const Category = ({ label, isDeletable }: TProps): React.JSX.Element => {
+export const Category = ({
+  category,
+  isDeletable,
+  setCategories
+}: TProps): React.JSX.Element => {
   return (
     <StyledCategoryContainer>
-      {label}
-      {isDeletable && <StyledDeleteButton />}
+      {category.label}
+      {isDeletable && (
+        <StyledDeleteButton
+          onClick={() => {
+            setCategories((prev) => {
+              return prev.filter((cate) => cate.uuid !== category.uuid);
+            });
+          }}
+        />
+      )}
     </StyledCategoryContainer>
   );
 };
