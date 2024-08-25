@@ -40,10 +40,19 @@ export const Status = {
 export type TStatus = TValueOf<typeof Status>;
 
 export type TCategory = {
-  uuid:string;
-  label: string; 
+  uuid: string;
+  name: string;
 };
 
 export type TGetTicketRes = TTicket;
 export type TCreateTicketReq = Omit<TTicket, '_id' | 'ticketId'>;
 export type TPutTicketReq = Omit<TTicket, '_id' | 'ticketId'>;
+export type TCreateCategoryReq = {
+  projectId: string;
+  categories: TCategory[];
+};
+
+export type TMGetCategoryRes = {
+  projectId: string;
+  categories: TCategory[];
+};

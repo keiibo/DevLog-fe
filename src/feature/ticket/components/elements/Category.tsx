@@ -23,7 +23,7 @@ export const Category = ({
 }: TProps): React.JSX.Element => {
   return (
     <StyledCategoryContainer>
-      {category.label}
+      {category.name}
       {isDeletable && (
         <StyledDeleteButton
           onClick={() => {

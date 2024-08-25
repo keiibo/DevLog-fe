@@ -1,9 +1,9 @@
-import { Divider, Flex, Modal } from 'antd';
-import React, { useState } from 'react';
+import { Divider, Flex, Modal, notification } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { MultiLineText } from '../../../../components/composition/MultiLineText';
 import { Input } from '../../../../components/element/input/Input';
 import { Button } from '../../../../components/element/button/Button';
-import { TCategory } from '../../types/TTicket';
+import { TCategory, TCreateCategoryReq } from '../../types/TTicket';
 import { Category } from './Category';
 import { Form } from '../../../../components/element/form/Form';
 import { FormItem } from '../../../../components/element/form/FormItem';
@@ -21,34 +21,64 @@ import {
 import { CloseCircleFilled } from '@ant-design/icons';
 import { Colors } from '../../../../style/Colors';
 import { v4 as uuidv4 } from 'uuid';
+import { useMutation, useQuery } from 'react-query';
+import { createCategories, getCategories } from '../../api/category';
+import { NOTIFICATION_TIME } from '../../../../constant/Notification';
+import { useParams } from 'react-router-dom';
+import { Loading } from '../../../../components/element/loading/Loading';
 
 type TProps = {
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
-  hasCloseIcon: boolean;
+  hasCloseIcon?: boolean;
 };
 
 export const SettingModal = ({
   isOpened,
   setIsOpened,
   title,
-  hasCloseIcon
+  hasCloseIcon = false
 }: TProps): React.JSX.Element => {
+  const { id: projectId } = useParams();
+  const { data } = useQuery('categoryList', () =>
+    getCategories(projectId || '')
+  );
+
   const [categories, setCategories] = useState<TCategory[]>([]);
   const [form] = useForm();
+
+  useEffect(() => {
+    if (data) {
+      setCategories(data);
+    }
+  }, []);
+
+  const mutation = useMutation(createCategories, {
+    onSuccess: () => {
+      setIsOpened(false);
+      notification.success({
+        message: `カテゴリを更新しました`,
+        duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
+      });
+    }
+  });
+
+  if (!projectId || !data) {
+    return <Loading />;
+  }
   const handleClickResistor = () => {
     const newCategory = form.getFieldValue('category');
 
     setCategories((prev) => {
       // カテゴリーのラベルが既に存在するかを確認
       const isDuplicate = prev.some(
-        (category) => category.label === newCategory
+        (category) => category.name === newCategory
       );
 
       // 重複していなければ新しいカテゴリーを追加
       if (!isDuplicate) {
-        return [...prev, { label: newCategory, uuid: uuidv4() }];
+        return [...prev, { name: newCategory, uuid: uuidv4() }];
       } else {
         // 重複している場合、警告を表示するか、他の処理を行う
         alert('このカテゴリーは既に存在しています。');
@@ -58,12 +88,31 @@ export const SettingModal = ({
     form.resetFields();
   };
 
+  const handleSave = () => {
+    const req: TCreateCategoryReq = {
+      projectId,
+      categories
+    };
+    mutation.mutate(req);
+  };
+
   return (
-    <StyledModal open={isOpened} closable={false} footer={false} width={800}>
+    <StyledModal
+      open={isOpened}
+      footer={false}
+      width={800}
+      destroyOnClose
+      closeIcon={false}
+    >
       <Flex justify="space-between">
         <StyledTitle>{title}</StyledTitle>
         {hasCloseIcon && (
-          <StyledCloseCircleFilled onClick={() => setIsOpened(false)} />
+          <StyledCloseCircleFilled
+            onClick={() => {
+              setIsOpened(false);
+              form.resetFields();
+            }}
+          />
         )}
       </Flex>
       <StyledDivider />
@@ -88,7 +137,7 @@ export const SettingModal = ({
         <div>
           <StyledThirdTitle>登録済みのカテゴリー:</StyledThirdTitle>
           <StyledCategoryContainer>
-            <Flex gap={4}>
+            <Flex gap={8}>
               {categories.map((category) => (
                 <Category
                   category={category}
@@ -100,7 +149,9 @@ export const SettingModal = ({
           </StyledCategoryContainer>
         </div>
         <Flex justify="center">
-          <Button type="primary">保存</Button>
+          <Button type="primary" onClick={handleSave}>
+            保存
+          </Button>
         </Flex>
       </Flex>
     </StyledModal>

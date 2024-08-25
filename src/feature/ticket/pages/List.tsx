@@ -7,12 +7,15 @@ import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
 import { mixinNormalFontSize24px, mixinTextColor } from '../../../style/Mixin';
 import { PlusCircleFilled, SettingFilled } from '@ant-design/icons';
+import { SettingModal } from '../components/elements/SettingModal';
 type TProps = {
   ticketList: TTicket[];
 };
 
 export const List = ({ ticketList }: TProps): React.JSX.Element => {
   const [isOpenedNewCreateModal, setIsOpenedNewCreateModal] =
+    useState<boolean>(false);
+  const [isOpenedSettingModal, setIsOpenedSettingModal] =
     useState<boolean>(false);
 
   // 未着手カテゴリの開閉状態
@@ -25,6 +28,9 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   // 新規作成ボタン押下時にモーダルを開く
   const handleNewCreateClick = (): void => {
     setIsOpenedNewCreateModal(true);
+  };
+  const handleSettingClick = (): void => {
+    setIsOpenedSettingModal(true);
   };
 
   // 各ステータスの開閉状態をトグルする
@@ -67,7 +73,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
           </Flex>
           <Flex gap={8}>
             <StyledPlusCircleFilled onClick={handleNewCreateClick} />
-            <StyledSettingFilled />
+            <StyledSettingFilled onClick={handleSettingClick} />
           </Flex>
         </StyledListDataFlex>
 
@@ -178,6 +184,13 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
       <CreateModal
         isOpenedNewCreateModal={isOpenedNewCreateModal}
         setIsOpenedNewCreateModal={setIsOpenedNewCreateModal}
+      />
+
+      <SettingModal
+        isOpened={isOpenedSettingModal}
+        setIsOpened={setIsOpenedSettingModal}
+        title={'設定'}
+        hasCloseIcon
       />
     </>
   );
