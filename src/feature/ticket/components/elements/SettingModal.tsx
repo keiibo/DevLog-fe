@@ -52,7 +52,7 @@ export const SettingModal = ({
     if (data) {
       setCategories(data);
     }
-  }, []);
+  }, [data]);
 
   const mutation = useMutation(createCategories, {
     onSuccess: () => {
@@ -69,7 +69,7 @@ export const SettingModal = ({
   }
   const handleClickResistor = () => {
     const newCategory = form.getFieldValue('category');
-
+    if (!newCategory) return;
     setCategories((prev) => {
       // カテゴリーのラベルが既に存在するかを確認
       const isDuplicate = prev.some(
@@ -140,6 +140,7 @@ export const SettingModal = ({
             <Flex gap={8}>
               {categories.map((category) => (
                 <Category
+                  key={category.uuid}
                   category={category}
                   isDeletable
                   setCategories={setCategories}
