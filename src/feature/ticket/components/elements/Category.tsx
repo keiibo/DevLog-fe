@@ -42,6 +42,8 @@ export const Category = ({
 const StyledCategoryContainer = styled.div`
   position: relative; /* 必須: 削除ボタンを絶対位置で配置するために必要 */
   display: inline-block; /* コンテナのサイズをコンテンツに合わせる */
+  min-width: 24px;
+  text-align: center;
   width: fit-content;
   height: fit-content;
   padding: 2px 4px;
