@@ -12,14 +12,26 @@ import {
 } from '../../../../style/Mixin';
 import { TicketTitle } from './TicketTitle';
 import { getLabelColor } from '../../lib/labelColor';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Category } from '../elements/Category';
+import { useQuery } from 'react-query';
+import { getCategories } from '../../api/category';
+import { Loading } from '../../../../components/element/loading/Loading';
 
 type TProps = {
   ticket: TTicket;
 };
 
 export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { data } = useQuery('category', () => getCategories(id || ''));
+
+  if (!data) {
+    return <Loading />;
+  }
+
   const {
     ticketId,
     title,
@@ -30,7 +42,6 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
     categories
   } = ticket;
 
-  const navigate = useNavigate();
   const handleTicketClick = () => {
     navigate(ticketId);
   };
@@ -55,7 +66,13 @@ export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
       <StyledFlex justify="space-between">
         <StyledCategoryFlex gap={4}>
           {categories && categories.length > 0 ? (
-            categories.map((category) => <Category category={category} />)
+            categories.map((category) => {
+              if (data.find((d) => d.uuid === category.uuid)) {
+                return <Category key={category.uuid} category={category} />;
+              } else {
+                return <div key={category.uuid} style={{ flex: 1 }}></div>;
+              }
+            })
           ) : (
             <div style={{ flex: 1 }}></div>
           )}

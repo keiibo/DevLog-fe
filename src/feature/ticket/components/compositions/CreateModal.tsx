@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Modal, notification } from 'antd';
 import { FormItem } from '../../../../components/element/form/FormItem';
 import { Input } from '../../../../components/element/input/Input';
 import { Button } from '../../../../components/element/button/Button';
-import { Status, TCreateTicketReq } from '../../types/TTicket';
-import { mixinNormalFontSize24px } from '../../../../style/Mixin';
+import { Status, TCategory, TCreateTicketReq } from '../../types/TTicket';
+import { mixinNormalFontSize16px } from '../../../../style/Mixin';
 import { styled } from 'styled-components';
 import { Form } from '../../../../components/element/form/Form';
 import { useMutation, useQueryClient } from 'react-query';
@@ -21,7 +21,6 @@ type TProps = {
   setIsOpenedNewCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// TODO 詳細と共通のコンポジションにできる
 export const CreateModal = ({
   isOpenedNewCreateModal,
   setIsOpenedNewCreateModal
@@ -29,6 +28,8 @@ export const CreateModal = ({
   const queryClient = useQueryClient();
   const [form] = useForm();
   const { id: projectId } = useParams();
+  const [selectedCategories, setSelectedCategories] = useState<TCategory[]>([]);
+
   if (!projectId) {
     return <Loading />;
   }
@@ -50,7 +51,8 @@ export const CreateModal = ({
         ? form.getFieldValue('limitEndYm').format(DateFormat.HYPHEN)
         : null,
       priority: form.getFieldValue('priority'),
-      status: form.getFieldValue('status')
+      status: form.getFieldValue('status'),
+      categories: selectedCategories
     };
     mutation.mutate(reqBody);
   };
@@ -89,14 +91,14 @@ export const CreateModal = ({
     <Modal
       open={isOpenedNewCreateModal}
       onCancel={handleCancel}
-      width={'80%'}
+      width={'800px'}
       title={'チケットの新規作成'}
       footer={false}
       destroyOnClose
     >
       <Form onFinish={handleSubmit} form={form}>
-        <Flex vertical gap={18}>
-          <Flex vertical>
+        <Flex vertical gap={8}>
+          <Flex vertical gap={8}>
             <StyledLabel>タイトル:</StyledLabel>
             <FormItem
               noStyle
@@ -111,7 +113,12 @@ export const CreateModal = ({
               <Input width={'100%'} />
             </FormItem>
           </Flex>
-          <TicketProperty isEditMode={true} ticket={null} />
+          <TicketProperty
+            isEditMode={true}
+            ticket={null}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+          />
 
           <Flex justify="center">
             <Button htmlType={'submit'} type="primary">
@@ -125,5 +132,5 @@ export const CreateModal = ({
 };
 
 const StyledLabel = styled.div`
-  ${mixinNormalFontSize24px}
+  ${mixinNormalFontSize16px}
 `;

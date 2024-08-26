@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Status, TLabelColorType, TPutTicketReq } from '../types/TTicket';
+import {
+  Status,
+  TCategory,
+  TLabelColorType,
+  TPutTicketReq
+} from '../types/TTicket';
 import { TicketTitle } from '../components/compositions/TicketTitle';
 import styled from 'styled-components';
 import { getLabelColor } from '../lib/labelColor';
@@ -28,6 +33,8 @@ export const Detail = (): React.JSX.Element => {
   const { id: projectId, ticketId } = useParams();
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [labelColor, setLabelColor] = useState<TLabelColorType>();
+  const [selectedCategories, setSelectedCategories] = useState<TCategory[]>([]);
+
   const [form] = useForm();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -92,6 +99,7 @@ export const Detail = (): React.JSX.Element => {
       limitEndYm: ticket?.limitEndYm ? dayjs(ticket?.limitEndYm) : null,
       isDeletable: ticket?.isDeletable
     });
+    setSelectedCategories(ticket?.categories || []);
   }, [ticket]);
 
   if (!ticketId || !projectId || isLoading || !ticket) return <Loading />;
@@ -113,7 +121,8 @@ export const Detail = (): React.JSX.Element => {
         : null,
       detail: form.getFieldValue('detail'),
       priority: form.getFieldValue('priority'),
-      status: form.getFieldValue('status')
+      status: form.getFieldValue('status'),
+      categories: selectedCategories
     };
     putMutation.mutate({ req, ticketId });
   };
@@ -139,7 +148,7 @@ export const Detail = (): React.JSX.Element => {
         戻る
       </StyledBackFlex>
       <Form onFinish={handleEditFinish} form={form}>
-        <Flex justify="center">
+        <Flex>
           <StyledTicketContainer
             vertical
             gap={16}
@@ -160,6 +169,8 @@ export const Detail = (): React.JSX.Element => {
               isEditMode={isEditMode}
               ticket={ticket}
               setLabelColor={setLabelColor}
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
             />
             <Flex justify="center">
               <Space>
@@ -187,7 +198,7 @@ const StyledBackFlex = styled(Flex)`
 const StyledTicketContainer = styled(Flex)<{
   $labelColor: TLabelColorType;
 }>`
-  width: 95%;
+  width: 800px;
   border-top: 12px solid ${(props) => getLabelColor(props.$labelColor)};
 
   ${mixinPadding12px}
