@@ -12,7 +12,6 @@ import {
   mixinBgWhite,
   mixinBorderRadius12px,
   mixinNormalFontSize16px,
-  mixinPadding12px,
   mixinTextColor
 } from '../../../style/Mixin';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -148,41 +147,35 @@ export const Detail = (): React.JSX.Element => {
         戻る
       </StyledBackFlex>
       <Form onFinish={handleEditFinish} form={form}>
-        <Flex>
-          <StyledTicketContainer
-            vertical
-            gap={16}
-            $labelColor={labelColor || ''}
-          >
-            <TicketTitle
-              id={ticket.ticketId}
-              title={ticket.title}
-              isDeletable
-              mode={'detail'}
-              labelColorType={ticket.labelColorType}
-              isEditable
-              isEditMode={isEditMode}
-              setIsEditMode={setIsEditMode}
-              handleDelete={handleDelete}
-            />
-            <TicketProperty
-              isEditMode={isEditMode}
-              ticket={ticket}
-              setLabelColor={setLabelColor}
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
-            />
-            <Flex justify="center">
-              <Space>
-                {isEditMode && (
-                  <Button htmlType={'submit'} type="primary">
-                    更新
-                  </Button>
-                )}
-              </Space>
-            </Flex>
-          </StyledTicketContainer>
-        </Flex>
+        <StyledTicketContainer vertical gap={16} $labelColor={labelColor || ''}>
+          <TicketTitle
+            id={ticket.ticketId}
+            title={ticket.title}
+            isDeletable
+            mode={'detail'}
+            labelColorType={ticket.labelColorType}
+            isEditable
+            isEditMode={isEditMode}
+            setIsEditMode={setIsEditMode}
+            handleDelete={handleDelete}
+          />
+          <TicketProperty
+            isEditMode={isEditMode}
+            ticket={ticket}
+            setLabelColor={setLabelColor}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+          />
+          <Flex justify="center">
+            <Space>
+              {isEditMode && (
+                <Button htmlType={'submit'} type="primary">
+                  更新
+                </Button>
+              )}
+            </Space>
+          </Flex>
+        </StyledTicketContainer>
       </Form>
     </Flex>
   );
@@ -200,8 +193,8 @@ const StyledTicketContainer = styled(Flex)<{
 }>`
   width: 800px;
   border-top: 12px solid ${(props) => getLabelColor(props.$labelColor)};
+  padding: 12px 24px;
 
-  ${mixinPadding12px}
-  ${mixinBgWhite}
+  ${mixinBgWhite};
   ${mixinBorderRadius12px};
 `;

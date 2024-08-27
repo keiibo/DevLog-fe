@@ -7,7 +7,7 @@ import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
 import { mixinNormalFontSize24px, mixinTextColor } from '../../../style/Mixin';
 import { PlusCircleFilled, SettingFilled } from '@ant-design/icons';
-import { SettingModal } from '../components/elements/SettingModal';
+import { SettingModal } from '../components/compositions/SettingModal';
 type TProps = {
   ticketList: TTicket[];
 };
@@ -190,7 +190,6 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
         isOpened={isOpenedSettingModal}
         setIsOpened={setIsOpenedSettingModal}
         title={'設定'}
-        hasCloseIcon
       />
     </>
   );

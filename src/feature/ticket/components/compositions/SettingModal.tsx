@@ -1,10 +1,10 @@
-import { Divider, Flex, Modal, notification } from 'antd';
+import { Flex, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { MultiLineText } from '../../../../components/composition/MultiLineText';
 import { Input } from '../../../../components/element/input/Input';
 import { Button } from '../../../../components/element/button/Button';
 import { TCategory, TCreateCategoryReq } from '../../types/TTicket';
-import { Category } from './Category';
+import { Category } from '../elements/Category';
 import { Form } from '../../../../components/element/form/Form';
 import { FormItem } from '../../../../components/element/form/FormItem';
 import { useForm } from 'antd/es/form/Form';
@@ -13,12 +13,8 @@ import {
   mixinBoldFontSize24px,
   mixinBorderRadius4px,
   mixinNormalFontSize16px,
-  mixinNormalFontSize40px,
-  mixinPadding24px,
-  mixinPadding8px,
-  mixinTextColor
+  mixinPadding8px
 } from '../../../../style/Mixin';
-import { CloseCircleFilled } from '@ant-design/icons';
 import { Colors } from '../../../../style/Colors';
 import { v4 as uuidv4 } from 'uuid';
 import { useMutation, useQuery } from 'react-query';
@@ -26,19 +22,21 @@ import { createCategories, getCategories } from '../../api/category';
 import { NOTIFICATION_TIME } from '../../../../constant/Notification';
 import { useParams } from 'react-router-dom';
 import { Loading } from '../../../../components/element/loading/Loading';
+import { Modal } from '../../../../components/element/modal/Modal';
+import { ModalHeader } from '../../../../components/element/modal/ModalHeader';
+import { ModalBody } from '../../../../components/element/modal/ModalBody';
+import { ModalFooter } from '../../../../components/element/modal/ModalFooter';
 
 type TProps = {
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
-  hasCloseIcon?: boolean;
 };
 
 export const SettingModal = ({
   isOpened,
   setIsOpened,
-  title,
-  hasCloseIcon = false
+  title
 }: TProps): React.JSX.Element => {
   const { id: projectId } = useParams();
   const { data } = useQuery('categoryList', () =>
@@ -97,85 +95,60 @@ export const SettingModal = ({
   };
 
   return (
-    <StyledModal
+    <Modal
       open={isOpened}
       footer={false}
       width={800}
       destroyOnClose
       closeIcon={false}
     >
-      <Flex justify="space-between">
-        <StyledTitle>{title}</StyledTitle>
-        {hasCloseIcon && (
-          <StyledCloseCircleFilled
-            onClick={() => {
-              setIsOpened(false);
-              form.resetFields();
-            }}
-          />
-        )}
-      </Flex>
-      <StyledDivider />
-      <Flex vertical gap={16}>
-        <StyledSubTitle>カテゴリーの登録</StyledSubTitle>
-        <MultiLineText
-          text={`チケットに設定できるカテゴリーを作成することができます。
+      <ModalHeader
+        title={title}
+        hasCloseIcon
+        onClickCloseButton={() => {
+          setIsOpened(false);
+          form.resetFields();
+        }}
+      />
+      <ModalBody>
+        <Flex vertical gap={16}>
+          <StyledSubTitle>カテゴリーの登録</StyledSubTitle>
+          <MultiLineText
+            text={`チケットに設定できるカテゴリーを作成することができます。
 カテゴリーを用いることで、チケットの属性を管理することが一層容易になります。`}
-        />
-
-        <Form form={form}>
-          <Flex align="center" gap={8}>
-            <FormItem name="category" noStyle>
-              <StyledInput placeholder="カテゴリー名を入力" />
-            </FormItem>
-            <Button type="primary" onClick={handleClickResistor}>
-              登録
-            </Button>
-          </Flex>
-        </Form>
-
-        <div>
-          <StyledThirdTitle>登録済みのカテゴリー:</StyledThirdTitle>
-          <StyledCategoryContainer>
-            <Flex gap={8}>
-              {categories.map((category) => (
-                <Category
-                  key={category.uuid}
-                  category={category}
-                  isDeletable
-                  setCategories={setCategories}
-                />
-              ))}
+          />
+          <Form form={form}>
+            <Flex align="center" gap={8}>
+              <FormItem name="category" noStyle>
+                <StyledInput placeholder="カテゴリー名を入力" />
+              </FormItem>
+              <Button type="primary" onClick={handleClickResistor}>
+                登録
+              </Button>
             </Flex>
-          </StyledCategoryContainer>
-        </div>
-        <Flex justify="center">
-          <Button type="primary" onClick={handleSave}>
-            保存
-          </Button>
+          </Form>
+
+          <div>
+            <StyledThirdTitle>登録済みのカテゴリー:</StyledThirdTitle>
+            <StyledCategoryContainer>
+              <Flex gap={8}>
+                {categories.map((category) => (
+                  <Category
+                    key={category.uuid}
+                    category={category}
+                    isDeletable
+                    setCategories={setCategories}
+                  />
+                ))}
+              </Flex>
+            </StyledCategoryContainer>
+          </div>
         </Flex>
-      </Flex>
-    </StyledModal>
+      </ModalBody>
+      <ModalFooter okButtonTitle={'保存'} hasOkButton handleOk={handleSave} />
+    </Modal>
   );
 };
-
-const StyledModal = styled(Modal)`
-  ${mixinPadding24px}
-`;
-
-const StyledDivider = styled(Divider)`
-  margin: 0;
-`;
-
-const StyledTitle = styled.h1`
-  ${mixinNormalFontSize40px}
-  margin: 0;
-`;
-
-const StyledCloseCircleFilled = styled(CloseCircleFilled)`
-  ${mixinNormalFontSize40px}
-  ${mixinTextColor}
-`;
 
 const StyledSubTitle = styled.h3`
   ${mixinBoldFontSize24px}

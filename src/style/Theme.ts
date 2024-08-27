@@ -14,6 +14,10 @@ export const Theme = {
       bodyBg: Colors.MAIN,
       siderBg: Colors.TEXT_DARK
     },
+    Divider:{
+      colorSplit: `${Colors.PURPLE}2a`,
+
+    },
     Button: {
       colorPrimary: Colors.PURPLE,
       defaultBg: Colors.PURPLE,

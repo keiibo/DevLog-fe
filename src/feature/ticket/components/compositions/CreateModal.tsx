@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex, Modal, notification } from 'antd';
+import { Flex, notification } from 'antd';
 import { FormItem } from '../../../../components/element/form/FormItem';
 import { Input } from '../../../../components/element/input/Input';
 import { Button } from '../../../../components/element/button/Button';
@@ -15,6 +15,9 @@ import { TicketProperty } from './TicketProperty';
 import { DateFormat } from '../../../../constant/DateFormat';
 import { Loading } from '../../../../components/element/loading/Loading';
 import { NOTIFICATION_TIME } from '../../../../constant/Notification';
+import { Modal } from '../../../../components/element/modal/Modal';
+import { ModalHeader } from '../../../../components/element/modal/ModalHeader';
+import { ModalBody } from '../../../../components/element/modal/ModalBody';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
@@ -90,43 +93,49 @@ export const CreateModal = ({
   return (
     <Modal
       open={isOpenedNewCreateModal}
-      onCancel={handleCancel}
       width={'800px'}
-      title={'チケットの新規作成'}
       footer={false}
       destroyOnClose
+      closeIcon={false}
     >
-      <Form onFinish={handleSubmit} form={form}>
-        <Flex vertical gap={8}>
+      <ModalHeader
+        title={'チケットの新規作成'}
+        hasCloseIcon
+        onClickCloseButton={handleCancel}
+      />
+      <ModalBody>
+        <Form onFinish={handleSubmit} form={form}>
           <Flex vertical gap={8}>
-            <StyledLabel>タイトル:</StyledLabel>
-            <FormItem
-              noStyle
-              name={'title'}
-              rules={[
-                {
-                  required: true,
-                  message: '必須項目です'
-                }
-              ]}
-            >
-              <Input width={'100%'} />
-            </FormItem>
-          </Flex>
-          <TicketProperty
-            isEditMode={true}
-            ticket={null}
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-          />
+            <Flex vertical gap={8}>
+              <StyledLabel>タイトル:</StyledLabel>
+              <FormItem
+                noStyle
+                name={'title'}
+                rules={[
+                  {
+                    required: true,
+                    message: '必須項目です'
+                  }
+                ]}
+              >
+                <Input width={'100%'} />
+              </FormItem>
+            </Flex>
+            <TicketProperty
+              isEditMode={true}
+              ticket={null}
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+            />
 
-          <Flex justify="center">
-            <Button htmlType={'submit'} type="primary">
-              作成
-            </Button>
+            <Flex justify="center">
+              <Button htmlType={'submit'} type="primary">
+                作成
+              </Button>
+            </Flex>
           </Flex>
-        </Flex>
-      </Form>
+        </Form>
+      </ModalBody>
     </Modal>
   );
 };

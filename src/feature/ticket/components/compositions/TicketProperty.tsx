@@ -9,7 +9,7 @@ import {
   TTicket
 } from '../../types/TTicket';
 import { FormItem } from '../../../../components/element/form/FormItem';
-import { Checkbox, Divider, Flex } from 'antd';
+import { Checkbox, Flex } from 'antd';
 import dayjs from 'dayjs';
 import DatePicker from '../../../../components/element/datepicker/DatePicker';
 import { DateFormat } from '../../../../constant/DateFormat';
@@ -32,6 +32,7 @@ import { getCategories } from '../../api/category';
 import { useParams } from 'react-router-dom';
 import { Loading } from '../../../../components/element/loading/Loading';
 import { Category } from '../elements/Category';
+import { Divider } from '../../../../components/element/divider/Divider';
 
 type TProps = {
   isEditMode: boolean;
@@ -144,9 +145,9 @@ export const TicketProperty = ({
           <MultiLineText text={ticket?.detail || ''} />
         </StyledDetailBox>
       )}
-      <StyledDivider />
+      <Divider />
       <Flex gap={48}>
-        <StyledPropertyFlex vertical gap={8}>
+        <StyledPropertyFlex vertical gap={8} flex={4}>
           <Flex align="center" justify="space-between">
             <StyledLabel>優先度:</StyledLabel>
             <FormItem
@@ -237,7 +238,7 @@ export const TicketProperty = ({
             </FormItem>
           </Flex>
         </StyledPropertyFlex>
-        <StyledPropertyFlex vertical gap={8}>
+        <StyledPropertyFlex vertical gap={8} flex={6}>
           <Flex align="center" justify="space-between">
             <StyledLabel>期限日:</StyledLabel>
             <Flex gap={4} align="center">
@@ -290,7 +291,7 @@ export const TicketProperty = ({
           </Flex>
         </StyledPropertyFlex>
       </Flex>
-      <StyledDivider />
+      <Divider />
       <StyledLabel>カテゴリ:</StyledLabel>
       <StyledCategoryFlex gap={8}>
         {isEditMode ? (
@@ -357,8 +358,4 @@ const StyledSpan = styled.span<{ $isToday: boolean }>`
 
 const StyledCategoryFlex = styled(Flex)`
   padding-left: 16px;
-`;
-
-const StyledDivider = styled(Divider)`
-  margin: 4px 0;
 `;
