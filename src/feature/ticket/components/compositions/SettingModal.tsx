@@ -101,6 +101,10 @@ export const SettingModal = ({
       width={800}
       destroyOnClose
       closeIcon={false}
+      onCancel={() => {
+        setIsOpened(false);
+        form.resetFields();
+      }}
     >
       <ModalHeader
         title={title}

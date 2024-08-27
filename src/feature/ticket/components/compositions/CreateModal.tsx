@@ -97,6 +97,7 @@ export const CreateModal = ({
       footer={false}
       destroyOnClose
       closeIcon={false}
+      onCancel={handleCancel}
     >
       <ModalHeader
         title={'チケットの新規作成'}
