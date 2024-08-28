@@ -25,7 +25,6 @@ export const Default: TStory = {
   args: {
     isOpened: true,
     title: '設定',
-    hasCloseIcon: true,
     setIsOpened: () => {}
   }
 };
