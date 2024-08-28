@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { TCreateProjectReq, TGetProjectRes } from '../types/TProject';
-import { setConfig } from '../../auth/api/auth';
+import { TCreateProjectReq, TGetProjectRes } from '../feature/dashboard/types/TProject';
+import { setConfig } from '../feature/auth/api/auth';
 
 /**
  * プロジェクト一覧の取得

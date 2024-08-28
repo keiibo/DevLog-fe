@@ -7,7 +7,7 @@ import { Content } from 'antd/es/layout/layout';
 import { LayoutNum } from './constant/LayoutNum';
 import { useQuery } from 'react-query';
 import { TGetProjectRes } from './feature/dashboard/types/TProject';
-import { getProjects } from './feature/dashboard/api/dashboard';
+import { getProjects } from './api/project';
 import { SideMenu } from './SideMenu';
 import {
   mixinBgTextDark,

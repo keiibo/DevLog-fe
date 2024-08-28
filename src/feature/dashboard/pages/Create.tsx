@@ -11,7 +11,7 @@ import { FormItem } from '../../../components/element/form/FormItem';
 import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
 import { useMutation, useQueryClient } from 'react-query';
-import { createProject } from '../api/dashboard';
+import { createProject } from '../../../api/project';
 import { TCreateProjectReq } from '../types/TProject';
 import { useNavigate } from 'react-router-dom';
 import { Flex, notification } from 'antd';

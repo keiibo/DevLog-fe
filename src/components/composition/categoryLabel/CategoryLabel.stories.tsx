@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { CategoryLabel } from './CategoryLabel';
-import { Colors } from '../../../../style/Colors';
+import { CategoryLabel, CategoryLabelMode } from './CategoryLabel';
+import { Colors } from '../../../style/Colors';
 
 const meta = {
-  title: 'feature/ticket/elements/CategoryLabel',
+  title: 'composition/CategoryLabel',
   component: CategoryLabel,
   parameters: {
     backgrounds: {
@@ -29,7 +29,21 @@ type TStory = StoryObj<typeof meta>;
 export const Default: TStory = {
   args: {
     label: 'ラベルテキスト',
-    onClick: () => {},
+    mode: CategoryLabelMode.NONE
+  }
+};
+export const Accordion: TStory = {
+  args: {
+    label: 'ラベルテキスト',
+    mode: CategoryLabelMode.ACCORDION,
     defaultOpenState: true
+  }
+};
+export const HasButton: TStory = {
+  args: {
+    label: 'ラベルテキスト',
+    mode: CategoryLabelMode.BUTTON,
+    onButtonClick: () => {},
+    buttonTitle: '編集'
   }
 };

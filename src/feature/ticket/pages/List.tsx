@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Status, TStatus, TTicket } from '../types/TTicket';
 import { Flex } from 'antd';
-import { CategoryLabel } from '../components/elements/CategoryLabel';
+import { CategoryLabel } from '../../../components/composition/categoryLabel/CategoryLabel';
 import { Ticket } from '../components/compositions/Ticket';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
