@@ -6,6 +6,13 @@ import { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'feature/detail/element/LinkIcon',
+  argTypes: {
+    type: {
+      control: 'select', // selectタイプのコントロールを設定
+      options: Object.values(IconType), // IconTypeの値をオプションとして設定
+      defaultValue: IconType.GITHUB
+    }
+  },
   parameters: {
     backgrounds: {
       default: 'main',
@@ -16,7 +23,6 @@ const meta = {
     }
   },
   component: LinkIcon,
-  argTypes: {},
   tags: ['autodocs']
 } satisfies Meta<typeof LinkIcon>;
 

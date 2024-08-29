@@ -16,7 +16,7 @@ export const LinkIcon = ({ type }: TProps): React.JSX.Element => {
   const handleClick = () => {};
 
   return (
-    <StyledFlex justify="center" onClick={handleClick}>
+    <StyledFlex justify="center" align="center" onClick={handleClick}>
       <Icon type={type} />
     </StyledFlex>
   );
