@@ -90,6 +90,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
                   ).length > 0) ||
                 false
               }
+              mode="accordion"
             />
             <StyledTicketList
               vertical
@@ -123,6 +124,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
                   ).length > 0) ||
                 false
               }
+              mode="accordion"
             />
             <StyledTicketList
               vertical
@@ -158,6 +160,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
                   ).length > 0) ||
                 false
               }
+              mode="accordion"
             />
             <StyledTicketList
               vertical
