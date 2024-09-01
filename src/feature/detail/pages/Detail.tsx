@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Section } from '../components/compositions/Section';
 import { CategoryLabelMode } from '../../../components/composition/categoryLabel/CategoryLabel';
 import { useParams } from 'react-router-dom';
@@ -8,13 +8,44 @@ import { getProject } from '../../../api/project';
 import { Loading } from '../../../components/element/loading/Loading';
 import { LinkIcon } from '../components/elements/LinkIcon';
 import { IconType } from '../../../components/element/icon/Icon';
+import { styled } from 'styled-components';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId } = useParams();
+  const [mainView, setMainView] = useState<DOMRect>();
+  const ref = useRef<HTMLElement>(null);
 
   const { data } = useQuery('detail', () => getProject(projectId || ''));
 
   if (!data) <Loading />;
+
+  useEffect(() => {
+    const rect = ref.current?.parentElement?.getBoundingClientRect();
+    setMainView(rect);
+  }, [ref]);
+
+  const dummyLinkIcon = [
+    {
+      name: 'GitHub',
+      ref: 'https://google.com',
+      iconType: IconType.GITHUB
+    },
+    {
+      name: 'test',
+      ref: 'https://google.com',
+      iconType: IconType.FILE
+    },
+    {
+      name: 'aa',
+      ref: 'https://google.com',
+      iconType: IconType.BOOK
+    },
+    {
+      name: 'aaa',
+      ref: 'https://google.com',
+      iconType: IconType.LIGHT
+    }
+  ];
 
   const items = [
     {
@@ -34,14 +65,35 @@ export const Detail = (): React.JSX.Element => {
     {
       label: '各種リンク',
       mode: CategoryLabelMode.NONE,
-      children: [<LinkIcon type={IconType.PLUS} isInTooltip={false}></LinkIcon>]
+      children: (
+        <StyledIconFlex gap={8}>
+          {dummyLinkIcon.map((data, index) => (
+            <StyledLinkIcon key={index}>
+              <LinkIcon
+                type={data.iconType}
+                link={data.ref}
+                isInTooltip={false}
+                mainView={mainView}
+              />
+            </StyledLinkIcon>
+          ))}
+          <StyledLinkIcon>
+            <LinkIcon
+              type={IconType.PLUS}
+              isInTooltip={false}
+              mainView={mainView}
+            />
+          </StyledLinkIcon>
+        </StyledIconFlex>
+      )
     }
   ];
 
   return (
-    <Flex vertical gap={8}>
+    <Flex vertical gap={8} ref={ref}>
       {items.map((item) => (
         <Section
+          key={item.label}
           label={item.label}
           mode={item.mode}
           children={item.children}
@@ -52,3 +104,13 @@ export const Detail = (): React.JSX.Element => {
     </Flex>
   );
 };
+
+const StyledLinkIcon = styled.div`
+  flex: 0 0 2; // 8個表示で折り返す計算（100% / 8 - gap）
+`;
+
+const StyledIconFlex = styled(Flex)`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; // ここを調整してアイテムの配置を制御
+`;

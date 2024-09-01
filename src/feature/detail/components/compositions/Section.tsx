@@ -47,4 +47,5 @@ const StyledSectionContent = styled.span`
   ${mixinTextColor}
   ${mixinNormalFontSize24px}
   margin-left: 16px;
+  max-width: 100%;
 `;
