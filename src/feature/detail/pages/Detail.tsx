@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getProject } from '../../../api/project';
 import { Loading } from '../../../components/element/loading/Loading';
+import { LinkIcon } from '../components/elements/LinkIcon';
+import { IconType } from '../../../components/element/icon/Icon';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId } = useParams();
@@ -32,7 +34,7 @@ export const Detail = (): React.JSX.Element => {
     {
       label: '各種リンク',
       mode: CategoryLabelMode.NONE,
-      children: 'test'
+      children: [<LinkIcon type={IconType.PLUS} isInTooltip={false}></LinkIcon>]
     }
   ];
 

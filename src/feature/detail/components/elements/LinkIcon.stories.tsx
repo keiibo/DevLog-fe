@@ -1,8 +1,16 @@
+import { styled } from 'styled-components';
 import { IconType } from '../../../../components/element/icon/Icon';
 import { Colors } from '../../../../style/Colors';
 import { LinkIcon } from './LinkIcon';
 
 import { Meta, StoryObj } from '@storybook/react';
+
+const CenterDecorator = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // 画面の高さに合わせる
+`;
 
 const meta = {
   title: 'feature/detail/element/LinkIcon',
@@ -22,6 +30,13 @@ const meta = {
       ]
     }
   },
+  decorators: [
+    (Story) => (
+      <CenterDecorator>
+        <Story />
+      </CenterDecorator>
+    )
+  ], // デコレータを追加
   component: LinkIcon,
   tags: ['autodocs']
 } satisfies Meta<typeof LinkIcon>;
@@ -31,6 +46,7 @@ type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
   args: {
-    type: IconType.GITHUB
+    type: IconType.GITHUB,
+    isInTooltip: true
   }
 };
