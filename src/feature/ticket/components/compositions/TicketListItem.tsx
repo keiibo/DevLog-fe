@@ -22,7 +22,7 @@ type TProps = {
   ticket: TTicket;
 };
 
-export const Ticket = ({ ticket }: TProps): React.JSX.Element => {
+export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
   const { id } = useParams();
   const navigate = useNavigate();
 

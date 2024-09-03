@@ -295,32 +295,38 @@ export const TicketProperty = ({
       <StyledLabel>カテゴリ:</StyledLabel>
       <StyledCategoryFlex gap={8}>
         {isEditMode ? (
-          <Checkbox.Group
-            value={selectedCategories.map((category) => category.uuid)}
-            onChange={(checkedValues) => {
-              data.forEach((category) => {
-                if (checkedValues.includes(category.uuid)) {
-                  if (
-                    !selectedCategories.some((c) => c.uuid === category.uuid)
-                  ) {
-                    toggleCheckbox(category.uuid);
-                  }
-                } else {
-                  if (
-                    selectedCategories.some((c) => c.uuid === category.uuid)
-                  ) {
-                    toggleCheckbox(category.uuid);
-                  }
-                }
-              });
-            }}
+          <FormItem
+            noStyle
+            name="categories"
+            initialValue={selectedCategories.map((category) => category.uuid)}
           >
-            {data.map((category) => (
-              <Checkbox key={category.uuid} value={category.uuid}>
-                {category.name}
-              </Checkbox>
-            ))}
-          </Checkbox.Group>
+            <Checkbox.Group
+              value={selectedCategories.map((category) => category.uuid)}
+              onChange={(checkedValues) => {
+                data.forEach((category) => {
+                  if (checkedValues.includes(category.uuid)) {
+                    if (
+                      !selectedCategories.some((c) => c.uuid === category.uuid)
+                    ) {
+                      toggleCheckbox(category.uuid);
+                    }
+                  } else {
+                    if (
+                      selectedCategories.some((c) => c.uuid === category.uuid)
+                    ) {
+                      toggleCheckbox(category.uuid);
+                    }
+                  }
+                });
+              }}
+            >
+              {data.map((category) => (
+                <Checkbox key={category.uuid} value={category.uuid}>
+                  {category.name}
+                </Checkbox>
+              ))}
+            </Checkbox.Group>
+          </FormItem>
         ) : (
           <>
             {ticket?.categories?.map((category) => {

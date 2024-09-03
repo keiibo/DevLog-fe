@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Status, TStatus, TTicket } from '../types/TTicket';
 import { Flex } from 'antd';
 import { CategoryLabel } from '../../../components/composition/categoryLabel/CategoryLabel';
-import { Ticket } from '../components/compositions/Ticket';
+import { TicketListItem } from '../components/compositions/TicketListItem';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
 import { mixinNormalFontSize24px, mixinTextColor } from '../../../style/Mixin';
@@ -108,7 +108,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
                 ticketList
                   .filter((ticket) => ticket.status === Status.NOT_STARTED)
                   .map((ticket) => (
-                    <Ticket ticket={ticket} key={ticket.ticketId} />
+                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
                   ))}
             </StyledTicketList>
           </Flex>
@@ -144,7 +144,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
                     (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
                   )
                   .map((ticket) => (
-                    <Ticket ticket={ticket} key={ticket.ticketId} />
+                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
                   ))}
             </StyledTicketList>
           </Flex>
@@ -178,7 +178,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
                 ticketList
                   .filter((ticket) => ticket.status === Status.COMPLETED)
                   .map((ticket) => (
-                    <Ticket ticket={ticket} key={ticket.ticketId} />
+                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
                   ))}
             </StyledTicketList>
           </Flex>
@@ -199,8 +199,8 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
 };
 
 const StyledListFlexContainer = styled(Flex)`
-  max-width: 800px;
-  min-width: 800px;
+  max-width: 640px;
+  min-width: 640px;
 `;
 
 const StyledListDataFlex = styled(Flex)`

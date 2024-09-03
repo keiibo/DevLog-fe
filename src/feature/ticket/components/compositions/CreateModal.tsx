@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Flex, notification } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { Flex, InputRef, notification } from 'antd';
 import { FormItem } from '../../../../components/element/form/FormItem';
 import { Input } from '../../../../components/element/input/Input';
 import { Button } from '../../../../components/element/button/Button';
@@ -32,6 +32,14 @@ export const CreateModal = ({
   const [form] = useForm();
   const { id: projectId } = useParams();
   const [selectedCategories, setSelectedCategories] = useState<TCategory[]>([]);
+  const titleInputRef = useRef<InputRef>(null); // Input用のrefを作成
+
+  useEffect(() => {
+    // モーダルが開かれたときにタイトルのInputにフォーカスを設定
+    if (isOpenedNewCreateModal) {
+      setTimeout(() => titleInputRef.current?.focus(), 100);
+    }
+  }, [isOpenedNewCreateModal]); // 依存配列にモーダルの状態を追加
 
   if (!projectId) {
     return <Loading />;
@@ -119,7 +127,7 @@ export const CreateModal = ({
                   }
                 ]}
               >
-                <Input width={'100%'} />
+                <Input width={'100%'} ref={titleInputRef} />
               </FormItem>
             </Flex>
             <TicketProperty

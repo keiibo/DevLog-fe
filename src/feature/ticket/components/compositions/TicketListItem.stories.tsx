@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Ticket } from './Ticket';
+import { TicketListItem } from './TicketListItem';
 import { Colors } from '../../../../style/Colors';
 import { Priority, Status } from '../../types/TTicket';
 
 const meta = {
-  title: 'feature/ticket/compositions/Ticket',
-  component: Ticket,
+  title: 'feature/ticket/compositions/TicketListItem',
+  component: TicketListItem,
   tags: ['autodocs'],
   parameters: {
     backgrounds: {
@@ -22,7 +22,7 @@ const meta = {
       description: 'The ticket data object to display'
     }
   }
-} satisfies Meta<typeof Ticket>;
+} satisfies Meta<typeof TicketListItem>;
 
 export default meta;
 type TStory = StoryObj<typeof meta>;
