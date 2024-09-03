@@ -9,6 +9,8 @@ import { Loading } from '../../../components/element/loading/Loading';
 import { LinkIcon } from '../components/elements/LinkIcon';
 import { IconType } from '../../../components/element/icon/Icon';
 import { styled } from 'styled-components';
+import dayjs from 'dayjs';
+import { DateFormat } from '../../../constant/DateFormat';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId } = useParams();
@@ -23,29 +25,6 @@ export const Detail = (): React.JSX.Element => {
     const rect = ref.current?.parentElement?.getBoundingClientRect();
     setMainView(rect);
   }, [ref]);
-
-  const dummyLinkIcon = [
-    {
-      name: 'GitHub',
-      ref: 'https://google.com',
-      iconType: IconType.GITHUB
-    },
-    {
-      name: 'test',
-      ref: 'https://google.com',
-      iconType: IconType.FILE
-    },
-    {
-      name: 'aa',
-      ref: 'https://google.com',
-      iconType: IconType.BOOK
-    },
-    {
-      name: 'aaa',
-      ref: 'https://google.com',
-      iconType: IconType.LIGHT
-    }
-  ];
 
   const items = [
     {
@@ -63,15 +42,23 @@ export const Detail = (): React.JSX.Element => {
       onButtonClick: () => {}
     },
     {
+      label: '期限日',
+      mode: CategoryLabelMode.NONE,
+      children: dayjs(data?.limitDate).format(DateFormat.SLASH),
+      buttonTitle: '編集',
+      onButtonClick: () => {}
+    },
+    {
       label: '各種リンク',
       mode: CategoryLabelMode.NONE,
       children: (
         <StyledIconFlex gap={8}>
-          {dummyLinkIcon.map((data, index) => (
+          {data?.linkIconList.map((data, index) => (
             <StyledLinkIcon key={index}>
               <LinkIcon
                 type={data.iconType}
-                link={data.ref}
+                link={data.url}
+                name={data.name}
                 isInTooltip={false}
                 mainView={mainView}
               />
@@ -79,6 +66,7 @@ export const Detail = (): React.JSX.Element => {
           ))}
           <StyledLinkIcon>
             <LinkIcon
+              linkIconList={data?.linkIconList || []}
               type={IconType.PLUS}
               isInTooltip={false}
               mainView={mainView}

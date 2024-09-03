@@ -5,28 +5,35 @@ import {
   mixinBorderRadius8px,
   mixinPadding8px
 } from '../../../../style/Mixin';
-import { Flex } from 'antd';
+import { Flex, Tooltip } from 'antd';
 import {
   Icon,
   IconType,
   TIconType
 } from '../../../../components/element/icon/Icon';
 import { LinkIconSettingTooltip } from './LinkIconSettingTooltip';
+import { TLinkIconList } from '../../types/TDetail';
+import { useQueryClient } from 'react-query';
 
 type TProps = {
   type: TIconType;
   isInTooltip: boolean;
   mainView?: DOMRect;
   link?: string;
+  name?: string;
+  linkIconList?: TLinkIconList[];
 };
 
 export const LinkIcon = ({
   type,
   isInTooltip,
   mainView,
-  link
+  link,
+  name,
+  linkIconList
 }: TProps): React.JSX.Element => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
   const [tooltipPosition, setTooltipPosition] = useState<{
     top: number;
@@ -57,25 +64,33 @@ export const LinkIcon = ({
   };
 
   return (
-    <StyledBox ref={iconRef}>
-      <StyledFlex
-        justify="center"
-        align="center"
-        onClick={handleClick}
-        $isInTooltip={isInTooltip}
-      >
-        <Icon type={type} />
-      </StyledFlex>
-      {isOpened && type === IconType.PLUS && (
-        <StyledSpan
-          ref={ref}
+    <Tooltip title={name}>
+      <StyledBox ref={iconRef}>
+        <StyledFlex
+          justify="center"
+          align="center"
+          onClick={handleClick}
           $isInTooltip={isInTooltip}
-          $tooltipPosition={tooltipPosition}
         >
-          <LinkIconSettingTooltip />
-        </StyledSpan>
-      )}
-    </StyledBox>
+          <Icon type={type} />
+        </StyledFlex>
+        {isOpened && type === IconType.PLUS && (
+          <StyledSpan
+            ref={ref}
+            $isInTooltip={isInTooltip}
+            $tooltipPosition={tooltipPosition}
+          >
+            <LinkIconSettingTooltip
+              linkIconList={linkIconList || []}
+              onOk={() => {
+                queryClient.invalidateQueries('detail');
+                setIsOpened(false);
+              }}
+            />
+          </StyledSpan>
+        )}
+      </StyledBox>
+    </Tooltip>
   );
 };
 
