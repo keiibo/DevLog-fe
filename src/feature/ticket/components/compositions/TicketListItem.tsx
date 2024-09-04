@@ -17,6 +17,7 @@ import { Category } from '../elements/Category';
 import { useQuery } from 'react-query';
 import { getCategories } from '../../api/category';
 import { Loading } from '../../../../components/element/loading/Loading';
+import { Colors } from '../../../../style/Colors';
 
 type TProps = {
   ticket: TTicket;
@@ -88,6 +89,11 @@ const StyledTicketFlexContainer = styled(Flex)<{
 }>`
   border-left: 12px solid ${(props) => getLabelColor(props.$borderColor)};
   cursor: pointer;
+
+  &&:hover {
+    border: 4px solid ${Colors.MAIN}4A;
+  }
+
   ${mixinBgWhite}
   ${mixinMainColor}
   ${mixinBorderRadius4px}
