@@ -5,7 +5,7 @@ import {
   TCategoryLabelMode
 } from '../../../../components/composition/categoryLabel/CategoryLabel';
 import {
-  mixinNormalFontSize24px,
+  mixinNormalFontSize16px,
   mixinPadding8px,
   mixinTextColor
 } from '../../../../style/Mixin';
@@ -45,7 +45,7 @@ const StyledFlex = styled(Flex)`
 
 const StyledSectionContent = styled.span`
   ${mixinTextColor}
-  ${mixinNormalFontSize24px}
+  ${mixinNormalFontSize16px}
   margin-left: 16px;
   max-width: 100%;
 `;
