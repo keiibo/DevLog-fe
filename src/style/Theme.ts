@@ -14,9 +14,8 @@ export const Theme = {
       bodyBg: Colors.MAIN,
       siderBg: Colors.TEXT_DARK
     },
-    Divider:{
-      colorSplit: `${Colors.PURPLE}2a`,
-
+    Divider: {
+      colorSplit: `${Colors.PURPLE}2a`
     },
     Button: {
       colorPrimary: Colors.PURPLE,
@@ -31,7 +30,7 @@ export const Theme = {
       itemBorderRadius: 0,
       iconSize: 24,
       itemMarginInline: 0,
-      itemMarginBlock: 16,
+      itemMarginBlock: 4,
       itemSelectedBg: Colors.MAIN_LIGHT,
       itemSelectedColor: Colors.WHITE
     },

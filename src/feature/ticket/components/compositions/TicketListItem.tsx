@@ -87,11 +87,23 @@ export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
 const StyledTicketFlexContainer = styled(Flex)<{
   $borderColor: TLabelColorType;
 }>`
-  border-left: 12px solid ${(props) => getLabelColor(props.$borderColor)};
+  position: relative; /* 疑似要素の基準点とする */
+  box-sizing: border-box;
   cursor: pointer;
 
   &&:hover {
     border: 4px solid ${Colors.MAIN}4A;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 12px; /* 左の線の太さ */
+    background-color: ${(props) =>
+      getLabelColor(props.$borderColor)}; /* 背景色はpropsから */
   }
 
   ${mixinBgWhite}

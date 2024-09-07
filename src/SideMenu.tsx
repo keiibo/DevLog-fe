@@ -2,7 +2,10 @@ import {
   ExperimentFilled,
   ProfileFilled,
   DatabaseFilled,
-  ReadFilled
+  ReadFilled,
+  SettingFilled,
+  CustomerServiceFilled,
+  UserOutlined
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import Sider from 'antd/es/layout/Sider';
@@ -26,7 +29,20 @@ export const SideMenu = ({ project }: TProps): React.JSX.Element => {
     { key: 'detail', label: 'プロジェクト詳細', icon: <ExperimentFilled /> },
     { key: 'dashboard', label: 'ダッシュボード', icon: <ProfileFilled /> },
     { key: 'ticket', label: 'チケット', icon: <DatabaseFilled /> },
-    { key: 'diary', label: 'ダイアリー', icon: <ReadFilled /> }
+    { key: 'diary', label: 'ダイアリー', icon: <ReadFilled /> },
+    {
+      key: 'setting',
+      label: '設定',
+      icon: <SettingFilled />,
+      children: [
+        { key: 'userSetting', label: 'ユーザー設定', icon: <UserOutlined /> },
+        {
+          key: 'customerService',
+          label: 'お問い合わせ',
+          icon: <CustomerServiceFilled />
+        }
+      ]
+    }
   ];
 
   const handleMenuClick = (e: { key: string }) => {
