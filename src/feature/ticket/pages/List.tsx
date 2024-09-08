@@ -246,8 +246,8 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
 };
 
 const StyledListFlexContainer = styled(Flex)`
-  max-width: 640px;
-  min-width: 640px;
+  max-width: 40vw;
+  min-width: 40vw;
 `;
 
 const StyledListDataFlex = styled(Flex)`
