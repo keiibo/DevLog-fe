@@ -56,3 +56,4 @@ export type TMGetCategoryRes = {
   projectId: string;
   categories: TCategory[];
 };
+

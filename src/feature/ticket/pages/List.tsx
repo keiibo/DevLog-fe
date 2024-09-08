@@ -1,18 +1,106 @@
-import React, { useState } from 'react';
-import { Status, TStatus, TTicket } from '../types/TTicket';
-import { Flex } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Priority, Status, TStatus, TTicket } from '../types/TTicket';
+import { Flex, Tooltip } from 'antd';
 import { CategoryLabel } from '../../../components/composition/categoryLabel/CategoryLabel';
 import { TicketListItem } from '../components/compositions/TicketListItem';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/CreateModal';
 import { mixinNormalFontSize24px, mixinTextColor } from '../../../style/Mixin';
-import { PlusCircleFilled, SettingFilled } from '@ant-design/icons';
+import {
+  PlusCircleFilled,
+  SettingFilled,
+  SlidersFilled
+} from '@ant-design/icons';
 import { SettingModal } from '../components/compositions/SettingModal';
+import { SortPopover } from '../components/elements/SortPopover';
+import { useSearchParams } from 'react-router-dom';
+import { SortQueryCategoryType, HowToSortQueryType } from '../types/TQuery';
 type TProps = {
   ticketList: TTicket[];
 };
 
 export const List = ({ ticketList }: TProps): React.JSX.Element => {
+  const [searchParams, _] = useSearchParams();
+  const querySortType = searchParams.get('sort');
+  const queryCategory = searchParams.get('category');
+  const [open, setOpen] = useState(false);
+
+  const handleOpenChange = () => setOpen(true);
+
+  const [notStartedTicketList, setNotStartedTicketList] = useState<TTicket[]>(
+    []
+  );
+  const [underConstructionTicketList, setUnderConstructionTicketList] =
+    useState<TTicket[]>([]);
+  const [completedTicketList, setCompletedTicketList] = useState<TTicket[]>([]);
+
+  // 優先度を数値にマッピングする関数
+  const priorityToNumber = (priority: string): number => {
+    switch (priority) {
+      case Priority.HIGH:
+        return 1;
+      case Priority.MEDIUM:
+        return 2;
+      case Priority.LOW:
+        return 3;
+      default:
+        return 4; // 未知の値は最低優先度とする
+    }
+  };
+
+  // ソート
+  const sortTicketList = (list: TTicket[]): TTicket[] => {
+    // クエリパラメータから条件を取得する
+    // 条件未設定の場合はそのまま返す
+    if (!queryCategory || !querySortType) return list;
+    return list.sort((a, b) => {
+      let result = 0;
+      switch (queryCategory) {
+        case SortQueryCategoryType.CREATE_AT:
+          return 0;
+        case SortQueryCategoryType.LIMIT_DATE:
+          if (!a.limitEndYm) return 1; // aがnullならbを前に
+          if (!b.limitEndYm) return -1; // bがnullならaを前に
+
+          const dateA = new Date(a.limitEndYm);
+          const dateB = new Date(b.limitEndYm);
+          result = dateA.getTime() - dateB.getTime();
+          break;
+        case SortQueryCategoryType.PRIORITY:
+          const priorityA = priorityToNumber(a.priority);
+          const priorityB = priorityToNumber(b.priority);
+          result = priorityA - priorityB;
+          break;
+        default:
+          return 0;
+      }
+      return querySortType === HowToSortQueryType.DESCENDING ? -result : result;
+    });
+  };
+
+  useEffect(() => {
+    setNotStartedTicketList(
+      sortTicketList(
+        ticketList &&
+          ticketList.filter((ticket) => ticket.status === Status.NOT_STARTED)
+      )
+    );
+    setUnderConstructionTicketList(
+      sortTicketList(
+        ticketList &&
+          ticketList.filter(
+            (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
+          )
+      )
+    );
+    setCompletedTicketList(
+      sortTicketList(
+        ticketList &&
+          ticketList.filter((ticket) => ticket.status === Status.COMPLETED)
+      )
+    );
+  }, [queryCategory, querySortType, ticketList]);
+
   const [isOpenedNewCreateModal, setIsOpenedNewCreateModal] =
     useState<boolean>(false);
   const [isOpenedSettingModal, setIsOpenedSettingModal] =
@@ -55,25 +143,23 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
       <StyledListFlexContainer vertical gap={16}>
         <StyledListDataFlex justify="space-between" align="center">
           <Flex gap={8}>
-            未着手{' '}
-            {ticketList &&
-              ticketList.filter(
-                (ticket) => ticket.status === Status.NOT_STARTED
-              ).length}
-            件 着手中{'  '}
-            {ticketList &&
-              ticketList.filter(
-                (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
-              ).length}
-            件 完了{'  '}
-            {ticketList &&
-              ticketList.filter((ticket) => ticket.status === Status.COMPLETED)
-                .length}
-            件 / 全{ticketList && ticketList.length}件
+            未着手 {notStartedTicketList.length}件 着手中{'  '}
+            {underConstructionTicketList.length}件 完了{'  '}
+            {completedTicketList.length}件 / 全{ticketList && ticketList.length}
+            件
           </Flex>
           <Flex gap={8}>
-            <StyledPlusCircleFilled onClick={handleNewCreateClick} />
-            <StyledSettingFilled onClick={handleSettingClick} />
+            <Tooltip title="チケットを新規作成">
+              <StyledPlusCircleFilled onClick={handleNewCreateClick} />
+            </Tooltip>
+            <SortPopover open={open} setOpen={setOpen}>
+              <Tooltip title="並び替え">
+                <StyledSlidersFilled onClick={() => handleOpenChange()} />
+              </Tooltip>
+            </SortPopover>
+            <Tooltip title="設定">
+              <StyledSettingFilled onClick={handleSettingClick} />
+            </Tooltip>
           </Flex>
         </StyledListDataFlex>
 
@@ -83,33 +169,18 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
             <CategoryLabel
               label={'未着手'}
               onClick={() => toggleCategory(Status.NOT_STARTED)}
-              defaultOpenState={
-                (ticketList &&
-                  ticketList.filter(
-                    (ticket) => ticket.status === Status.NOT_STARTED
-                  ).length > 0) ||
-                false
-              }
+              defaultOpenState={notStartedTicketList.length > 0 || false}
               mode="accordion"
             />
             <StyledTicketList
               vertical
               gap={2}
               $show={showNotStarted}
-              $height={
-                (ticketList &&
-                  ticketList.filter(
-                    (ticket) => ticket.status === Status.NOT_STARTED
-                  ).length) ||
-                0
-              }
+              $height={notStartedTicketList.length || 0}
             >
-              {ticketList &&
-                ticketList
-                  .filter((ticket) => ticket.status === Status.NOT_STARTED)
-                  .map((ticket) => (
-                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
-                  ))}
+              {notStartedTicketList.map((ticket) => (
+                <TicketListItem ticket={ticket} key={ticket.ticketId} />
+              ))}
             </StyledTicketList>
           </Flex>
           {/* 着手中*/}
@@ -117,35 +188,18 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
             <CategoryLabel
               label={'着手中'}
               onClick={() => toggleCategory(Status.UNDER_CONSTRUCTION)}
-              defaultOpenState={
-                (ticketList &&
-                  ticketList.filter(
-                    (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
-                  ).length > 0) ||
-                false
-              }
+              defaultOpenState={underConstructionTicketList.length > 0 || false}
               mode="accordion"
             />
             <StyledTicketList
               vertical
               gap={4}
               $show={showUnderConstruction}
-              $height={
-                (ticketList &&
-                  ticketList.filter(
-                    (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
-                  ).length) ||
-                0
-              }
+              $height={underConstructionTicketList.length || 0}
             >
-              {ticketList &&
-                ticketList
-                  .filter(
-                    (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
-                  )
-                  .map((ticket) => (
-                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
-                  ))}
+              {underConstructionTicketList.map((ticket) => (
+                <TicketListItem ticket={ticket} key={ticket.ticketId} />
+              ))}
             </StyledTicketList>
           </Flex>
           {/* 完了 */}
@@ -153,33 +207,18 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
             <CategoryLabel
               label={'完了'}
               onClick={() => toggleCategory(Status.COMPLETED)}
-              defaultOpenState={
-                (ticketList &&
-                  ticketList.filter(
-                    (ticket) => ticket.status === Status.COMPLETED
-                  ).length > 0) ||
-                false
-              }
+              defaultOpenState={completedTicketList.length > 0 || false}
               mode="accordion"
             />
             <StyledTicketList
               vertical
               gap={4}
               $show={showCompleted}
-              $height={
-                (ticketList &&
-                  ticketList.filter(
-                    (ticket) => ticket.status === Status.COMPLETED
-                  ).length) ||
-                0
-              }
+              $height={completedTicketList.length || 0}
             >
-              {ticketList &&
-                ticketList
-                  .filter((ticket) => ticket.status === Status.COMPLETED)
-                  .map((ticket) => (
-                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
-                  ))}
+              {completedTicketList.map((ticket) => (
+                <TicketListItem ticket={ticket} key={ticket.ticketId} />
+              ))}
             </StyledTicketList>
           </Flex>
         </Flex>
@@ -188,7 +227,6 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
         isOpenedNewCreateModal={isOpenedNewCreateModal}
         setIsOpenedNewCreateModal={setIsOpenedNewCreateModal}
       />
-
       <SettingModal
         isOpened={isOpenedSettingModal}
         setIsOpened={setIsOpenedSettingModal}
@@ -216,6 +254,9 @@ const StyledTicketList = styled(Flex)<{ $show: boolean; $height: number }>`
 `;
 
 const StyledPlusCircleFilled = styled(PlusCircleFilled)`
+  ${mixinNormalFontSize24px}
+`;
+const StyledSlidersFilled = styled(SlidersFilled)`
   ${mixinNormalFontSize24px}
 `;
 

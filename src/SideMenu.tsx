@@ -7,14 +7,13 @@ import {
   CustomerServiceFilled,
   UserOutlined
 } from '@ant-design/icons';
-import { Menu, MenuProps } from 'antd';
+import { Menu } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { TGetProjectRes } from './feature/dashboard/types/TProject';
-
-type TMenuItem = Required<MenuProps>['items'][number];
+import { TMenuItem } from './types/TMenuItem';
 
 type TProps = {
   project: TGetProjectRes;
