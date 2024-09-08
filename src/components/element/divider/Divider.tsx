@@ -1,9 +1,11 @@
 import React from 'react';
-import { Divider as AdDivider } from 'antd';
+import { Divider as AdDivider, DividerProps } from 'antd';
 import styled from 'styled-components';
 
-export const Divider = (): React.JSX.Element => {
-  return <StyledDivider />;
+type TProps = DividerProps;
+
+export const Divider = (props: TProps): React.JSX.Element => {
+  return <StyledDivider {...props} />;
 };
 
 const StyledDivider = styled(AdDivider)`

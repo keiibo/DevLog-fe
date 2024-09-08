@@ -6,6 +6,7 @@ import { Colors } from '../../../../style/Colors';
 import { Button } from '../../../../components/element/button/Button';
 import { useSearchParams } from 'react-router-dom';
 import { HowToSortQueryType, SortQueryCategoryType } from '../../types/TQuery';
+import { Divider } from '../../../../components/element/divider/Divider';
 
 type TProps = {
   children: React.ReactNode;
@@ -34,7 +35,7 @@ export const SortPopover = ({
         { key: SortQueryCategoryType.PRIORITY, label: '優先度' }
       ]
     },
-    { type: 'divider' },
+
     {
       key: 'howToSort',
       type: 'group',
@@ -88,7 +89,7 @@ export const SortPopover = ({
     });
 
     if (!allGroupsSelected) {
-      alert('TODO');
+      alert('両方選択必須です');
       return;
     }
 
@@ -146,6 +147,7 @@ export const SortPopover = ({
               onSelect={handleSelect}
               selectedKeys={selectedKeys}
             />
+            <Divider />
             <Flex justify="center" gap={4}>
               <Button type={'primary'} onClick={handleClear}>
                 全てクリア

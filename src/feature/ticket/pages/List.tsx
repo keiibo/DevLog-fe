@@ -25,7 +25,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   const queryCategory = searchParams.get('category');
   const [open, setOpen] = useState(false);
 
-  const handleOpenChange = () => setOpen(true);
+  const handleOpenChange = () => setOpen(!open);
 
   const [notStartedTicketList, setNotStartedTicketList] = useState<TTicket[]>(
     []
