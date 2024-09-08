@@ -63,7 +63,8 @@ export const CreateModal = ({
         : null,
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status'),
-      categories: selectedCategories
+      categories: selectedCategories,
+      createdAt: new Date().toISOString()
     };
     mutation.mutate(reqBody);
   };
@@ -114,7 +115,7 @@ export const CreateModal = ({
       />
       <ModalBody>
         <Form onFinish={handleSubmit} form={form}>
-          <Flex vertical gap={8}>
+          <Flex vertical gap={16}>
             <Flex vertical gap={8}>
               <StyledLabel>タイトル:</StyledLabel>
               <FormItem

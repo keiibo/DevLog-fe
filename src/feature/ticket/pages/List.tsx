@@ -57,7 +57,15 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
       let result = 0;
       switch (queryCategory) {
         case SortQueryCategoryType.CREATE_AT:
-          return 0;
+          // createdAtが存在しない場合の処理
+          if (!a.createdAt) return 1; // aがnullならbを前に
+          if (!b.createdAt) return -1; // bがnullならaを前に
+
+          const createdAtA = new Date(a.createdAt);
+          const createdAtB = new Date(b.createdAt);
+          result = createdAtA.getTime() - createdAtB.getTime();
+          break;
+
         case SortQueryCategoryType.LIMIT_DATE:
           if (!a.limitEndYm) return 1; // aがnullならbを前に
           if (!b.limitEndYm) return -1; // bがnullならaを前に
@@ -78,6 +86,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
     });
   };
 
+  // 初期orソート状態のチケットリストの用意
   useEffect(() => {
     setNotStartedTicketList(
       sortTicketList(

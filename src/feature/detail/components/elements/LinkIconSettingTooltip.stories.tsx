@@ -23,5 +23,8 @@ export default meta;
 type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
-  args: {}
+  args: {
+    linkIconList: [],
+    onOk: () => {}
+  }
 };

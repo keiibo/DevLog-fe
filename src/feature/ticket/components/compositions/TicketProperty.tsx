@@ -1,5 +1,4 @@
-import React, { SetStateAction, useState } from 'react';
-import { Textarea } from '../../../../components/element/textarea/Textarea';
+import React, { SetStateAction, useMemo, useState } from 'react';
 import {
   LabelColorType,
   Priority,
@@ -21,7 +20,6 @@ import {
 } from '../../../../style/Mixin';
 import { Select } from '../../../../components/element/select/Select';
 import { Option } from '../../../../components/element/select/Option';
-import { MultiLineText } from '../../../../components/composition/MultiLineText';
 import { getPriorityStr } from '../../lib/priority';
 import { Colors } from '../../../../style/Colors';
 import { getLabelColorStr } from '../../lib/labelColor';
@@ -33,6 +31,10 @@ import { useParams } from 'react-router-dom';
 import { Loading } from '../../../../components/element/loading/Loading';
 import { Category } from '../elements/Category';
 import { Divider } from '../../../../components/element/divider/Divider';
+import SimpleMdeReact from 'react-simplemde-editor';
+import SimpleMDE from 'easymde';
+import 'easymde/dist/easymde.min.css';
+import ReactMarkdown from 'react-markdown';
 
 type TProps = {
   isEditMode: boolean;
@@ -52,6 +54,7 @@ export const TicketProperty = ({
   const [startYm, setStartYm] = useState(
     ticket ? dayjs(ticket.limitStartYm) : undefined
   );
+  const [markdownValue, setMarkdownValue] = useState('');
 
   const { id } = useParams();
   const { data } = useQuery('category', () => getCategories(id || ''));
@@ -124,25 +127,48 @@ export const TicketProperty = ({
     });
   };
 
+  const options = useMemo(() => {
+    return {
+      toolbar: [
+        'bold', // 太字
+        'italic', // 斜体
+        'heading', // 見出し
+        '|', // 区切り線
+        'quote', // 引用
+        'unordered-list', // リスト
+        'ordered-list', // 番号付きリスト
+        '|',
+        'link', // リンク
+        '|',
+        'preview' // プレビュー
+      ],
+      spellChecker: false,
+      lineNumbers: false,
+      indentWithTabs: false
+    } as SimpleMDE.Options;
+  }, []);
+
   if (!data) {
     return <Loading />;
   }
+
   return (
     <>
       {isEditMode ? (
         <>
           <StyledLabel>詳細:</StyledLabel>
           <FormItem name={'detail'} noStyle initialValue={ticket?.detail}>
-            <Textarea
-              autoSize={{
-                minRows: 12
-              }}
+            <SimpleMdeReact
+              value={markdownValue}
+              onChange={(e) => setMarkdownValue(e)}
+              options={options}
             />
           </FormItem>
         </>
       ) : (
+        // 表示
         <StyledDetailBox>
-          <MultiLineText text={ticket?.detail || ''} />
+          <ReactMarkdown>{ticket?.detail}</ReactMarkdown>
         </StyledDetailBox>
       )}
       <Divider />

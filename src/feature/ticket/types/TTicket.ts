@@ -13,6 +13,7 @@ export type TTicket = {
   priority: TPriority;
   status: TStatus;
   categories?: TCategory[];
+  createdAt: string;
 };
 
 export const LabelColorType = {
@@ -56,4 +57,3 @@ export type TMGetCategoryRes = {
   projectId: string;
   categories: TCategory[];
 };
-

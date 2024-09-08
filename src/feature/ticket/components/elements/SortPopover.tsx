@@ -110,6 +110,14 @@ export const SortPopover = ({
     hide();
   };
 
+  const handleClear = () => {
+    // クエリパラメータを全て削除
+    setSearchParams(new URLSearchParams());
+    // 選択されたキーもリセット
+    setSelectedKeys([]);
+    hide();
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -138,7 +146,10 @@ export const SortPopover = ({
               onSelect={handleSelect}
               selectedKeys={selectedKeys}
             />
-            <Flex justify="center">
+            <Flex justify="center" gap={4}>
+              <Button type={'primary'} onClick={handleClear}>
+                全てクリア
+              </Button>
               <Button type={'primary'} onClick={handleOk}>
                 OK
               </Button>
