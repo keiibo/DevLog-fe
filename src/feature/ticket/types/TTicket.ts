@@ -47,7 +47,7 @@ export type TCategory = {
 
 export type TGetTicketRes = TTicket;
 export type TCreateTicketReq = Omit<TTicket, '_id' | 'ticketId'>;
-export type TPutTicketReq = Omit<TTicket, '_id' | 'ticketId'>;
+export type TPutTicketReq = Omit<TTicket, '_id' | 'ticketId' | 'createdAt'>;
 export type TCreateCategoryReq = {
   projectId: string;
   categories: TCategory[];
