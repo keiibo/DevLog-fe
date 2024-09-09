@@ -45,7 +45,7 @@ export const CategoryLabel = ({
   };
 
   return (
-    <StyledCategoryLabel onClick={toggleAccordion}>
+    <StyledCategoryLabel onClick={toggleAccordion} $mode={mode}>
       <Flex justify="space-between" align="center">
         <StyledLabel>{label}</StyledLabel>
         {mode === CategoryLabelMode.ACCORDION && (
@@ -63,12 +63,16 @@ export const CategoryLabel = ({
   );
 };
 
-const StyledCategoryLabel = styled.div`
+const StyledCategoryLabel = styled.div<{
+  $mode: string;
+}>`
   width: 100%;
   padding: 8px 24px;
   border-left: 12px solid ${Colors.PURPLE};
   box-shadow: 4px 4px 4px 0 ${Colors.TEXT_DARK};
-  cursor: pointer;
+
+  cursor: ${({ $mode }) =>
+    $mode === CategoryLabelMode.ACCORDION ? 'pointer' : 'default'};
 
   ${mixinMainColor}
   ${mixinBgWhite} 
