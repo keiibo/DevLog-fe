@@ -70,5 +70,5 @@ export const setConfig = (): {} => {
  * baseUrlの決定
  */
 export const sgetBaseUrl = (): string => {
-  return import.meta.env.VITE_BE_LOCAL_BASE_URL || 'teste';
+  return import.meta.env.VITE_BACKEND_URL || '';
 };
