@@ -24,11 +24,13 @@ type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
   args: {
-    children: 'test'
+    children: 'test',
+    open: true,
+    setOpen: () => {}
   },
   render: () => (
     <div>
-      <SortPopover>
+      <SortPopover open={true} setOpen={() => {}}>
         <Button type="primary">並び替え</Button>
       </SortPopover>
     </div>

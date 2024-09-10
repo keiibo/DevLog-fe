@@ -14,12 +14,7 @@ const meta = {
       ]
     }
   },
-  argTypes: {
-    label: {
-      control: 'text', // テキストコントロールを使用してラベルを編集可能にします。
-      description: '表示されるカテゴリのラベル' // argTypesの説明を提供
-    }
-  },
+  argTypes: {},
   tags: ['autodocs']
 } satisfies Meta<typeof Category>;
 
@@ -28,11 +23,17 @@ type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
   args: {
-    label: '実装'
+    category: {
+      uuid: 'test',
+      name: 'test'
+    }
   }
 };
 export const LongText: TStory = {
   args: {
-    label: '実装aaaaaあああああaaaaaああああ'
+    category: {
+      uuid: 'test',
+      name: 'testtesttesttesttesttesttesttesttesttest'
+    }
   }
 };

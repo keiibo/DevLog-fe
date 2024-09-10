@@ -40,7 +40,9 @@ export const Default: TStory = {
       limitEndYm: '2022-12',
       priority: Priority.HIGH,
       status: Status.UNDER_CONSTRUCTION,
-      detail: 'testtesttesttest'
+      detail: 'testtesttesttest',
+      createdAt: '',
+      completedAt: null
     }
   }
 };
@@ -58,7 +60,9 @@ export const CantDelete: TStory = {
       limitEndYm: '2022-12-02',
       priority: Priority.HIGH,
       status: Status.NOT_STARTED,
-      detail: 'testtesttesttest'
+      detail: 'testtesttesttest',
+      createdAt: '',
+      completedAt: null
     }
   }
 };

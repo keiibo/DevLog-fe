@@ -37,14 +37,16 @@ export const Default: TStory = {
         name: 'プロジェクト1',
         detail: '',
         limitDate: '',
-        projectId: ''
+        projectId: '',
+        linkIconList: []
       },
       {
         _id: '2',
         name: 'プロジェクト2',
         detail: '',
         limitDate: '',
-        projectId: ''
+        projectId: '',
+        linkIconList: []
       }
     ],
     setProject: () => {},
