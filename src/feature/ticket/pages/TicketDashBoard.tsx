@@ -21,6 +21,11 @@ import {
   mixinTextColor
 } from '../../../style/Mixin';
 import { Status, TTicket } from '../types/TTicket';
+import {
+  endMessages,
+  midMessages,
+  startMessages
+} from '../../../constant/message';
 
 type TProps = {
   ticketList: TTicket[];
@@ -98,13 +103,21 @@ export const TicketDashBoard = ({ ticketList }: TProps): React.JSX.Element => {
   const getMessage = (): string => {
     const now = new Date();
     const dayOfWeek = now.getDay(); // 日曜: 0, 月曜: 1, ..., 土曜: 6
+    // ランダムにメッセージを選択する関数
+    const getRandomMessage = (messages: string[]) => {
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      return messages[randomIndex];
+    };
 
     if (dayOfWeek >= 0 && dayOfWeek <= 1) {
-      return '週の始まりですね。頑張りましょう！';
+      // 週の始まり
+      return getRandomMessage(startMessages);
     } else if (dayOfWeek >= 2 && dayOfWeek <= 3) {
-      return '週の中間に入りました。あと少し頑張ってください！';
+      // 週の中間
+      return getRandomMessage(midMessages);
     } else if (dayOfWeek >= 4 && dayOfWeek <= 6) {
-      return '週の終わりが近づいてきました。もうひと踏ん張りです！';
+      // 週の終わり
+      return getRandomMessage(endMessages);
     } else {
       return '日付が不正です。';
     }
