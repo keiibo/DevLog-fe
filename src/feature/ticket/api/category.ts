@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setConfig } from '../../auth/api/auth';
+import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
 import {
   TCategory,
   TCreateCategoryReq,
@@ -13,7 +13,7 @@ export const createCategories = async (
   categories: TCreateCategoryReq
 ): Promise<void> => {
   await axios.post(
-    `http://localhost:4001/api/tickets/category`,
+    `${sgetBaseUrl()}/api/tickets/category`,
     categories,
     setConfig()
   );
@@ -26,7 +26,7 @@ export const getCategories = async (
   projectId: string
 ): Promise<TCategory[]> => {
   const res = await axios.get<TMGetCategoryRes>(
-    `http://localhost:4001/api/tickets/category/${projectId}`,
+    `${sgetBaseUrl()}/api/tickets/category/${projectId}`,
     setConfig()
   );
 

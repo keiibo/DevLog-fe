@@ -1,6 +1,9 @@
 import axios from 'axios';
-import { TCreateProjectReq, TGetProjectRes } from '../feature/dashboard/types/TProject';
-import { setConfig } from '../feature/auth/api/auth';
+import {
+  TCreateProjectReq,
+  TGetProjectRes
+} from '../feature/dashboard/types/TProject';
+import { setConfig, sgetBaseUrl } from '../feature/auth/api/auth';
 
 /**
  * プロジェクト一覧の取得
@@ -9,7 +12,7 @@ export const getProjects = async (
   userId: string
 ): Promise<TGetProjectRes[]> => {
   const response = await axios.get(
-    `http://localhost:4001/api/project/all/${userId}`,
+    `${sgetBaseUrl()}/api/project/all/${userId}`,
     setConfig()
   );
   return response.data;
@@ -22,7 +25,7 @@ export const getProject = async (
   projectId: string
 ): Promise<TGetProjectRes> => {
   const response = await axios.get(
-    `http://localhost:4001/api/project/${projectId}`,
+    `${sgetBaseUrl()}/api/project/${projectId}`,
     setConfig()
   );
   return response.data;
@@ -35,7 +38,7 @@ export const createProject = async (
   req: TCreateProjectReq
 ): Promise<TGetProjectRes> => {
   const response = await axios.post<TGetProjectRes>(
-    'http://localhost:4001/api/project',
+    '${sgetBaseUrl]api/project',
     req,
     setConfig()
   );

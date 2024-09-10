@@ -4,7 +4,7 @@ import {
   TGetTicketRes,
   TPutTicketReq
 } from '../types/TTicket';
-import { setConfig } from '../../auth/api/auth';
+import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
 
 /**
  * チケット一覧の取得
@@ -13,7 +13,7 @@ export const getTickets = async (
   projectId: string
 ): Promise<TGetTicketRes[]> => {
   const response = await axios.get(
-    `http://localhost:4001/api/tickets?projectId=${projectId}`,
+    `${sgetBaseUrl()}/api/tickets?projectId=${projectId}`,
     setConfig()
   );
   return response.data;
@@ -24,7 +24,7 @@ export const getTickets = async (
  */
 export const getTicket = async (ticketId: string): Promise<TGetTicketRes> => {
   const response = await axios.get(
-    `http://localhost:4001/api/tickets/${ticketId}`,
+    `${sgetBaseUrl()}/api/tickets/${ticketId}`,
     setConfig()
   );
   return response.data;
@@ -37,7 +37,7 @@ export const createTicket = async (
   req: TCreateTicketReq
 ): Promise<TGetTicketRes> => {
   const response = await axios.post(
-    `http://localhost:4001/api/tickets`,
+    `${sgetBaseUrl()}/api/tickets`,
     req,
     setConfig()
   );
@@ -54,7 +54,7 @@ export const updateTicket = async ({
   ticketId: string;
 }): Promise<TGetTicketRes> => {
   const response = await axios.put(
-    `http://localhost:4001/api/tickets/${ticketId}`,
+    `${sgetBaseUrl()}/api/tickets/${ticketId}`,
     req,
     setConfig()
   );
@@ -67,7 +67,7 @@ export const deleteTicket = async (
   ticketId: string
 ): Promise<TGetTicketRes> => {
   const response = await axios.delete(
-    `http://localhost:4001/api/tickets/${ticketId}`,
+    `${sgetBaseUrl()}/api/tickets/${ticketId}`,
     setConfig()
   );
   return response.data;

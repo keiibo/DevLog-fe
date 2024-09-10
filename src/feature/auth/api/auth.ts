@@ -1,12 +1,17 @@
 import axios from 'axios';
-import { TPostCreateAccountReq, TPostCreateAccountRes, TPostLoginReq, TPostLoginRes } from '../types/TAuth';
+import {
+  TPostCreateAccountReq,
+  TPostCreateAccountRes,
+  TPostLoginReq,
+  TPostLoginRes
+} from '../types/TAuth';
 
 /**
  * ログイン
  */
 export const login = async (req: TPostLoginReq): Promise<TPostLoginRes> => {
   const response = await axios.post<TPostLoginRes>(
-    'http://localhost:4001/api/login',
+    `${sgetBaseUrl()}/api/login`,
     req
   );
   return response.data;
@@ -18,7 +23,7 @@ export const login = async (req: TPostLoginReq): Promise<TPostLoginRes> => {
 export const me = async (): Promise<TPostLoginRes> => {
   try {
     const response = await axios.get<TPostLoginRes>(
-      'http://localhost:4001/api/me',
+      `${sgetBaseUrl()}/api/me`,
       setConfig()
     );
     return response.data;
@@ -35,7 +40,7 @@ export const createAccount = async (
 ): Promise<TPostCreateAccountRes> => {
   try {
     const response = await axios.post<TPostCreateAccountRes>(
-      'http://localhost:4001/api/user',
+      `${sgetBaseUrl()}/api/user`,
       req,
       setConfig()
     );
@@ -59,4 +64,11 @@ export const setConfig = (): {} => {
       Authorization: `Bearer ${token}` // トークンをBearerスキームで設定
     }
   };
+};
+
+/**
+ * baseUrlの決定
+ */
+export const sgetBaseUrl = (): string => {
+  return import.meta.env.VITE_BE_LOCAL_BASE_URL || 'teste';
 };

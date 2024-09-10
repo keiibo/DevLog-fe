@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setConfig } from '../../auth/api/auth';
+import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
 import { TPostLinkIconsReq, TPostLinkIconsRes } from '../types/TDetail';
 
 /**
@@ -9,7 +9,7 @@ export const postLinkIcons = async (
   req: TPostLinkIconsReq
 ): Promise<TPostLinkIconsRes> => {
   const response = await axios.post(
-    `http://localhost:4001/api/detail/linkIcon`,
+    `${sgetBaseUrl()}/api/detail/linkIcon`,
     req,
     setConfig()
   );
