@@ -121,7 +121,11 @@ export const Detail = (): React.JSX.Element => {
       detail: form.getFieldValue('detail'),
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status'),
-      categories: selectedCategories
+      categories: selectedCategories,
+      completedAt:
+        form.getFieldValue('status') === Status.COMPLETED
+          ? new Date().toISOString()
+          : null
     };
     putMutation.mutate({ req, ticketId });
   };

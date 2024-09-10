@@ -64,7 +64,11 @@ export const CreateModal = ({
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status'),
       categories: selectedCategories,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      completedAt:
+        form.getFieldValue('status') === Status.COMPLETED
+          ? new Date().toISOString()
+          : null
     };
     mutation.mutate(reqBody);
   };
@@ -82,6 +86,7 @@ export const CreateModal = ({
       setIsOpenedNewCreateModal(false);
       queryClient.invalidateQueries('tickets');
       form.resetFields();
+      setSelectedCategories([]);
     },
     onError: () => {
       // エラー処理

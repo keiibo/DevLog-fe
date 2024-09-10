@@ -6,7 +6,6 @@ import { useQuery } from 'react-query';
 import { getTickets } from '../api/ticket';
 import { TicketDashBoard } from './TicketDashBoard';
 import { Loading } from '../../../components/element/loading/Loading';
-import { styled } from 'styled-components';
 
 export const TicketRoot = (): React.JSX.Element => {
   const { id: projectId } = useParams();
@@ -20,15 +19,8 @@ export const TicketRoot = (): React.JSX.Element => {
 
   return (
     <Flex gap={16}>
-      <StyledList ticketList={ticketList} />
-      <StyledTicketDashBoard />
+      <List ticketList={ticketList} />
+      <TicketDashBoard ticketList={ticketList} />
     </Flex>
   );
 };
-const StyledList = styled(List)`
-  flex: 1;
-`;
-
-const StyledTicketDashBoard = styled(TicketDashBoard)`
-  flex: 1;
-`;

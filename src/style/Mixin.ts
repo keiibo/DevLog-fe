@@ -37,6 +37,10 @@ export const mixinBgMainLight = css`
 export const mixinBgWhite = css`
   background-color: ${Colors.WHITE};
 `;
+export const mixinBgTransparent = css`
+  background-color: #a9a9a9;
+  opacity: 10%;
+`;
 
 // border-radius
 export const mixinBorderRadius4px = css`

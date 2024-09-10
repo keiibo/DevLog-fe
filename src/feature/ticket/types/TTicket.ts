@@ -14,6 +14,7 @@ export type TTicket = {
   status: TStatus;
   categories?: TCategory[];
   createdAt: string;
+  completedAt: string | null;
 };
 
 export const LabelColorType = {

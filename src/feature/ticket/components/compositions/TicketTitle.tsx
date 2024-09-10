@@ -121,7 +121,7 @@ const StyledTitle = styled.h4<{
   ${({ $mode }) =>
     $mode === 'list' &&
     `
-    max-width: 24vw; 
+    max-width: 32vw; 
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap;  
