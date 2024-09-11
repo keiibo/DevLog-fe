@@ -39,7 +39,10 @@ export const Detail = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   const { data: ticket, isLoading } = useQuery('ticketDetail', () =>
-    getTicket(ticketId || '')
+    getTicket(ticketId || ''),  {
+      staleTime: 0, // キャッシュをすぐに無効化する
+      cacheTime: 0, // キャッシュを残さない
+    }
   );
 
   /**
