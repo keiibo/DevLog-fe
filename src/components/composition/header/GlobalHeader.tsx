@@ -46,7 +46,11 @@ export const GlobalHeader = ({
   }, [projectId, projectList, setProject]);
 
   const items: TMenuItem[] = [
-    { key: '1', label: `通知`, icon:<BellFilled style={{fontSize: '16px'}}/>},
+    {
+      key: '1',
+      label: `通知`,
+      icon: <BellFilled style={{ fontSize: '16px' }} />
+    },
     {
       key: '2',
       label: selectedProjectName,
@@ -101,7 +105,7 @@ export const GlobalHeader = ({
         <StyledLink to={'#'}>
           <Image
             preview={false}
-            src="/src/assets/DevLog_header_logo.svg"
+            src="/assets/DevLog_header_logo.svg"
             alt="develog"
             width={152}
           />

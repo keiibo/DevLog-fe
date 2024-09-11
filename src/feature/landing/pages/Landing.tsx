@@ -25,10 +25,10 @@ export const Landing = (): React.JSX.Element => {
       <StyledWrapper vertical gap={120}>
         <Flex align="center" gap={234}>
           <Flex vertical gap={24}>
-            <Image preview={false} src="src/assets/Develog.svg" />
+            <Image preview={false} src="/assets/Develog.svg" />
             <Typewriter text="コーディングの旅を記録し、シェアしよう。" />
           </Flex>
-          <Image preview={false} src="src/assets/files.png" />
+          <Image preview={false} src="/assets/files.png" />
         </Flex>
         <Flex vertical gap={64}>
           {themeSectionData.map((theme) => (

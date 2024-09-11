@@ -8,7 +8,6 @@ import {
   mixinPadding24px
 } from '../../../style/Mixin';
 import { Button } from '../../element/button/Button';
-import deleteSvg from '../../../assets/AiOutlineDelete.svg';
 
 type TProps = {
   isOpened: boolean;
@@ -30,6 +29,8 @@ export const ConfirmDeleteModal = ({
   handleDelete,
   width
 }: TProps): React.JSX.Element => {
+  const deleteSvg = `/assets/AiOutlineDelete.svg`;
+
   return (
     <StyledModal
       centered
@@ -41,7 +42,7 @@ export const ConfirmDeleteModal = ({
       destroyOnClose
       closable={false}
     >
-      <StyledContent>
+      <StyledContent $deleteSvg={deleteSvg}>
         <Flex vertical gap={16}>
           <Flex vertical gap={4}>
             <StyledConfirmMessage>{confirmMessage}</StyledConfirmMessage>
@@ -69,7 +70,7 @@ const StyledModal = styled(Modal)`
   padding-bottom: 0;
 `;
 
-const StyledContent = styled.div`
+const StyledContent = styled.div<{ $deleteSvg: string }>`
   overflow: hidden;
   ${mixinPadding24px}
   &::before {
@@ -81,7 +82,7 @@ const StyledContent = styled.div`
     left: 35%;
     width: 90%; // サイズを大きくして完全にカバー
     height: 90%;
-    background: url(${deleteSvg}) no-repeat left center;
+    background: url(${(props) => props.$deleteSvg}) no-repeat left center;
     background-size: contain;
     transform: translate(-50%, -50%) rotate(-15deg); //
   }
@@ -94,7 +95,7 @@ const StyledContent = styled.div`
     left: -10%;
     width: 100%; // サイズを大きくして完全にカバー
     height: 100%;
-    background: url(${deleteSvg}) no-repeat center center;
+    background: url(${(props) => props.$deleteSvg}) no-repeat center center;
     background-size: contain;
     transform: translate(50%, 50%) rotate(15deg); //
   }

@@ -23,7 +23,7 @@ type TStory = StoryObj<typeof meta>;
 // Log ストーリー
 export const Log: TStory = {
   args: {
-    imageUrl: 'src/assets/log.png',
+    imageUrl: '/assets/log.png',
     imageAlt: '記録する',
     title: '記録する',
     description:
@@ -34,7 +34,7 @@ export const Log: TStory = {
 // Share ストーリー
 export const Share: StoryObj<TStory> = {
   args: {
-    imageUrl: 'src/assets/share.png',
+    imageUrl: '/assets/share.png',
     imageAlt: 'シェアする',
     title: 'シェアする',
     description:
@@ -45,7 +45,7 @@ export const Share: StoryObj<TStory> = {
 // Support ストーリー
 export const Support: TStory = {
   args: {
-    imageUrl: 'src/assets/beer.png',
+    imageUrl: '/assets/beer.png',
     imageAlt: '応援する',
     title: '応援する',
     description:

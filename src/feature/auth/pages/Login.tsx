@@ -77,7 +77,7 @@ export const Login = (): React.JSX.Element => {
       <StyledBox vertical gap={32}>
         <Image
           preview={false}
-          src="/src/assets/DevLog_header_logo.svg"
+          src="/assets/DevLog_header_logo.svg"
           alt="develog"
           width={'520px'}
         />

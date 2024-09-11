@@ -1,20 +1,20 @@
 export const themeSectionData = [
   {
-    imageUrl: 'src/assets/log.png',
+    imageUrl: '/assets/log.png',
     imageAlt: '記録する',
     title: '記録する',
     description: `プロジェクトを作成し、あなたの個人開発を記録しましょう。
       開発の進捗や学んだ点を詳細に記録して、いつでも振り返ることができます。`
   },
   {
-    imageUrl: 'src/assets/share.png',
+    imageUrl: '/assets/share.png',
     imageAlt: 'シェアする',
     title: 'シェアする',
     description: `あなたのプロジェクトやアイディアを共有し、コミュニティと知識を共有しましょう。
       他の開発者と協力し、フィードバックを受け取ることで、より良いソリューションを見つけ出すことができます。`
   },
   {
-    imageUrl: 'src/assets/beer.png',
+    imageUrl: '/assets/beer.png',
     imageAlt: '応援する',
     title: '応援する',
     description: `他の開発者のプロジェクトを支持し、モチベーションの向上に寄与しましょう。

@@ -132,7 +132,7 @@ export const CreateAccount = (): React.JSX.Element => {
           <Flex align="end">
             <Image
               preview={false}
-              src="/src/assets/DevLog_header_logo.svg"
+              src="/assets/DevLog_header_logo.svg"
               alt="develog"
               width={'520px'}
             />
