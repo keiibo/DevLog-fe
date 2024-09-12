@@ -1,7 +1,7 @@
 import { ConfigProvider } from 'antd';
 import React, { Suspense } from 'react';
 import { Theme } from './style/Theme';
-import { AppRouter } from './route/Router';
+import { AppRouter } from './router/Router';
 import GlobalStyle from './style/GlobalStyle';
 import { Loading } from './components/element/loading/Loading';
 
