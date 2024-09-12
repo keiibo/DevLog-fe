@@ -44,7 +44,7 @@ export const createTicket = async (
   return response.data;
 };
 /**
- * チケットの新規作成
+ * チケットの更新
  */
 export const updateTicket = async ({
   req,

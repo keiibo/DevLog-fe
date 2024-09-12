@@ -27,6 +27,7 @@ type TProps = {
   mode: TCategoryLabelMode;
   buttonTitle?: string;
   onButtonClick?: () => void;
+  isButtonDisabled?: boolean;
 };
 
 export const CategoryLabel = ({
@@ -35,7 +36,8 @@ export const CategoryLabel = ({
   defaultOpenState = false,
   mode,
   buttonTitle,
-  onButtonClick
+  onButtonClick,
+  isButtonDisabled = false
 }: TProps): React.JSX.Element => {
   const [isOpened, setIsOpened] = useState(defaultOpenState);
 
@@ -54,7 +56,11 @@ export const CategoryLabel = ({
           </StyledIcon>
         )}
         {mode === CategoryLabelMode.BUTTON && buttonTitle && onButtonClick && (
-          <Button type={'primary'} onClick={onButtonClick}>
+          <Button
+            type={'primary'}
+            onClick={onButtonClick}
+            disabled={isButtonDisabled}
+          >
             {buttonTitle}
           </Button>
         )}

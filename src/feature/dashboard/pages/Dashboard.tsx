@@ -1,6 +1,6 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { TGetProjectRes } from '../types/TProject';
+import { TGetProjectRes } from '../../detail/types/TProject';
 import { Flex } from 'antd';
 import styled from 'styled-components';
 import { mixinBgText } from '../../../style/Mixin';

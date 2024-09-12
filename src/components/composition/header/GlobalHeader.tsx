@@ -3,7 +3,7 @@ import { Header as AntDHeader } from 'antd/es/layout/layout';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { TGetProjectRes } from '../../../feature/dashboard/types/TProject';
+import { TGetProjectRes } from '../../../feature/detail/types/TProject';
 import { LayoutNum } from '../../../constant/LayoutNum';
 import { useDispatch } from 'react-redux';
 import { logout, TAuthSliceType } from '../../../store/slice/auth/authSlice';

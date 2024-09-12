@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   TCreateProjectReq,
   TGetProjectRes
-} from '../feature/dashboard/types/TProject';
+} from '../feature/detail/types/TProject';
 import { setConfig, sgetBaseUrl } from '../feature/auth/api/auth';
 
 /**

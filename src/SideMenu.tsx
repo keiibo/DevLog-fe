@@ -12,7 +12,7 @@ import Sider from 'antd/es/layout/Sider';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { TGetProjectRes } from './feature/dashboard/types/TProject';
+import { TGetProjectRes } from './feature/detail/types/TProject';
 import { TMenuItem } from './types/TMenuItem';
 
 type TProps = {

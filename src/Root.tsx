@@ -6,7 +6,7 @@ import { styled } from 'styled-components';
 import { Content } from 'antd/es/layout/layout';
 import { LayoutNum } from './constant/LayoutNum';
 import { useQuery } from 'react-query';
-import { TGetProjectRes } from './feature/dashboard/types/TProject';
+import { TGetProjectRes } from './feature/detail/types/TProject';
 import { getProjects } from './api/project';
 import { SideMenu } from './SideMenu';
 import {

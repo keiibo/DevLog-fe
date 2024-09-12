@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button as AntDButton } from 'antd';
 import styled from 'styled-components';
-import { ButtonHTMLType } from 'antd/es/button';
+import { ButtonHTMLType, ButtonProps } from 'antd/es/button';
 
-type TProps = {
+type TProps = ButtonProps & {
   onClick?: () => void; // クリックイベントの型定義
   children: React.ReactNode; // ボタンに表示する内容
   width?: string; // ボタンの幅
@@ -18,7 +18,8 @@ export const Button = ({
   width,
   height,
   htmlType,
-  type = 'default' // デフォルトタイプを'default'に設定
+  type = 'default', // デフォルトタイプを'default'に設定
+  ...restProps
 }: TProps): React.JSX.Element => {
   return (
     <StyledButton
@@ -27,6 +28,7 @@ export const Button = ({
       type={type}
       width={width}
       height={height}
+      {...restProps}
     >
       {children}
     </StyledButton>

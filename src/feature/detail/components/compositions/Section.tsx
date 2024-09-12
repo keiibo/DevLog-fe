@@ -17,6 +17,7 @@ type TProps = {
   mode: TCategoryLabelMode;
   buttonTitle?: string;
   onButtonClick?: () => void;
+  isButtonDisabled?: boolean;
 };
 
 export const Section = ({
@@ -24,7 +25,8 @@ export const Section = ({
   children,
   mode,
   onButtonClick,
-  buttonTitle
+  buttonTitle,
+  isButtonDisabled = false
 }: TProps): React.JSX.Element => {
   return (
     <StyledFlex vertical gap={16}>
@@ -33,6 +35,7 @@ export const Section = ({
         mode={mode}
         onButtonClick={onButtonClick}
         buttonTitle={buttonTitle}
+        isButtonDisabled={isButtonDisabled}
       />
       <StyledSectionContent>{children}</StyledSectionContent>
     </StyledFlex>
