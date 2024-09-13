@@ -47,6 +47,7 @@ export const Detail = (): React.JSX.Element => {
   const updateMutation = useMutation(updateProject, {
     onSuccess: () => {
       queryClient.invalidateQueries('projectDetail');
+      queryClient.invalidateQueries('projects');
       notification.success({
         message: `プロジェクト情報を更新しました`,
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
