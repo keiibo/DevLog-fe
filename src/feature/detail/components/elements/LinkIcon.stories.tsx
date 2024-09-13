@@ -47,6 +47,7 @@ type TStory = StoryObj<typeof meta>;
 export const Default: TStory = {
   args: {
     type: IconType.GITHUB,
+    uuid: '',
     isInTooltip: true
   }
 };
