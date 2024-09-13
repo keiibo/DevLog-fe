@@ -14,3 +14,7 @@ export type TLinkIcon = {
 
 export type TPostLinkIconsReq = TLinkIconListData;
 export type TPostLinkIconsRes = TLinkIconListData;
+export type TDeleteLinkIconReq = {
+  projectId: string;
+  uuid: string;
+};

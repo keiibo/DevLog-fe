@@ -22,12 +22,6 @@ const meta = {
 export default meta;
 type TStory = StoryObj<typeof meta>;
 
-// export const Default: TStory = {
-//   args: {
-//     linkIconList: [],
-//     onOk: () => {}
-//   }
-// };
 export const Default: TStory = {
   args: {
     children: 'test',
@@ -40,7 +34,8 @@ export const Default: TStory = {
       url: '',
       iconType: '',
       uuid: ''
-    }
+    },
+    setIsOpened: () => {}
   },
   render: () => (
     <div>
@@ -55,6 +50,7 @@ export const Default: TStory = {
           iconType: '',
           uuid: ''
         }}
+        setIsOpened={() => {}}
       >
         test
       </LinkIconSettingTooltip>

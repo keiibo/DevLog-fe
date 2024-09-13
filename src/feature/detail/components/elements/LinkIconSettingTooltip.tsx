@@ -19,11 +19,16 @@ import { IconType, TIconType } from '../../../../components/element/icon/Icon';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
 import { Loading } from '../../../../components/element/loading/Loading';
-import { TLinkIcon, TPostLinkIconsReq } from '../../types/TDetail';
+import {
+  TDeleteLinkIconReq,
+  TLinkIcon,
+  TPostLinkIconsReq
+} from '../../types/TDetail';
 import { useMutation } from 'react-query';
-import { postLinkIcons } from '../../api/detail';
+import { deleteLinkIcon, postLinkIcons } from '../../api/detail';
 import { DeleteFilled } from '@ant-design/icons';
 import { v4 } from 'uuid';
+import { ConfirmDeleteModal } from '../../../../components/composition/modal/ConfirmDeleteModal';
 
 type TProps = {
   linkIconList: TLinkIcon[];
@@ -31,6 +36,7 @@ type TProps = {
   onOk: () => void;
   children: React.ReactNode;
   isOpen: boolean;
+  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   hasDelete: boolean;
 };
 
@@ -39,12 +45,14 @@ export const LinkIconSettingTooltip = ({
   setLinkIcon,
   onOk,
   isOpen,
+  setIsOpened,
   children,
   hasDelete
 }: TProps): React.JSX.Element => {
   const [form] = useForm();
   const [iconValue, setIconValue] = useState<TIconType>();
   const { id } = useParams();
+  const [isOpenedDeleteModal, setIsOpenedDeleteModal] = useState(false);
 
   if (!id) <Loading />;
 
@@ -84,6 +92,23 @@ export const LinkIconSettingTooltip = ({
     postLinkIconMutation.mutate(req);
   };
 
+  const mutation = useMutation(deleteLinkIcon, {
+    onSuccess: () => {
+      onOk();
+      setIsOpenedDeleteModal(false);
+    },
+    onError: () => {}
+  });
+
+  const handleDelete = () => {
+    const req: TDeleteLinkIconReq = {
+      projectId: id || '',
+      uuid: setLinkIcon.uuid
+    };
+
+    mutation.mutate(req);
+  };
+
   const popoverContent = (
     <StyledFlex gap={24} align="center" justify="center">
       <Flex align="center">
@@ -94,7 +119,16 @@ export const LinkIconSettingTooltip = ({
         />
       </Flex>
       <Flex vertical>
-        <Flex justify="end">{hasDelete && <StyledDeleteOutlined />}</Flex>
+        <Flex justify="end">
+          {hasDelete && (
+            <StyledDeleteOutlined
+              onClick={() => {
+                setIsOpened(false);
+                setIsOpenedDeleteModal(true);
+              }}
+            />
+          )}
+        </Flex>
         <Form onFinish={handleSaveLinkIcon} form={form}>
           <StyledFormItem
             label="名前"
@@ -137,14 +171,26 @@ export const LinkIconSettingTooltip = ({
   );
 
   return (
-    <Popover
-      content={popoverContent}
-      trigger="click"
-      placement="top"
-      open={isOpen}
-    >
-      {children}
-    </Popover>
+    <>
+      <Popover
+        content={popoverContent}
+        trigger="click"
+        placement="top"
+        open={isOpen}
+      >
+        {children}
+      </Popover>{' '}
+      {isOpenedDeleteModal && (
+        <ConfirmDeleteModal
+          isOpened={isOpenedDeleteModal}
+          confirmMessage={`アイコン「${setLinkIcon.name}」を削除してよろしいですか？`}
+          handleClose={() => setIsOpenedDeleteModal(false)}
+          handleCancel={() => setIsOpenedDeleteModal(false)}
+          handleDelete={handleDelete}
+          width={'640px'}
+        />
+      )}
+    </>
   );
 };
 

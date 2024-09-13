@@ -80,6 +80,7 @@ export const LinkIcon = ({
         setIsOpened(false);
       }}
       isOpen={isOpened}
+      setIsOpened={setIsOpened}
       hasDelete={type !== IconType.PLUS}
     >
       <Tooltip title={name}>

@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
-import { TPostLinkIconsReq, TPostLinkIconsRes } from '../types/TDetail';
+import {
+  TDeleteLinkIconReq,
+  TPostLinkIconsReq,
+  TPostLinkIconsRes
+} from '../types/TDetail';
 import { TUpdateProjectReq } from '../types/TProject';
 
 /**
@@ -16,6 +20,20 @@ export const postLinkIcons = async (
   );
   return response.data;
 };
+
+/**
+ * リンクアイコンの削除
+ */
+export const deleteLinkIcon = async (
+  req: TDeleteLinkIconReq
+): Promise<TPostLinkIconsRes> => {
+  const response = await axios.delete(
+    `${sgetBaseUrl()}/api/detail/linkIcon/${req.projectId}/${req.uuid}`,
+    setConfig()
+  );
+  return response.data;
+};
+
 /**
  * プロジェクト更新
  */
