@@ -122,18 +122,22 @@ export const Detail = (): React.JSX.Element => {
           {detail?.linkIconList.map((data, index) => (
             <StyledLinkIcon key={index}>
               <LinkIcon
+                linkIconList={detail.linkIconList}
                 type={data.iconType}
                 link={data.url}
                 name={data.name}
+                uuid={data.uuid}
                 isInTooltip={false}
               />
             </StyledLinkIcon>
           ))}
           <StyledLinkIcon>
+            {/* 追加アイコン */}
             <LinkIcon
               linkIconList={detail?.linkIconList || []}
               type={IconType.PLUS}
               isInTooltip={false}
+              uuid={''}
             />
           </StyledLinkIcon>
         </StyledIconFlex>
