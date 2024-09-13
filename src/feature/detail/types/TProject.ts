@@ -1,4 +1,4 @@
-import { TLinkIconList } from './TDetail';
+import { TLinkIcon } from './TDetail';
 
 export type TGetProjectRes = {
   _id: string;
@@ -6,7 +6,7 @@ export type TGetProjectRes = {
   name: string;
   detail: string;
   limitDate: string;
-  linkIconList: TLinkIconList[];
+  linkIconList: TLinkIcon[];
 };
 
 export type TCreateProjectReq = {

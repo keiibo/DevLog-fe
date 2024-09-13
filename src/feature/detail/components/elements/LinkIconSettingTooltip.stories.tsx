@@ -33,11 +33,29 @@ export const Default: TStory = {
     children: 'test',
     linkIconList: [],
     onOk: () => {},
-    isOpen: true
+    isOpen: true,
+    hasDelete: false,
+    setLinkIcon: {
+      name: '',
+      url: '',
+      iconType: '',
+      uuid: ''
+    }
   },
   render: () => (
     <div>
-      <LinkIconSettingTooltip linkIconList={[]} onOk={() => {}} isOpen={true}>
+      <LinkIconSettingTooltip
+        linkIconList={[]}
+        onOk={() => {}}
+        isOpen={true}
+        hasDelete={false}
+        setLinkIcon={{
+          name: '',
+          url: '',
+          iconType: '',
+          uuid: ''
+        }}
+      >
         test
       </LinkIconSettingTooltip>
     </div>

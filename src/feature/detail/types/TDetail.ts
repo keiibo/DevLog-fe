@@ -1,16 +1,16 @@
 import { TIconType } from '../../../components/element/icon/Icon';
 
-export type TLinkIcon = {
+export type TLinkIconListData = {
   projectId: string;
-  linkIconList: TLinkIconList[];
+  linkIconList: TLinkIcon[];
 };
 
-export type TLinkIconList = {
+export type TLinkIcon = {
   name: string;
   url: string;
   iconType: TIconType;
+  uuid: string;
 };
 
-export type TPostLinkIconsReq = TLinkIcon;
-export type TPostLinkIconsRes = TLinkIcon;
-
+export type TPostLinkIconsReq = TLinkIconListData;
+export type TPostLinkIconsRes = TLinkIconListData;

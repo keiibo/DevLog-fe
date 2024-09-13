@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   mixinBgMainLight,
+  mixinBoldFontSize16px,
   mixinBorderRadius8px,
-  mixinPadding8px,
   mixinTextColor
 } from '../../../../style/Mixin';
 import { LinkIcon } from './LinkIcon';
@@ -19,22 +19,28 @@ import { IconType, TIconType } from '../../../../components/element/icon/Icon';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
 import { Loading } from '../../../../components/element/loading/Loading';
-import { TLinkIconList, TPostLinkIconsReq } from '../../types/TDetail';
+import { TLinkIcon, TPostLinkIconsReq } from '../../types/TDetail';
 import { useMutation } from 'react-query';
 import { postLinkIcons } from '../../api/detail';
+import { DeleteFilled } from '@ant-design/icons';
+import { v4 } from 'uuid';
 
 type TProps = {
-  linkIconList: TLinkIconList[];
+  linkIconList: TLinkIcon[];
+  setLinkIcon: TLinkIcon;
   onOk: () => void;
   children: React.ReactNode;
   isOpen: boolean;
+  hasDelete: boolean;
 };
 
 export const LinkIconSettingTooltip = ({
   linkIconList,
+  setLinkIcon,
   onOk,
   isOpen,
-  children
+  children,
+  hasDelete
 }: TProps): React.JSX.Element => {
   const [form] = useForm();
   const [iconValue, setIconValue] = useState<TIconType>();
@@ -51,57 +57,82 @@ export const LinkIconSettingTooltip = ({
   });
 
   const handleSaveLinkIcon = () => {
+    const newIcon = {
+      name: form.getFieldValue('name'),
+      url: form.getFieldValue('url'),
+      iconType: form.getFieldValue('iconType'),
+      uuid: setLinkIcon.uuid || v4()
+    };
+
+    let updatedLinkIconList;
+
+    if (setLinkIcon.uuid) {
+      // 編集の場合：既存のアイコンを更新
+      updatedLinkIconList = linkIconList.map((icon) =>
+        icon.uuid === setLinkIcon.uuid ? newIcon : icon
+      );
+    } else {
+      // 新規作成の場合：新しいアイコンを追加
+      updatedLinkIconList = [...linkIconList, newIcon];
+    }
+
     const req: TPostLinkIconsReq = {
       projectId: id || '',
-      linkIconList: [
-        ...linkIconList,
-        {
-          name: form.getFieldValue('name'),
-          url: form.getFieldValue('url'),
-          iconType: form.getFieldValue('iconType')
-        }
-      ]
+      linkIconList: updatedLinkIconList
     };
 
     postLinkIconMutation.mutate(req);
   };
 
   const popoverContent = (
-    <StyledFlex align="center" justify="center">
-      <StyledBubble gap={24} align="center" justify="center">
-        <Flex align="center">
-          <LinkIcon type={iconValue || 'none'} isInTooltip />
-        </Flex>
-        <Flex vertical>
-          <Form onFinish={handleSaveLinkIcon} form={form}>
-            <StyledFormItem label="名前" name="name">
-              <StyleInput />
-            </StyledFormItem>
-            <StyledFormItem label="URL" name="url">
-              <StyleInput />
-            </StyledFormItem>
-            <StyledFormItem label="アイコン" name="iconType">
-              <StyledSelect
-                value={iconValue}
-                getPopupContainer={(trigger) => trigger.parentNode}
-                onChange={(value) => setIconValue(value)}
-              >
-                {Object.values(IconType).map((iconType) => (
-                  <Option key={iconType} value={iconType}>
-                    {iconType}
-                  </Option>
-                ))}
-              </StyledSelect>
-            </StyledFormItem>
+    <StyledFlex gap={24} align="center" justify="center">
+      <Flex align="center">
+        <LinkIcon
+          type={iconValue || 'none'}
+          isInTooltip
+          uuid={setLinkIcon.uuid}
+        />
+      </Flex>
+      <Flex vertical>
+        <Flex justify="end">{hasDelete && <StyledDeleteOutlined />}</Flex>
+        <Form onFinish={handleSaveLinkIcon} form={form}>
+          <StyledFormItem
+            label="名前"
+            name="name"
+            initialValue={setLinkIcon.name}
+          >
+            <StyleInput />
+          </StyledFormItem>
+          <StyledFormItem label="URL" name="url" initialValue={setLinkIcon.url}>
+            <StyleInput />
+          </StyledFormItem>
+          <StyledFormItem
+            label="アイコン"
+            name="iconType"
+            initialValue={
+              setLinkIcon.iconType === IconType.PLUS ? '' : setLinkIcon.iconType
+            }
+          >
+            <StyledSelect
+              value={iconValue}
+              getPopupContainer={(trigger) => trigger.parentNode}
+              onChange={(value) => setIconValue(value)}
+            >
+              {Object.values(IconType).map((iconType) => (
+                <Option key={iconType} value={iconType}>
+                  {iconType}
+                </Option>
+              ))}
+            </StyledSelect>
+          </StyledFormItem>
 
-            <Flex justify="end">
-              <Button type="primary" htmlType="submit">
-                OK
-              </Button>
-            </Flex>
-          </Form>
-        </Flex>
-      </StyledBubble>
+          <Flex justify="end">
+            <Button type="primary" htmlType="submit">
+              OK
+            </Button>
+          </Flex>
+        </Form>
+      </Flex>
     </StyledFlex>
   );
 
@@ -126,38 +157,10 @@ const StyledFlex = styled(Flex)`
   ${mixinBorderRadius8px}
 `;
 
-const StyledBubble = styled(Flex)`
-  position: relative; // 吹き出しの位置調整のための基準点を設定
-  padding: 16px 8px; // 内容物との間隔
-  ${mixinPadding8px}
-  z-index:10000;
-  /* &::after {
-    content: '';
-    position: absolute;
-    bottom: -11px; // 吹き出しの下部に配置し、枠線を見せるために位置を微調整
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 11px 11px 0 11px; // 三角形の大きさを1px大きくして背景色の枠線を見せる
-    border-color: ${Colors.TEXT} transparent transparent transparent; // 枠線色を適用
-    z-index: 1000;
-  } */
-
-  /* &::before {
-    content: '';
-    position: absolute;
-    bottom: -10px; // 吹き出しの直下
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 10px 10px 0 10px;
-    border-color: ${Colors.MAIN_LIGHT} transparent transparent transparent; // 背景色と同じ
-    z-index: 10000;
-  } */
+const StyledDeleteOutlined = styled(DeleteFilled)`
+  ${mixinTextColor}
+  ${mixinBoldFontSize16px}
+  cursor: pointer;
 `;
 
 const StyledFormItem = styled(FormItem)`
