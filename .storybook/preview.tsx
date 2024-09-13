@@ -8,6 +8,7 @@ import GlobalStyle from '../src/style/GlobalStyle';
 import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from '../src/store/slice/auth/authSlice';
 import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 export const preview: Preview = {
   parameters: {
@@ -36,18 +37,21 @@ const store = configureStore({
     auth: loginReducer
   }
 });
+const queryClient = new QueryClient();
 
 export const decorators = [
   (Story) => (
     <ConfigProvider theme={Theme}>
-      <Provider store={store}>
-        <MemoryRouter>
-          <GlobalStyle />
-          <Routes>
-            <Route path="/" element={<Story />} />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <MemoryRouter>
+            <GlobalStyle />
+            <Routes>
+              <Route path="/" element={<Story />} />
+            </Routes>
+          </MemoryRouter>
+        </Provider>
+      </QueryClientProvider>
     </ConfigProvider>
   )
 ];

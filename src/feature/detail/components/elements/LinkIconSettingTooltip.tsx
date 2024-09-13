@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Flex, Popover } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
@@ -26,11 +26,15 @@ import { postLinkIcons } from '../../api/detail';
 type TProps = {
   linkIconList: TLinkIconList[];
   onOk: () => void;
+  children: React.ReactNode;
+  isOpen: boolean;
 };
 
 export const LinkIconSettingTooltip = ({
   linkIconList,
-  onOk
+  onOk,
+  isOpen,
+  children
 }: TProps): React.JSX.Element => {
   const [form] = useForm();
   const [iconValue, setIconValue] = useState<TIconType>();
@@ -41,6 +45,8 @@ export const LinkIconSettingTooltip = ({
   const postLinkIconMutation = useMutation(postLinkIcons, {
     onSuccess: () => {
       onOk();
+      form.resetFields();
+      setIconValue('none');
     }
   });
 
@@ -60,7 +66,7 @@ export const LinkIconSettingTooltip = ({
     postLinkIconMutation.mutate(req);
   };
 
-  return (
+  const popoverContent = (
     <StyledFlex align="center" justify="center">
       <StyledBubble gap={24} align="center" justify="center">
         <Flex align="center">
@@ -97,6 +103,17 @@ export const LinkIconSettingTooltip = ({
         </Flex>
       </StyledBubble>
     </StyledFlex>
+  );
+
+  return (
+    <Popover
+      content={popoverContent}
+      trigger="click"
+      placement="top"
+      open={isOpen}
+    >
+      {children}
+    </Popover>
   );
 };
 

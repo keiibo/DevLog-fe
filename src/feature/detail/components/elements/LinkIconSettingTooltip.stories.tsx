@@ -22,9 +22,24 @@ const meta = {
 export default meta;
 type TStory = StoryObj<typeof meta>;
 
+// export const Default: TStory = {
+//   args: {
+//     linkIconList: [],
+//     onOk: () => {}
+//   }
+// };
 export const Default: TStory = {
   args: {
+    children: 'test',
     linkIconList: [],
-    onOk: () => {}
-  }
+    onOk: () => {},
+    isOpen: true
+  },
+  render: () => (
+    <div>
+      <LinkIconSettingTooltip linkIconList={[]} onOk={() => {}} isOpen={true}>
+        test
+      </LinkIconSettingTooltip>
+    </div>
+  )
 };

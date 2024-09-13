@@ -23,7 +23,6 @@ import { NOTIFICATION_TIME } from '../../../constant/Notification';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId } = useParams();
-  const [mainView, setMainView] = useState<DOMRect>();
   const ref = useRef<HTMLElement>(null);
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [isDetailEdit, setIsDetailEdit] = useState(false);
@@ -38,11 +37,6 @@ export const Detail = (): React.JSX.Element => {
   useEffect(() => {
     setDetail(data);
   }, [data]);
-
-  useEffect(() => {
-    const rect = ref.current?.parentElement?.getBoundingClientRect();
-    setMainView(rect);
-  }, [ref]);
 
   const updateMutation = useMutation(updateProject, {
     onSuccess: () => {
@@ -132,7 +126,6 @@ export const Detail = (): React.JSX.Element => {
                 link={data.url}
                 name={data.name}
                 isInTooltip={false}
-                mainView={mainView}
               />
             </StyledLinkIcon>
           ))}
@@ -141,7 +134,6 @@ export const Detail = (): React.JSX.Element => {
               linkIconList={detail?.linkIconList || []}
               type={IconType.PLUS}
               isInTooltip={false}
-              mainView={mainView}
             />
           </StyledLinkIcon>
         </StyledIconFlex>
