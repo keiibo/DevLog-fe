@@ -43,7 +43,7 @@ export const WeeklyBoard = ({ ticketList }: TProps): React.JSX.Element => {
     setWeekData(currentWeekData);
     // データ群の最大件数を取得
     const maxDataCount = Math.max(...currentWeekData.map((data) => data.count));
-    setMaxCount(maxDataCount < 5 ? 5 : maxDataCount); // 5未満の場合は5を設定
+    setMaxCount(maxDataCount < 5 ? 5 : maxDataCount + 2); // 5未満の場合は5を設定
   }, [ticketList]);
 
   // 今週の日付を取得してチケットをカウントする
