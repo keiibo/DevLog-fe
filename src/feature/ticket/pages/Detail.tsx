@@ -27,6 +27,7 @@ import { DateFormat } from '../../../constant/DateFormat';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Loading } from '../../../components/element/loading/Loading';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
+import { QueryKey } from '../../../constant/QueryKey';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId, ticketId } = useParams();
@@ -38,10 +39,12 @@ export const Detail = (): React.JSX.Element => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { data: ticket, isLoading } = useQuery('ticketDetail', () =>
-    getTicket(ticketId || ''),  {
+  const { data: ticket, isLoading } = useQuery(
+    QueryKey.TICKET_DETAIL,
+    () => getTicket(ticketId || ''),
+    {
       staleTime: 0, // キャッシュをすぐに無効化する
-      cacheTime: 0, // キャッシュを残さない
+      cacheTime: 0 // キャッシュを残さない
     }
   );
 
@@ -54,7 +57,7 @@ export const Detail = (): React.JSX.Element => {
         message: 'チケットを更新しました',
         duration: NOTIFICATION_TIME.SUCCESS
       });
-      queryClient.invalidateQueries('ticketDetail');
+      queryClient.invalidateQueries(QueryKey.TICKET_DETAIL);
       setIsEditMode(false);
     },
     onError: () => {
@@ -76,7 +79,7 @@ export const Detail = (): React.JSX.Element => {
         message: 'チケットを削除しました',
         duration: NOTIFICATION_TIME.SUCCESS
       });
-      queryClient.invalidateQueries('ticketDetail');
+      queryClient.invalidateQueries(QueryKey.TICKET_DETAIL);
       navigate(`/${projectId}/ticket`);
     },
     onError: () => {

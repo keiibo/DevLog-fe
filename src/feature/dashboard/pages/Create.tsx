@@ -24,6 +24,7 @@ import {
 } from '../../../style/Mixin';
 import { DateFormat } from '../../../constant/DateFormat';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
+import { QueryKey } from '../../../constant/QueryKey';
 
 export const Create = (): React.JSX.Element => {
   const queryClient = useQueryClient();
@@ -101,7 +102,7 @@ export const Create = (): React.JSX.Element => {
         description: '新しいプロジェクトが正常に作成されました。',
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
-      queryClient.invalidateQueries('projects');
+      queryClient.invalidateQueries(QueryKey.PROJECT_LIST);
       navigate(`/${res.projectId}/dashboard`);
     },
     onError: () => {

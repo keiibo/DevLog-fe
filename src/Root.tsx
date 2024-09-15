@@ -17,12 +17,13 @@ import {
 import { Loading } from './components/element/loading/Loading';
 import { useSelector } from 'react-redux';
 import { selectAuth } from './store/slice/auth/authSlice';
+import { QueryKey } from './constant/QueryKey';
 
 export const Root = (): React.JSX.Element => {
   const auth = useSelector(selectAuth);
 
   // storeに保存されたユーザー情報からuserIdを取得し、reqに使う
-  const { data: projectList, refetch } = useQuery('projects', () =>
+  const { data: projectList, refetch } = useQuery(QueryKey.PROJECT_LIST, () =>
     getProjects(auth.userId)
   );
   const { id: projectId } = useParams();

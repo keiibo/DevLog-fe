@@ -26,6 +26,7 @@ import { Modal } from '../../../../components/element/modal/Modal';
 import { ModalHeader } from '../../../../components/element/modal/ModalHeader';
 import { ModalBody } from '../../../../components/element/modal/ModalBody';
 import { ModalFooter } from '../../../../components/element/modal/ModalFooter';
+import { QueryKey } from '../../../../constant/QueryKey';
 
 type TProps = {
   isOpened: boolean;
@@ -39,7 +40,7 @@ export const SettingModal = ({
   title
 }: TProps): React.JSX.Element => {
   const { id: projectId } = useParams();
-  const { data } = useQuery('categoryList', () =>
+  const { data } = useQuery(QueryKey.CATEGORY_LIST, () =>
     getCategories(projectId || '')
   );
 

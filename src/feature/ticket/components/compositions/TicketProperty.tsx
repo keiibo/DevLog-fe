@@ -35,6 +35,7 @@ import SimpleMdeReact from 'react-simplemde-editor';
 import SimpleMDE from 'easymde';
 import 'easymde/dist/easymde.min.css';
 import ReactMarkdown from 'react-markdown';
+import { QueryKey } from '../../../../constant/QueryKey';
 
 type TProps = {
   isEditMode: boolean;
@@ -57,7 +58,9 @@ export const TicketProperty = ({
   const [markdownValue, setMarkdownValue] = useState('');
 
   const { id } = useParams();
-  const { data } = useQuery('category', () => getCategories(id || ''));
+  const { data } = useQuery(QueryKey.CATEGORY_LIST, () =>
+    getCategories(id || '')
+  );
 
   const priorityOption = [
     { label: getPriorityStr(Priority.HIGH), value: Priority.HIGH },

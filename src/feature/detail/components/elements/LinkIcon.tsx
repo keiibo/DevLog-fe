@@ -14,6 +14,7 @@ import {
 import { LinkIconSettingTooltip } from './LinkIconSettingTooltip';
 import { TLinkIcon } from '../../types/TDetail';
 import { useQueryClient } from 'react-query';
+import { QueryKey } from '../../../../constant/QueryKey';
 
 type TProps = {
   type: TIconType;
@@ -76,7 +77,7 @@ export const LinkIcon = ({
         uuid: uuid || ''
       }}
       onOk={() => {
-        queryClient.invalidateQueries('projectDetail');
+        queryClient.invalidateQueries(QueryKey.PROJECT_DETAIL);
         setIsOpened(false);
       }}
       isOpen={isOpened}

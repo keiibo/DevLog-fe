@@ -18,6 +18,7 @@ import { NOTIFICATION_TIME } from '../../../../constant/Notification';
 import { Modal } from '../../../../components/element/modal/Modal';
 import { ModalHeader } from '../../../../components/element/modal/ModalHeader';
 import { ModalBody } from '../../../../components/element/modal/ModalBody';
+import { QueryKey } from '../../../../constant/QueryKey';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
@@ -84,7 +85,7 @@ export const CreateModal = ({
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
       setIsOpenedNewCreateModal(false);
-      queryClient.invalidateQueries('tickets');
+      queryClient.invalidateQueries(QueryKey.TICKET_LIST);
       form.resetFields();
       setSelectedCategories([]);
     },

@@ -19,6 +19,7 @@ import {
   midMessages,
   endMessages
 } from '../../../../../constant/Message';
+import { startOfWeek, endOfWeek, parseISO, isWithinInterval } from 'date-fns';
 
 type TProps = {
   ticketList: TTicket[];
@@ -28,15 +29,20 @@ export const WeeklyBoard = ({ ticketList }: TProps): React.JSX.Element => {
   const [weekData, setWeekData] = useState<{ name: string; count: number }[]>(
     []
   );
+  // 今週の開始日と終了日を取得（週の開始日を日曜日とする場合）
+  const now = new Date();
+  const weekStart = startOfWeek(now, { weekStartsOn: 0 });
+  const weekEnd = endOfWeek(now, { weekStartsOn: 0 });
+
   const [message, setMessage] = useState<string>('');
 
-  const [maxCount, setMaxCount] = useState(5); // 縦軸の最大値の初期値は5
+  const [maxCount, setMaxCount] = useState(5);
 
   useEffect(() => {
     // 初回レンダリング時にのみメッセージを設定
     const initialMessage = getMessage();
     setMessage(initialMessage);
-  }, []); // 空の依存配列により初回レンダリング時のみ実行される
+  }, []);
 
   useEffect(() => {
     const currentWeekData = getCurrentWeekData(ticketList);
@@ -139,10 +145,19 @@ export const WeeklyBoard = ({ ticketList }: TProps): React.JSX.Element => {
             <p>
               完了した件数を表示しています。 今週は
               {
-                ticketList.filter(
-                  (ticket) =>
-                    ticket.completedAt && ticket.status === Status.COMPLETED
-                ).length
+                ticketList.filter((ticket) => {
+                  if (
+                    ticket.completedAt &&
+                    ticket.status === Status.COMPLETED
+                  ) {
+                    const completedDate = parseISO(ticket.completedAt);
+                    return isWithinInterval(completedDate, {
+                      start: weekStart,
+                      end: weekEnd
+                    });
+                  }
+                  return false;
+                }).length
               }
               件のチケットを完了にしました！
             </p>

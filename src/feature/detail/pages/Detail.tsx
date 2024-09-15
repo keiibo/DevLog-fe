@@ -20,6 +20,7 @@ import { updateProject } from '../api/detail';
 import { TGetProjectRes, TUpdateProjectReq } from '../types/TProject';
 import { useForm } from 'antd/es/form/Form';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
+import { QueryKey } from '../../../constant/QueryKey';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId } = useParams();
@@ -29,7 +30,9 @@ export const Detail = (): React.JSX.Element => {
   const [form] = useForm();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery('projectDetail', () => getProject(projectId || ''));
+  const { data } = useQuery(QueryKey.PROJECT_DETAIL, () =>
+    getProject(projectId || '')
+  );
   const [detail, setDetail] = useState<TGetProjectRes>();
 
   if (!data || !projectId) <Loading />;
@@ -40,8 +43,8 @@ export const Detail = (): React.JSX.Element => {
 
   const updateMutation = useMutation(updateProject, {
     onSuccess: () => {
-      queryClient.invalidateQueries('projectDetail');
-      queryClient.invalidateQueries('projects');
+      queryClient.invalidateQueries(QueryKey.PROJECT_DETAIL);
+      queryClient.invalidateQueries(QueryKey.PROJECT_LIST);
       notification.success({
         message: `プロジェクト情報を更新しました`,
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
