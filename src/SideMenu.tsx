@@ -17,9 +17,10 @@ import { TMenuItem } from './types/TMenuItem';
 
 type TProps = {
   project: TGetProjectRes;
+  canView: boolean;
 };
 
-export const SideMenu = ({ project }: TProps): React.JSX.Element => {
+export const SideMenu = ({ project, canView }: TProps): React.JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -48,20 +49,20 @@ export const SideMenu = ({ project }: TProps): React.JSX.Element => {
     navigate(`/${project?.projectId}/${e.key}`);
   };
   return (
-    <StyledSider>
+    <StyledSider $view={canView} collapsed={canView}>
       <StyledMenu
         mode="inline"
         selectedKeys={selectedKeys}
         defaultSelectedKeys={['dashboard']}
         items={items}
         onClick={handleMenuClick}
+        inlineCollapsed={canView}
       />
     </StyledSider>
   );
 };
 
-const StyledSider = styled(Sider)`
-  display: flex;
+const StyledSider = styled(Sider)<{ $view: boolean }>`
   .ant-layout-sider-children {
     width: 100%;
     display: flex;

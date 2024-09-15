@@ -21,6 +21,8 @@ import { QueryKey } from './constant/QueryKey';
 
 export const Root = (): React.JSX.Element => {
   const auth = useSelector(selectAuth);
+  // サイドメニューの開閉
+  const [canView, setCanView] = useState(false);
 
   // storeに保存されたユーザー情報からuserIdを取得し、reqに使う
   const { data: projectList, refetch } = useQuery(QueryKey.PROJECT_LIST, () =>
@@ -47,10 +49,12 @@ export const Root = (): React.JSX.Element => {
         setProject={setProject}
         selectedProjectName={project ? project.name : '未選択'}
         auth={auth}
+        canView={canView}
+        setCanView={setCanView}
       />
       {project ? (
         <StyledMainLayout>
-          <SideMenu project={project} />
+          <SideMenu project={project} canView={canView} />
           <StyledLayout>
             <StyledContent>
               <Outlet context={project} />

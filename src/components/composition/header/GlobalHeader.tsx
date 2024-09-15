@@ -9,6 +9,9 @@ import { useDispatch } from 'react-redux';
 import { logout, TAuthSliceType } from '../../../store/slice/auth/authSlice';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
 import { BellFilled } from '@ant-design/icons';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { Colors } from '../../../style/Colors';
+
 // import { useAuth0 } from '@auth0/auth0-react';
 
 type TMenuItem = Required<MenuProps>['items'][number];
@@ -18,13 +21,17 @@ type TProps = {
   projectList: TGetProjectRes[];
   setProject: React.Dispatch<React.SetStateAction<TGetProjectRes | null>>;
   auth: TAuthSliceType;
+  canView: boolean;
+  setCanView: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const GlobalHeader = ({
   selectedProjectName,
   projectList,
   setProject,
-  auth
+  auth,
+  canView,
+  setCanView
 }: TProps): React.JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -101,7 +108,13 @@ export const GlobalHeader = ({
 
   return (
     <StyledAntDHeader>
-      <Flex align="center">
+      <Flex align="center" gap={20}>
+        <RxHamburgerMenu
+          color={Colors.TEXT}
+          fontSize={24}
+          cursor={'pointer'}
+          onClick={() => setCanView(!canView)}
+        />
         <StyledLink to={'#'}>
           <Image
             preview={false}
@@ -126,6 +139,7 @@ export const GlobalHeader = ({
 
 const StyledAntDHeader = styled(AntDHeader)`
   width: 100%;
+  padding: 0 16px;
   height: ${LayoutNum.HEADER_HEIGHT}px;
   display: flex;
   align-items: center;

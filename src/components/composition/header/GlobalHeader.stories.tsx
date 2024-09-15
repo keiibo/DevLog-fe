@@ -31,6 +31,8 @@ const auth: TAuthSliceType = {
 export const Default: TStory = {
   args: {
     selectedProjectName: 'プロジェクト名',
+    canView: true,
+    setCanView: () => {},
     projectList: [
       {
         _id: '1',
