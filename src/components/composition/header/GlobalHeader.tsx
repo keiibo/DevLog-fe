@@ -56,7 +56,14 @@ export const GlobalHeader = ({
     {
       key: '1',
       label: `通知`,
-      icon: <BellFilled style={{ fontSize: '16px' }} />
+      icon: (
+        <StyledBellFilled
+          style={{
+            fontSize: 16,
+            minWidth: 16
+          }}
+        />
+      )
     },
     {
       key: '2',
@@ -124,15 +131,7 @@ export const GlobalHeader = ({
           />
         </StyledLink>
       </Flex>
-      <Menu
-        mode="horizontal"
-        items={items}
-        style={{
-          width: '400px',
-          direction: 'ltr'
-        }}
-        onClick={handleMenuClick}
-      />
+      <StyledMenu mode="horizontal" items={items} onClick={handleMenuClick} />
     </StyledAntDHeader>
   );
 };
@@ -145,9 +144,26 @@ const StyledAntDHeader = styled(AntDHeader)`
   align-items: center;
   justify-content: space-between;
   z-index: 100;
+  .ant-menu-item {
+    .ant-menu-title-content {
+      margin-left: 2px !important;
+    }
+  }
 `;
 
 const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
+`;
+
+const StyledBellFilled = styled(BellFilled)`
+  width: 16px;
+  min-width: 16px;
+`;
+
+const StyledMenu = styled(Menu)`
+  &.ant-menu-title-content {
+    margin-inline-start: 0;
+    margin: 0;
+  }
 `;

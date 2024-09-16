@@ -49,7 +49,7 @@ export const SideMenu = ({ project, canView }: TProps): React.JSX.Element => {
     navigate(`/${project?.projectId}/${e.key}`);
   };
   return (
-    <StyledSider $view={canView} collapsed={canView}>
+    <StyledSider $view={canView} collapsed={canView} collapsedWidth={40}>
       <StyledMenu
         mode="inline"
         selectedKeys={selectedKeys}
