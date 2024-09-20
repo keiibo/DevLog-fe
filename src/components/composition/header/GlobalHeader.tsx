@@ -116,12 +116,14 @@ export const GlobalHeader = ({
   return (
     <StyledAntDHeader>
       <Flex align="center" gap={20}>
-        <RxHamburgerMenu
-          color={Colors.TEXT}
-          fontSize={24}
-          cursor={'pointer'}
-          onClick={() => setCanView(!canView)}
-        />
+        <StyledIconFlex>
+          <RxHamburgerMenu
+            onClick={() => setCanView(!canView)}
+            color={Colors.TEXT}
+            fontSize={24}
+            cursor={'pointer'}
+          />
+        </StyledIconFlex>
         <StyledLink to={'#'}>
           <Image
             preview={false}
@@ -148,6 +150,15 @@ const StyledAntDHeader = styled(AntDHeader)`
     .ant-menu-title-content {
       margin-left: 2px !important;
     }
+  }
+`;
+
+const StyledIconFlex = styled(Flex)`
+  transition: background 0.3s ease;
+  padding: 8px;
+  border-radius: 4px;
+  &:hover {
+    background: rgba(255, 255, 255, 0.2); /* 半透明の白背景 */
   }
 `;
 

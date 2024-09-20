@@ -119,8 +119,8 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   const [showNotStarted, setShowNotStarted] = useState(true);
   // 着手中
   const [showUnderConstruction, setShowUnderConstruction] = useState(true);
-  // 完了
-  const [showCompleted, setShowCompleted] = useState(true);
+  // 完了だけ閉める
+  const [showCompleted, setShowCompleted] = useState(false);
 
   // 新規作成ボタン押下時にモーダルを開く
   const handleNewCreateClick = (): void => {
