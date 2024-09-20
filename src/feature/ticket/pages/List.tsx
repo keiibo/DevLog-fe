@@ -216,7 +216,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
             <CategoryLabel
               label={'完了'}
               onClick={() => toggleCategory(Status.COMPLETED)}
-              defaultOpenState={completedTicketList.length > 0 || false}
+              defaultOpenState
               mode="accordion"
             />
             <StyledTicketList
