@@ -7,6 +7,7 @@ import { store } from './store/store.ts';
 import 'normalize.css';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { RootPath } from './constant/RootPath.ts';
+import { Analytics } from '@vercel/analytics/react';
 
 const queryClient = new QueryClient();
 
@@ -25,5 +26,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </React.StrictMode>
       </QueryClientProvider>
     </Auth0Provider>
+    <Analytics />
   </Provider>
 );
