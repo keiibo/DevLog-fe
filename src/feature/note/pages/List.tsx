@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Flex, List as AdList } from 'antd';
 import React from 'react';
 import { styled } from 'styled-components';
 import {
@@ -7,18 +7,20 @@ import {
   mixinTextColor
 } from '../../../style/Mixin';
 import { Button } from '../../../components/element/button/Button';
-import { Search } from '../components/elements/Search';
+import { Search } from '../../../components/element/search/Search';
 import { TNote } from '../types/TNote';
 import { NoteListItem } from '../components/compositions/NoteListItem';
+import { useNavigate } from 'react-router-dom';
 
 export const List = (): React.JSX.Element => {
+  const navigate = useNavigate();
   const dummy: TNote[] = [
     {
       noteId: 1,
       uuid: 'fdsafda',
       projectId: 'DVLG',
       icon: '',
-      title: 'ノートタイトル',
+      title: 'ノーfdafdsトタイトル',
       body: 'こんちゃああああ',
       createdAt: '2024/12/31',
       updateAt: '2024/12/31'
@@ -28,7 +30,7 @@ export const List = (): React.JSX.Element => {
       uuid: 'fdsdfafda',
       projectId: 'DVLG',
       icon: '',
-      title: 'ノートタイトル',
+      title: 'ノートfdsafdsafタイトル',
       body: 'こんちゃああああ',
       createdAt: '2024/12/31',
       updateAt: '2024/12/31'
@@ -82,20 +84,270 @@ export const List = (): React.JSX.Element => {
       body: 'こんちゃああああ',
       createdAt: '2024/12/31',
       updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタfdafdsイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートfdsafdsfadfsafdsfタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタfdイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートfdsfdsaタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートfdafdタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノートタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
+    },
+    {
+      noteId: 7,
+      uuid: 'fddflfslsafda',
+      projectId: 'DVLG',
+      icon: '',
+      title: 'ノーfdafdfsトタイトル',
+      body: 'こんちゃああああ',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31'
     }
   ];
   return (
     <Flex vertical gap={12}>
       <StyledTitleFlex justify="space-between" align="center">
         <StyledPageTitle>ノート</StyledPageTitle>
-        <Button type="primary">新規作成</Button>
+        <Button type="primary" onClick={()=>navigate("create")}>新規作成</Button>
       </StyledTitleFlex>
       <StyledSearch />
-      <StyledListItemFlex vertical gap={24}>
-        {dummy.map((note) => (
-          <NoteListItem note={note} />
-        ))}
-      </StyledListItemFlex>
+      <AdList
+        pagination={{ align: 'center' }}
+        dataSource={dummy}
+        renderItem={(item) => <NoteListItem note={item} />}
+      />
     </Flex>
   );
 };
@@ -112,9 +364,5 @@ const StyledPageTitle = styled.h1`
 `;
 
 const StyledSearch = styled(Search)`
-  ${mixinPadding24px}
-`;
-
-const StyledListItemFlex = styled(Flex)`
   ${mixinPadding24px}
 `;

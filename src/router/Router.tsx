@@ -22,6 +22,7 @@ import { useQuery } from 'react-query';
 import { Loading } from '../components/element/loading/Loading';
 import { CreateAccount } from '../feature/auth/pages/CreateAccount';
 import { List as NoteList } from '../feature/note/pages/List';
+import { Edit as NoteEdit } from '../feature/note/pages/Edit';
 
 export const AppRouter = (): React.JSX.Element => {
   // ログイン画面に強制リダイレクトさせるコンポーネント
@@ -83,6 +84,7 @@ export const AppRouter = (): React.JSX.Element => {
           <Route path="/:id/ticket/:ticketId" element={<TicketDetail />} />
           <Route path="/:id/diary" element={<Diary />} />
           <Route path="/:id/note" element={<NoteList />} />
+          <Route path="/:id/note/create" element={<NoteEdit />} />
         </Route>
         <Route path="*" element={<LogoutAndRedirect />} />
       </Routes>

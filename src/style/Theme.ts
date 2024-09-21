@@ -44,6 +44,9 @@ export const Theme = {
     },
     Link: {
       colorText: Colors.MAIN
+    },
+    Pagination: {
+      colorText: Colors.TEXT
     }
   }
 };

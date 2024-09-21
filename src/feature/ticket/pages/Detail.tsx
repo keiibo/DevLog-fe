@@ -8,12 +8,7 @@ import {
 import { TicketTitle } from '../components/compositions/TicketTitle';
 import styled from 'styled-components';
 import { getLabelColor } from '../lib/labelColor';
-import {
-  mixinBgWhite,
-  mixinBorderRadius12px,
-  mixinNormalFontSize16px,
-  mixinTextColor
-} from '../../../style/Mixin';
+import { mixinBgWhite, mixinBorderRadius12px } from '../../../style/Mixin';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteTicket, getTicket, updateTicket } from '../api/ticket';
@@ -24,10 +19,10 @@ import { Form } from '../../../components/element/form/Form';
 import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
 import { DateFormat } from '../../../constant/DateFormat';
-import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Loading } from '../../../components/element/loading/Loading';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
 import { QueryKey } from '../../../constant/QueryKey';
+import { ArrowBack } from '../../../components/composition/ArrowBack';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId, ticketId } = useParams();
@@ -152,10 +147,7 @@ export const Detail = (): React.JSX.Element => {
 
   return (
     <Flex vertical gap={16}>
-      <StyledBackFlex gap={8} onClick={handleBack}>
-        <ArrowLeftOutlined />
-        戻る
-      </StyledBackFlex>
+      <ArrowBack handleBack={handleBack} />
       <Form onFinish={handleEditFinish} form={form}>
         <StyledTicketContainer vertical gap={16} $labelColor={labelColor || ''}>
           <TicketTitle
@@ -190,13 +182,6 @@ export const Detail = (): React.JSX.Element => {
     </Flex>
   );
 };
-
-const StyledBackFlex = styled(Flex)`
-  width: fit-content;
-  cursor: pointer;
-  ${mixinTextColor}
-  ${mixinNormalFontSize16px}
-`;
 
 const StyledTicketContainer = styled(Flex)<{
   $labelColor: TLabelColorType;

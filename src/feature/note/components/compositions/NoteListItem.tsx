@@ -56,7 +56,7 @@ export const NoteListItem = ({ note }: TProps): React.JSX.Element => {
           </Flex>
         </Flex>
         <Popover trigger={'hover'} content={popoverContent} placement={'left'}>
-          <StyledEllipsisOutlined />
+          <StyledEllipsisOutlined style={{ fontSize: 16 }} />
         </Popover>
       </StyledFlex>
     </ConfigProvider>
@@ -65,6 +65,8 @@ export const NoteListItem = ({ note }: TProps): React.JSX.Element => {
 
 const StyledFlex = styled(Flex)`
   cursor: pointer;
+
+  padding: 12px;
 `;
 
 const StyledTitle = styled.span`

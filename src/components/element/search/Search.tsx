@@ -1,8 +1,8 @@
 import React from 'react';
-import { Input } from '../../../../components/element/input/Input';
+import { Input } from '../input/Input';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { mixinTextDarkColor } from '../../../../style/Mixin';
+import { mixinTextDarkColor } from '../../../style/Mixin';
 
 export const Search = (): React.JSX.Element => {
   return (

@@ -1,11 +1,10 @@
-
 import { Meta, StoryObj } from '@storybook/react';
-import { Colors } from '../../../../style/Colors';
-import { Search } from './Search';
+import { Colors } from '../../../style/Colors';
+import { Pagination } from './Pagination';
 
 const meta = {
-  title: 'feature/note/elements/Search',
-  component: Search,
+  title: 'elements/Pagination',
+  component: Pagination,
   parameters: {
     backgrounds: {
       default: 'main',
@@ -17,11 +16,14 @@ const meta = {
   },
   argTypes: {},
   tags: ['autodocs']
-} satisfies Meta<typeof Search>;
+} satisfies Meta<typeof Pagination>;
 
 export default meta;
 type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
-  args: {}
+  args: {
+    current: 1,
+    total: 50
+  }
 };
