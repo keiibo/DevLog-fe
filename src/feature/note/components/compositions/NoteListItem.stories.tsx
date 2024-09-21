@@ -22,5 +22,16 @@ export default meta;
 type TStory = StoryObj<typeof meta>;
 
 export const Default: TStory = {
-  args: {}
+  args: {
+    note: {
+      noteId: 1,
+      title: 'ノートタイトルタイトルタイトル',
+      createdAt: '2024/12/31',
+      updateAt: '2024/12/31',
+      uuid: 'dfdfd',
+      projectId: 'DVLG',
+      icon: '',
+      body: '本文ぶん'
+    }
+  }
 };
