@@ -47,3 +47,13 @@ export const HasButton: TStory = {
     buttonTitle: '編集'
   }
 };
+
+export const HasButtonAndSubText: TStory = {
+  args: {
+    label: 'ラベルテキスト',
+    subText: 'サブテキスト',
+    mode: CategoryLabelMode.BUTTON,
+    onButtonClick: () => {},
+    buttonTitle: '編集'
+  }
+};

@@ -119,6 +119,7 @@ export const Detail = (): React.JSX.Element => {
     },
     {
       label: '各種リンク',
+      subText: '保存済みのアイコンは長押しで編集できます',
       mode: CategoryLabelMode.NONE,
       children: (
         <StyledIconFlex gap={8}>
@@ -155,6 +156,7 @@ export const Detail = (): React.JSX.Element => {
           <Section
             key={item.label}
             label={item.label}
+            subText={item.subText}
             mode={item.mode}
             children={item.children}
             onButtonClick={item.onButtonClick}

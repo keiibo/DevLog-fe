@@ -7,7 +7,9 @@ import {
   mixinBgWhite,
   mixinBoldFontSize24px,
   mixinBorderRadius4px,
-  mixinMainColor
+  mixinMainColor,
+  mixinNormalFontSize16px,
+  mixinTextDarkColor
 } from '../../../style/Mixin';
 import { TValueOf } from '../../../lib/type';
 import { Button } from '../../element/button/Button';
@@ -22,6 +24,7 @@ export type TCategoryLabelMode = TValueOf<typeof CategoryLabelMode>;
 
 type TProps = {
   label: string;
+  subText?: string;
   onClick?: () => void;
   defaultOpenState?: boolean;
   mode: TCategoryLabelMode;
@@ -33,6 +36,7 @@ type TProps = {
 export const CategoryLabel = ({
   label,
   onClick,
+  subText,
   defaultOpenState = false,
   mode,
   buttonTitle,
@@ -48,8 +52,11 @@ export const CategoryLabel = ({
 
   return (
     <StyledCategoryLabel onClick={toggleAccordion} $mode={mode}>
-      <Flex justify="space-between" align="center">
-        <StyledLabel>{label}</StyledLabel>
+      <Flex justify="space-between" align="end">
+        <Flex gap={8} align="end">
+          <StyledLabel>{label}</StyledLabel>
+          {subText && <StyledSubText>{subText}</StyledSubText>}
+        </Flex>
         {mode === CategoryLabelMode.ACCORDION && (
           <StyledIcon rotate={isOpened ? 0 : 180}>
             <DownOutlined />
@@ -87,6 +94,11 @@ const StyledCategoryLabel = styled.div<{
 
 const StyledLabel = styled.div`
   ${mixinBoldFontSize24px}
+`;
+
+const StyledSubText = styled.div`
+  ${mixinNormalFontSize16px}
+  ${mixinTextDarkColor}
 `;
 
 type TStyledIconProps = {

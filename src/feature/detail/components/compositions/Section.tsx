@@ -13,6 +13,7 @@ import { styled } from 'styled-components';
 
 type TProps = {
   label: string;
+  subText?: string;
   children: React.ReactNode;
   mode: TCategoryLabelMode;
   buttonTitle?: string;
@@ -22,6 +23,7 @@ type TProps = {
 
 export const Section = ({
   label,
+  subText,
   children,
   mode,
   onButtonClick,
@@ -32,6 +34,7 @@ export const Section = ({
     <StyledFlex vertical gap={16}>
       <CategoryLabel
         label={label}
+        subText={subText}
         mode={mode}
         onButtonClick={onButtonClick}
         buttonTitle={buttonTitle}
