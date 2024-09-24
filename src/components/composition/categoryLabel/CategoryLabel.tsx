@@ -52,7 +52,7 @@ export const CategoryLabel = ({
 
   return (
     <StyledCategoryLabel onClick={toggleAccordion} $mode={mode}>
-      <Flex justify="space-between" align="end">
+      <Flex justify="space-between" align="center">
         <Flex gap={8} align="end">
           <StyledLabel>{label}</StyledLabel>
           {subText && <StyledSubText>{subText}</StyledSubText>}
