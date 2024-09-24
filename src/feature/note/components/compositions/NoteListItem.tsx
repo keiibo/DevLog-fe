@@ -10,14 +10,20 @@ import {
 } from '../../../../style/Mixin';
 import { Colors } from '../../../../style/Colors';
 import { TNote } from '../../types/TNote';
+import dayjs from 'dayjs';
+import { DateFormat } from '../../../../constant/DateFormat';
+import { useNavigate } from 'react-router-dom';
 
 type TProps = {
   note: TNote;
 };
 
 export const NoteListItem = ({ note }: TProps): React.JSX.Element => {
-  const { title, createdAt, updateAt } = note;
-  const handleClick = () => {};
+  const { title, uuid, createdAt, updatedAt } = note;
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`edit/${uuid}`);
+  };
   const popoverContent = (
     <StyledMenu
       items={[
@@ -51,7 +57,8 @@ export const NoteListItem = ({ note }: TProps): React.JSX.Element => {
           <Flex vertical gap={4}>
             <StyledTitle>{title}</StyledTitle>
             <StyledDate>
-              作成日:{createdAt} 最終更新日:{updateAt}
+              作成日:{dayjs(createdAt).format(DateFormat.SLASH)} 最終更新日:
+              {dayjs(updatedAt).format(DateFormat.SLASH)}
             </StyledDate>
           </Flex>
         </Flex>

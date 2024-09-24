@@ -3,5 +3,7 @@ export const QueryKey = {
   PROJECT_DETAIL: 'projectDetail',
   TICKET_LIST: 'tickets',
   TICKET_DETAIL: 'ticketDetail',
-  CATEGORY_LIST: 'category'
+  CATEGORY_LIST: 'category',
+  NOTE_LIST:"noteList",
+  NOTE_DETAIL:"noteDetail",
 };
