@@ -19,7 +19,8 @@ import { useForm } from 'antd/es/form/Form';
 import { getNoteDetail, updateNote } from '../api/note';
 import { Loading } from '../../../components/element/loading/Loading';
 import { TNote, TUpdateNoteReq } from '../types/TNote';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
+import { QueryKey } from '../../../constant/QueryKey';
 
 export const Edit = (): React.JSX.Element => {
   const { id, uuid } = useParams();
@@ -29,6 +30,7 @@ export const Edit = (): React.JSX.Element => {
   const navigate = useNavigate();
   const [form] = useForm();
   const [textValue, setTextValue] = useState<string>('');
+  const queryClient = useQueryClient();
 
   /**
    * 編集状態の時に詳細apiを投げてstateにセットする
@@ -50,7 +52,11 @@ export const Edit = (): React.JSX.Element => {
     }
   }, [isEdit, id, uuid]);
 
-  const mutation = useMutation(updateNote);
+  const mutation = useMutation(updateNote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QueryKey.NOTE_LIST);
+    }
+  });
 
   /**
    * 更新処理
@@ -124,6 +130,7 @@ export const Edit = (): React.JSX.Element => {
       <ArrowBack
         handleBack={() => {
           handleUpdateNote();
+
           navigate(`/${id}/note`);
         }}
       />

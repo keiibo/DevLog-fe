@@ -16,14 +16,31 @@ import { useNavigate } from 'react-router-dom';
 
 type TProps = {
   note: TNote;
+  searchTerm: string;
 };
 
-export const NoteListItem = ({ note }: TProps): React.JSX.Element => {
+export const NoteListItem = ({
+  note,
+  searchTerm
+}: TProps): React.JSX.Element => {
   const { title, uuid, createdAt, updatedAt } = note;
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`edit/${uuid}`);
   };
+
+  // 検索キーワードに該当する部分をハイライトする関数
+  const highlightText = (text: string, highlight: string) => {
+    if (!highlight) return text;
+
+    const regex = new RegExp(`(${highlight})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) =>
+      regex.test(part) ? <mark key={index}>{part}</mark> : part
+    );
+  };
+
   const popoverContent = (
     <StyledMenu
       items={[
@@ -55,7 +72,7 @@ export const NoteListItem = ({ note }: TProps): React.JSX.Element => {
         <Flex align="center" gap={16}>
           <NoteIcon />
           <Flex vertical gap={4}>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>{highlightText(title, searchTerm)}</StyledTitle>
             <StyledDate>
               作成日:{dayjs(createdAt).format(DateFormat.SLASH)} 最終更新日:
               {dayjs(updatedAt).format(DateFormat.SLASH)}
@@ -73,12 +90,17 @@ export const NoteListItem = ({ note }: TProps): React.JSX.Element => {
 const StyledFlex = styled(Flex)`
   cursor: pointer;
 
-  padding: 12px;
+  padding: 8px;
 `;
 
 const StyledTitle = styled.span`
   ${mixinTextColor}
   ${mixinNormalFontSize16px}
+  mark {
+    padding: 2px 4px;
+    background-color: ${Colors.PURPLE}; 
+    color: ${Colors.TEXT}; 
+  }
 `;
 
 const StyledDate = styled.span`

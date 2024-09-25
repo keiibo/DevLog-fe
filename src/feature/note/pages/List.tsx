@@ -1,5 +1,5 @@
 import { Flex, List as AdList } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import {
   mixinNormalFontSize24px,
@@ -22,6 +22,10 @@ export const List = (): React.JSX.Element => {
   const { data: notes } = useQuery(QueryKey.NOTE_LIST, () =>
     getNotes(id || '')
   );
+  // 検索ボックスのキーワードを管理
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [filteredNotes, setFilteredNotes] = useState(notes || []);
 
   const mutation = useMutation(createNote, {
     onSuccess: () => {
@@ -45,6 +49,40 @@ export const List = (): React.JSX.Element => {
     mutation.mutate(reqBody);
   };
 
+  /**
+   * デバウンス用の useEffect
+   * searchTerm が変更されてから 300ms 後に debouncedSearchTerm を更新
+   */
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm); // searchTerm が 300ms 変わらなければ検索を実行
+    }, 300);
+
+    // クリーンアップ関数: 新しい入力が発生したらタイマーをリセット
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+
+  /**
+   * フィルタリング処理: debouncedSearchTerm を使って検索を行う
+   */
+  useEffect(() => {
+    if (notes) {
+      const filtered = notes.filter((note) =>
+        note.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      );
+      setFilteredNotes(filtered);
+    }
+  }, [debouncedSearchTerm, notes]);
+
+  /**
+   * 検索ボックスの入力変更時の処理
+   */
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <Flex vertical gap={12}>
       <StyledTitleFlex justify="space-between" align="center">
@@ -53,11 +91,17 @@ export const List = (): React.JSX.Element => {
           新規作成
         </Button>
       </StyledTitleFlex>
-      <StyledSearch />
+      <StyledSearch
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="ノートを検索"
+      />
       <AdList
         pagination={{ align: 'center', pageSize: 8 }}
-        dataSource={notes}
-        renderItem={(item) => <NoteListItem note={item} />}
+        dataSource={filteredNotes}
+        renderItem={(item) => (
+          <NoteListItem note={item} searchTerm={searchTerm} />
+        )}
       />
     </Flex>
   );
