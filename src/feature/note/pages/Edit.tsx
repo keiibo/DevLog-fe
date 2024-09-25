@@ -69,7 +69,10 @@ export const Edit = (): React.JSX.Element => {
       };
       // 非同期の保存処理
       await mutation.mutateAsync(req);
-      setIsSaving(false); // 保存完了後に false にする
+      // 保存が成功した後に、もう1秒間保存中を維持
+      setTimeout(() => {
+        setIsSaving(false); // 保存完了後に false にする
+      }, 1000); // 1秒遅延して保存完了メッセージに切り替え
     } catch (error) {}
   };
 
