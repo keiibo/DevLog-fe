@@ -68,8 +68,8 @@ export const NoteListItem = ({
         }
       }}
     >
-      <StyledFlex justify="space-between" align="center" onClick={handleClick}>
-        <Flex align="center" gap={16}>
+      <StyledFlex justify="space-between" align="center">
+        <Flex align="center" gap={16} onClick={handleClick}>
           <NoteIcon />
           <Flex vertical gap={4}>
             <StyledTitle>{highlightText(title, searchTerm)}</StyledTitle>
@@ -98,8 +98,8 @@ const StyledTitle = styled.span`
   ${mixinNormalFontSize16px}
   mark {
     padding: 2px 4px;
-    background-color: ${Colors.PURPLE}; 
-    color: ${Colors.TEXT}; 
+    background-color: ${Colors.PURPLE};
+    color: ${Colors.TEXT};
   }
 `;
 
