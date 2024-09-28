@@ -2,9 +2,11 @@ import { Flex, List as AdList } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import {
+  mixinNormalFontSize16px,
   mixinNormalFontSize24px,
   mixinPadding24px,
-  mixinTextColor
+  mixinTextColor,
+  mixinTextDarkColor
 } from '../../../style/Mixin';
 import { Button } from '../../../components/element/button/Button';
 import { Search } from '../../../components/element/search/Search';
@@ -15,6 +17,7 @@ import { createNote, getNotes } from '../api/note';
 import { QueryKey } from '../../../constant/QueryKey';
 import { TPostNoteReq } from '../types/TNote';
 import { v4 } from 'uuid';
+import { MailOutlined } from '@ant-design/icons';
 
 export const List = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -102,6 +105,14 @@ export const List = (): React.JSX.Element => {
         renderItem={(item) => (
           <NoteListItem note={item} searchTerm={searchTerm} />
         )}
+        locale={{
+          emptyText: (
+            <Flex align="center" justify="center" vertical>
+              <StyledMailFilled />
+              <StyledText>ノートが見つかりませんでした😢</StyledText>
+            </Flex>
+          )
+        }}
       />
     </Flex>
   );
@@ -120,4 +131,14 @@ const StyledPageTitle = styled.h1`
 
 const StyledSearch = styled(Search)`
   ${mixinPadding24px}
+`;
+
+const StyledMailFilled = styled(MailOutlined)`
+  font-size: 96px;
+  ${mixinTextDarkColor}
+`;
+
+const StyledText = styled.p`
+  ${mixinNormalFontSize16px}
+  ${mixinTextDarkColor}
 `;
