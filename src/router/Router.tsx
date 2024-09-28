@@ -84,7 +84,7 @@ export const AppRouter = (): React.JSX.Element => {
           <Route path="/:id/ticket/:ticketId" element={<TicketDetail />} />
           <Route path="/:id/diary" element={<Diary />} />
           <Route path="/:id/note" element={<NoteList />} />
-          <Route path="/:id/note/create" element={<NoteEdit />} />
+          <Route path="/:id/note/create/:uuid" element={<NoteEdit />} />
           <Route path="/:id/note/edit/:uuid" element={<NoteEdit />} />
         </Route>
         <Route path="*" element={<LogoutAndRedirect />} />

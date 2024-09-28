@@ -1,4 +1,4 @@
-import { ConfigProvider, Flex, Menu, Popover } from 'antd';
+import { ConfigProvider, Flex, Menu, notification, Popover } from 'antd';
 import React from 'react';
 import { NoteIcon } from '../elements/NoteIcon';
 import { EllipsisOutlined } from '@ant-design/icons';
@@ -9,10 +9,14 @@ import {
   mixinTextColor
 } from '../../../../style/Mixin';
 import { Colors } from '../../../../style/Colors';
-import { TNote } from '../../types/TNote';
+import { TDeleteNoteReq, TNote } from '../../types/TNote';
 import dayjs from 'dayjs';
 import { DateFormat } from '../../../../constant/DateFormat';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteNote } from '../../api/note';
+import { NOTIFICATION_TIME } from '../../../../constant/Notification';
+import { QueryKey } from '../../../../constant/QueryKey';
 
 type TProps = {
   note: TNote;
@@ -23,8 +27,11 @@ export const NoteListItem = ({
   note,
   searchTerm
 }: TProps): React.JSX.Element => {
+  const { id } = useParams();
+  const queryClient = useQueryClient();
   const { title, uuid, createdAt, updatedAt } = note;
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(`edit/${uuid}`);
   };
@@ -41,13 +48,32 @@ export const NoteListItem = ({
     );
   };
 
+  const mutation = useMutation(deleteNote, {
+    onSuccess: () => {
+      notification.success({
+        message: 'ノートを削除しました',
+        duration: NOTIFICATION_TIME.SUCCESS
+      });
+      queryClient.invalidateQueries(QueryKey.NOTE_LIST);
+    }
+  });
+
+  const handleDelete = () => {
+    const req: TDeleteNoteReq = {
+      projectId: id || '',
+      uuid: note.uuid
+    };
+    mutation.mutate(req);
+  };
+
   const popoverContent = (
     <StyledMenu
       items={[
         {
           key: 'delete',
           label: '削除',
-          type: 'item'
+          type: 'item',
+          onClick: handleDelete
         }
       ]}
     />

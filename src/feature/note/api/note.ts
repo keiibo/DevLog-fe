@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { TGetNoteDetailReq, TGetNoteRes, TPostNoteReq, TUpdateNoteReq } from '../types/TNote';
+import {
+  TDeleteNoteReq,
+  TGetNoteDetailReq,
+  TGetNoteRes,
+  TPostNoteReq,
+  TUpdateNoteReq
+} from '../types/TNote';
 import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
 
 /**
@@ -48,4 +54,14 @@ export const updateNote = async (req: TUpdateNoteReq): Promise<TGetNoteRes> => {
     setConfig()
   );
   return response.data;
+};
+
+/**
+ * ノートの削除
+ */
+export const deleteNote = async (req: TDeleteNoteReq): Promise<void> => {
+  await axios.delete(
+    `${sgetBaseUrl()}/api/note/${req.projectId}/${req.uuid}`,
+    setConfig()
+  );
 };

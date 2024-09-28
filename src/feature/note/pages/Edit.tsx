@@ -67,7 +67,10 @@ export const Edit = (): React.JSX.Element => {
       const req: TUpdateNoteReq = {
         projectId: id || '',
         req: {
-          title: form.getFieldValue('title'),
+          title:
+            form.getFieldValue('title') !== ''
+              ? form.getFieldValue('title')
+              : '新しいノート',
           body: form.getFieldValue('body'),
           uuid: uuid || '',
           icon: 'note'
@@ -130,7 +133,6 @@ export const Edit = (): React.JSX.Element => {
       <ArrowBack
         handleBack={() => {
           handleUpdateNote();
-
           navigate(`/${id}/note`);
         }}
       />

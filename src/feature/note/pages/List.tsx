@@ -28,8 +28,8 @@ export const List = (): React.JSX.Element => {
   const [filteredNotes, setFilteredNotes] = useState(notes || []);
 
   const mutation = useMutation(createNote, {
-    onSuccess: () => {
-      navigate('create');
+    onSuccess: (res) => {
+      navigate(`create/${res.uuid}`);
     }
   });
 

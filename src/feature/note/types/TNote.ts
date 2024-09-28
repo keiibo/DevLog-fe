@@ -24,6 +24,11 @@ export type TGetNoteDetailReq = {
   uuid: string;
 };
 
+export type TDeleteNoteReq = {
+  projectId: string;
+  uuid: string;
+};
+
 export type TUpdateNoteReq = {
   projectId: string;
   req: {
