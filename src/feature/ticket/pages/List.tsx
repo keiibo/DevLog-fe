@@ -4,17 +4,20 @@ import { Flex, Tooltip } from 'antd';
 import { CategoryLabel } from '../../../components/composition/categoryLabel/CategoryLabel';
 import { TicketListItem } from '../components/compositions/TicketListItem';
 import { styled } from 'styled-components';
-import { CreateModal } from '../components/compositions/CreateModal';
+import { CreateModal } from '../components/compositions/modal/CreateModal';
 import { mixinNormalFontSize24px, mixinTextColor } from '../../../style/Mixin';
 import {
+  FlagFilled,
   PlusCircleFilled,
   SettingFilled,
   SlidersFilled
 } from '@ant-design/icons';
-import { SettingModal } from '../components/compositions/SettingModal';
+import { SettingModal } from '../components/compositions/modal/SettingModal';
 import { SortPopover } from '../components/elements/SortPopover';
 import { useSearchParams } from 'react-router-dom';
 import { SortQueryCategoryType, HowToSortQueryType } from '../types/TQuery';
+import { MileStoneSelectModal } from '../components/compositions/modal/MileStoneSelectModal';
+import { NewMileStoneModal } from '../components/compositions/modal/NewMileStoneModal';
 type TProps = {
   ticketList: TTicket[];
 };
@@ -24,7 +27,6 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   const querySortType = searchParams.get('sort');
   const queryCategory = searchParams.get('category');
   const [open, setOpen] = useState(false);
-
   const handleOpenChange = () => setOpen(!open);
 
   const [notStartedTicketList, setNotStartedTicketList] = useState<TTicket[]>(
@@ -114,6 +116,10 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
     useState<boolean>(false);
   const [isOpenedSettingModal, setIsOpenedSettingModal] =
     useState<boolean>(false);
+  const [isOpenedMileStoneModal, setIsOpenedMileStoneModal] =
+    useState<boolean>(false);
+  const [isOpenedMileStoneSelectModal, setIsOpenedMileStoneSelectModal] =
+    useState<boolean>(false);
 
   // 未着手カテゴリの開閉状態
   const [showNotStarted, setShowNotStarted] = useState(true);
@@ -128,6 +134,10 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   };
   const handleSettingClick = (): void => {
     setIsOpenedSettingModal(true);
+  };
+
+  const handleMileStoneSelectClick = (): void => {
+    setIsOpenedMileStoneSelectModal(true);
   };
 
   // 各ステータスの開閉状態をトグルする
@@ -147,6 +157,10 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
     }
   };
 
+  const handleOpenNewMileStoneModal = () => {
+    setIsOpenedMileStoneModal(true);
+  };
+
   return (
     <>
       <StyledListFlexContainer vertical gap={16}>
@@ -160,6 +174,9 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
           <Flex gap={8}>
             <Tooltip title="チケットを新規作成">
               <StyledPlusCircleFilled onClick={handleNewCreateClick} />
+            </Tooltip>
+            <Tooltip title="マイルストーンを設定">
+              <StyledFlagFilled onClick={handleMileStoneSelectClick} />
             </Tooltip>
             <SortPopover open={open} setOpen={setOpen}>
               <Tooltip title="並び替え">
@@ -241,6 +258,19 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
         setIsOpened={setIsOpenedSettingModal}
         title={'設定'}
       />
+      <MileStoneSelectModal
+        isOpened={isOpenedMileStoneSelectModal}
+        setIsOpened={setIsOpenedMileStoneSelectModal}
+        title={'マイルストーン設定'}
+        handleOpenNewMileStoneModal={handleOpenNewMileStoneModal}
+      />
+      <NewMileStoneModal
+        isOpened={isOpenedMileStoneModal}
+        setIsOpened={setIsOpenedMileStoneModal}
+        setIsSelectModalOpened={setIsOpenedMileStoneSelectModal}
+        title={'新規マイルストーンの作成'}
+        tickets={ticketList}
+      />
     </>
   );
 };
@@ -263,6 +293,9 @@ const StyledTicketList = styled(Flex)<{ $show: boolean; $height: number }>`
 `;
 
 const StyledPlusCircleFilled = styled(PlusCircleFilled)`
+  ${mixinNormalFontSize24px}
+`;
+const StyledFlagFilled = styled(FlagFilled)`
   ${mixinNormalFontSize24px}
 `;
 const StyledSlidersFilled = styled(SlidersFilled)`

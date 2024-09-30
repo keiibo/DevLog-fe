@@ -123,6 +123,7 @@ export const Detail = (): React.JSX.Element => {
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status'),
       categories: selectedCategories,
+      mileStone: form.getFieldValue('mileStone') || null,
       completedAt:
         form.getFieldValue('status') === Status.COMPLETED
           ? new Date().toISOString()

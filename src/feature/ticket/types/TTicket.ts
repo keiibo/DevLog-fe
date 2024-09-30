@@ -13,6 +13,7 @@ export type TTicket = {
   priority: TPriority;
   status: TStatus;
   categories?: TCategory[];
+  mileStone: TMileStone | null;
   createdAt: string;
   completedAt: string | null;
 };
@@ -46,8 +47,27 @@ export type TCategory = {
   name: string;
 };
 
+export type TMileStone = {
+  uuid: string;
+  name: string;
+};
+
 export type TGetTicketRes = TTicket;
-export type TCreateTicketReq = Omit<TTicket, '_id' | 'ticketId'>;
+export type TCreateTicketReq = {
+  projectId: string;
+  detail: string | null;
+  labelColorType: TLabelColorType;
+  title: string;
+  isDeletable: boolean;
+  limitStartYm?: string;
+  limitEndYm?: string;
+  priority: TPriority;
+  status: TStatus;
+  categories?: TCategory[];
+  mileStone: string | null;
+  createdAt: string;
+  completedAt: string | null;
+};
 export type TPutTicketReq = Omit<TTicket, '_id' | 'ticketId' | 'createdAt'>;
 export type TCreateCategoryReq = {
   projectId: string;
@@ -57,4 +77,21 @@ export type TCreateCategoryReq = {
 export type TMGetCategoryRes = {
   projectId: string;
   categories: TCategory[];
+};
+
+export type TCreateMileStoneReq = {
+  projectId: string;
+  mileStone: {
+    uuid: string;
+    name: string;
+    version: string;
+  };
+  updateTicketIds: string[];
+};
+
+export type TGetMileStoneRes = {
+  projectId: string;
+  uuid: string;
+  name: string;
+  version: string;
 };

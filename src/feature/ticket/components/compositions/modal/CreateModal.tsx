@@ -1,24 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Flex, InputRef, notification } from 'antd';
-import { FormItem } from '../../../../components/element/form/FormItem';
-import { Input } from '../../../../components/element/input/Input';
-import { Button } from '../../../../components/element/button/Button';
-import { Status, TCategory, TCreateTicketReq } from '../../types/TTicket';
-import { mixinNormalFontSize16px } from '../../../../style/Mixin';
+import { FormItem } from '../../../../../components/element/form/FormItem';
+import { Input } from '../../../../../components/element/input/Input';
+import { Button } from '../../../../../components/element/button/Button';
+import { Status, TCategory, TCreateTicketReq } from '../../../types/TTicket';
+import { mixinNormalFontSize16px } from '../../../../../style/Mixin';
 import { styled } from 'styled-components';
-import { Form } from '../../../../components/element/form/Form';
+import { Form } from '../../../../../components/element/form/Form';
 import { useMutation, useQueryClient } from 'react-query';
-import { createTicket } from '../../api/ticket';
+import { createTicket } from '../../../api/ticket';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
-import { TicketProperty } from './TicketProperty';
-import { DateFormat } from '../../../../constant/DateFormat';
-import { Loading } from '../../../../components/element/loading/Loading';
-import { NOTIFICATION_TIME } from '../../../../constant/Notification';
-import { Modal } from '../../../../components/element/modal/Modal';
-import { ModalHeader } from '../../../../components/element/modal/ModalHeader';
-import { ModalBody } from '../../../../components/element/modal/ModalBody';
-import { QueryKey } from '../../../../constant/QueryKey';
+import { TicketProperty } from '../TicketProperty';
+import { DateFormat } from '../../../../../constant/DateFormat';
+import { Loading } from '../../../../../components/element/loading/Loading';
+import { NOTIFICATION_TIME } from '../../../../../constant/Notification';
+import { Modal } from '../../../../../components/element/modal/Modal';
+import { ModalHeader } from '../../../../../components/element/modal/ModalHeader';
+import { ModalBody } from '../../../../../components/element/modal/ModalBody';
+import { QueryKey } from '../../../../../constant/QueryKey';
 
 type TProps = {
   isOpenedNewCreateModal: boolean;
@@ -65,12 +65,14 @@ export const CreateModal = ({
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status'),
       categories: selectedCategories,
+      mileStone: form.getFieldValue('mileStone') || null,
       createdAt: new Date().toISOString(),
       completedAt:
         form.getFieldValue('status') === Status.COMPLETED
           ? new Date().toISOString()
           : null
     };
+
     mutation.mutate(reqBody);
   };
 

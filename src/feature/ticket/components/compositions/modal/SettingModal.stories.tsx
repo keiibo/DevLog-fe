@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Colors } from '../../../../style/Colors';
+import { Colors } from '../../../../../style/Colors';
 import { SettingModal } from './SettingModal';
 
 const meta = {

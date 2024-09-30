@@ -1,12 +1,12 @@
 import { Flex, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { MultiLineText } from '../../../../components/composition/MultiLineText';
-import { Input } from '../../../../components/element/input/Input';
-import { Button } from '../../../../components/element/button/Button';
-import { TCategory, TCreateCategoryReq } from '../../types/TTicket';
-import { Category } from '../elements/Category';
-import { Form } from '../../../../components/element/form/Form';
-import { FormItem } from '../../../../components/element/form/FormItem';
+import { MultiLineText } from '../../../../../components/composition/MultiLineText';
+import { Input } from '../../../../../components/element/input/Input';
+import { Button } from '../../../../../components/element/button/Button';
+import { TCategory, TCreateCategoryReq } from '../../../types/TTicket';
+import { Category } from '../../elements/Category';
+import { Form } from '../../../../../components/element/form/Form';
+import { FormItem } from '../../../../../components/element/form/FormItem';
 import { useForm } from 'antd/es/form/Form';
 import { styled } from 'styled-components';
 import {
@@ -14,19 +14,19 @@ import {
   mixinBorderRadius4px,
   mixinNormalFontSize16px,
   mixinPadding8px
-} from '../../../../style/Mixin';
-import { Colors } from '../../../../style/Colors';
+} from '../../../../../style/Mixin';
+import { Colors } from '../../../../../style/Colors';
 import { v4 as uuidv4 } from 'uuid';
 import { useMutation, useQuery } from 'react-query';
-import { createCategories, getCategories } from '../../api/category';
-import { NOTIFICATION_TIME } from '../../../../constant/Notification';
+import { createCategories, getCategories } from '../../../api/category';
+import { NOTIFICATION_TIME } from '../../../../../constant/Notification';
 import { useParams } from 'react-router-dom';
-import { Loading } from '../../../../components/element/loading/Loading';
-import { Modal } from '../../../../components/element/modal/Modal';
-import { ModalHeader } from '../../../../components/element/modal/ModalHeader';
-import { ModalBody } from '../../../../components/element/modal/ModalBody';
-import { ModalFooter } from '../../../../components/element/modal/ModalFooter';
-import { QueryKey } from '../../../../constant/QueryKey';
+import { Loading } from '../../../../../components/element/loading/Loading';
+import { Modal } from '../../../../../components/element/modal/Modal';
+import { ModalHeader } from '../../../../../components/element/modal/ModalHeader';
+import { ModalBody } from '../../../../../components/element/modal/ModalBody';
+import { ModalFooter } from '../../../../../components/element/modal/ModalFooter';
+import { QueryKey } from '../../../../../constant/QueryKey';
 
 type TProps = {
   isOpened: boolean;

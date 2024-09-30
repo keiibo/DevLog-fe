@@ -36,6 +36,7 @@ import SimpleMDE from 'easymde';
 import 'easymde/dist/easymde.min.css';
 import ReactMarkdown from 'react-markdown';
 import { QueryKey } from '../../../../constant/QueryKey';
+import { getMileStones } from '../../api/mileStone';
 
 type TProps = {
   isEditMode: boolean;
@@ -58,8 +59,11 @@ export const TicketProperty = ({
   const [markdownValue, setMarkdownValue] = useState('');
 
   const { id } = useParams();
-  const { data } = useQuery(QueryKey.CATEGORY_LIST, () =>
+  const { data: categoryList } = useQuery(QueryKey.CATEGORY_LIST, () =>
     getCategories(id || '')
+  );
+  const { data: mileStoneList } = useQuery(QueryKey.MILESTONE_LIST, () =>
+    getMileStones(id || '')
   );
 
   const priorityOption = [
@@ -123,7 +127,7 @@ export const TicketProperty = ({
         // カテゴリが選択されていない場合、新たにリストに追加する
         const newCategory = {
           uuid: categoryId,
-          name: data?.find((d) => d.uuid === categoryId)?.name || ''
+          name: categoryList?.find((d) => d.uuid === categoryId)?.name || ''
         };
         return [...prevSelected, newCategory];
       }
@@ -151,7 +155,7 @@ export const TicketProperty = ({
     } as SimpleMDE.Options;
   }, []);
 
-  if (!data) {
+  if (!categoryList || !mileStoneList) {
     return <Loading />;
   }
 
@@ -174,6 +178,32 @@ export const TicketProperty = ({
           <ReactMarkdown>{ticket?.detail}</ReactMarkdown>
         </StyledDetailBox>
       )}
+      <Divider />
+      <Flex align="center" gap={32}>
+        <StyledLabel>マイルストーン:</StyledLabel>
+        <FormItem
+          noStyle
+          initialValue={ticket?.mileStone?.uuid || null}
+          name={'mileStone'}
+        >
+          {isEditMode ? (
+            <StyledMileStoneSelect>
+              <Option key={'null'} value={null}>
+                {' '}
+              </Option>
+              {mileStoneList.map((mileStone) => {
+                return (
+                  <Option key={mileStone.uuid} value={mileStone.uuid}>
+                    {mileStone.name}
+                  </Option>
+                );
+              })}
+            </StyledMileStoneSelect>
+          ) : (
+            ticket?.mileStone?.name
+          )}
+        </FormItem>
+      </Flex>
       <Divider />
       <Flex gap={48}>
         <StyledPropertyFlex vertical gap={8} flex={4}>
@@ -332,7 +362,7 @@ export const TicketProperty = ({
             <Checkbox.Group
               value={selectedCategories.map((category) => category.uuid)}
               onChange={(checkedValues) => {
-                data.forEach((category) => {
+                categoryList.forEach((category) => {
                   if (checkedValues.includes(category.uuid)) {
                     if (
                       !selectedCategories.some((c) => c.uuid === category.uuid)
@@ -349,7 +379,7 @@ export const TicketProperty = ({
                 });
               }}
             >
-              {data.map((category) => (
+              {categoryList.map((category) => (
                 <Checkbox key={category.uuid} value={category.uuid}>
                   {category.name}
                 </Checkbox>
@@ -359,7 +389,7 @@ export const TicketProperty = ({
         ) : (
           <>
             {ticket?.categories?.map((category) => {
-              if (data.find((d) => d.uuid === category.uuid)) {
+              if (categoryList.find((d) => d.uuid === category.uuid)) {
                 return <Category key={category.uuid} category={category} />;
               }
             })}
@@ -385,6 +415,9 @@ const StyledLabel = styled.div`
 
 const StyledSelect = styled(Select)`
   width: 120px;
+`;
+const StyledMileStoneSelect = styled(Select)`
+  width: 60%;
 `;
 
 const StyledSpan = styled.span<{ $isToday: boolean }>`
