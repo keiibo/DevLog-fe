@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Priority, Status, TStatus, TTicket } from '../types/TTicket';
+import { Priority, Status, TGetMileStoneRes, TTicket } from '../types/TTicket';
 import { Flex, Tooltip } from 'antd';
 import { CategoryLabel } from '../../../components/composition/categoryLabel/CategoryLabel';
 import { TicketListItem } from '../components/compositions/TicketListItem';
@@ -20,21 +20,31 @@ import { MileStoneSelectModal } from '../components/compositions/modal/MileStone
 import { NewMileStoneModal } from '../components/compositions/modal/NewMileStoneModal';
 type TProps = {
   ticketList: TTicket[];
+  mileStoneList: TGetMileStoneRes[];
 };
 
-export const List = ({ ticketList }: TProps): React.JSX.Element => {
+export const List = ({
+  ticketList,
+  mileStoneList
+}: TProps): React.JSX.Element => {
   const [searchParams, _] = useSearchParams();
   const querySortType = searchParams.get('sort');
   const queryCategory = searchParams.get('category');
   const [open, setOpen] = useState(false);
   const handleOpenChange = () => setOpen(!open);
-
-  const [notStartedTicketList, setNotStartedTicketList] = useState<TTicket[]>(
-    []
+  /**
+   * チケットをステータスごとにフィルタリング
+   * 件数に使用する
+   */
+  const notStartedTicketList = ticketList.filter(
+    (ticket) => ticket.status === Status.NOT_STARTED
   );
-  const [underConstructionTicketList, setUnderConstructionTicketList] =
-    useState<TTicket[]>([]);
-  const [completedTicketList, setCompletedTicketList] = useState<TTicket[]>([]);
+  const underConstructionTicketList = ticketList.filter(
+    (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
+  );
+  const completedTicketList = ticketList.filter(
+    (ticket) => ticket.status === Status.COMPLETED
+  );
 
   // 優先度を数値にマッピングする関数
   const priorityToNumber = (priority: string): number => {
@@ -88,30 +98,7 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
     });
   };
 
-  // 初期orソート状態のチケットリストの用意
-  useEffect(() => {
-    setNotStartedTicketList(
-      sortTicketList(
-        ticketList &&
-          ticketList.filter((ticket) => ticket.status === Status.NOT_STARTED)
-      )
-    );
-    setUnderConstructionTicketList(
-      sortTicketList(
-        ticketList &&
-          ticketList.filter(
-            (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
-          )
-      )
-    );
-    setCompletedTicketList(
-      sortTicketList(
-        ticketList &&
-          ticketList.filter((ticket) => ticket.status === Status.COMPLETED)
-      )
-    );
-  }, [queryCategory, querySortType, ticketList]);
-
+  // モーダル用のstate
   const [isOpenedNewCreateModal, setIsOpenedNewCreateModal] =
     useState<boolean>(false);
   const [isOpenedSettingModal, setIsOpenedSettingModal] =
@@ -121,12 +108,27 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   const [isOpenedMileStoneSelectModal, setIsOpenedMileStoneSelectModal] =
     useState<boolean>(false);
 
-  // 未着手カテゴリの開閉状態
-  const [showNotStarted, setShowNotStarted] = useState(true);
-  // 着手中
-  const [showUnderConstruction, setShowUnderConstruction] = useState(true);
-  // 完了だけ閉める
-  const [showCompleted, setShowCompleted] = useState(false);
+  // 各マイルストーンの開閉状態を管理するオブジェクト
+  const [mileStoneOpenStates, setMileStoneOpenStates] = useState<{
+    [uuid: string]: boolean;
+  }>({});
+  // マイルストーンの開閉状態をトグルする
+  const toggleMileStone = (uuid: string) => {
+    setMileStoneOpenStates((prev) => ({
+      ...prev,
+      [uuid]: !prev[uuid] // 現在の開閉状態をトグル
+    }));
+  };
+
+  // useEffectで最初にマイルストーンを開いた状態にする
+  useEffect(() => {
+    const initialOpenStates: { [uuid: string]: boolean } = {};
+    mileStoneList.forEach((mileStone) => {
+      initialOpenStates[mileStone.uuid] = true; // 全てのマイルストーンを開いた状態にする
+    });
+    initialOpenStates['unassigned'] = true;
+    setMileStoneOpenStates(initialOpenStates);
+  }, [mileStoneList]); // mileStoneListが変わるたびに再実行
 
   // 新規作成ボタン押下時にモーダルを開く
   const handleNewCreateClick = (): void => {
@@ -135,28 +137,9 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
   const handleSettingClick = (): void => {
     setIsOpenedSettingModal(true);
   };
-
   const handleMileStoneSelectClick = (): void => {
     setIsOpenedMileStoneSelectModal(true);
   };
-
-  // 各ステータスの開閉状態をトグルする
-  const toggleCategory = (status: TStatus): void => {
-    switch (status) {
-      case Status.NOT_STARTED:
-        setShowNotStarted(!showNotStarted);
-        break;
-      case Status.UNDER_CONSTRUCTION:
-        setShowUnderConstruction(!showUnderConstruction);
-        break;
-      case Status.COMPLETED:
-        setShowCompleted(!showCompleted);
-        break;
-      default:
-        break;
-    }
-  };
-
   const handleOpenNewMileStoneModal = () => {
     setIsOpenedMileStoneModal(true);
   };
@@ -190,61 +173,97 @@ export const List = ({ ticketList }: TProps): React.JSX.Element => {
         </StyledListDataFlex>
 
         <Flex vertical gap={24}>
-          {/* 未着手 */}
+          {mileStoneList.map((mileStone) => {
+            // マイルストーンが設定されている完了していないチケットをフィルター
+            const filteredTicketList = ticketList
+              .filter((ticket) => ticket.status !== Status.COMPLETED)
+              .filter((ticket) => ticket.mileStone?.uuid === mileStone.uuid);
+            // チケットがない場合はスキップ
+            if (filteredTicketList.length === 0) {
+              return null;
+            }
+            const isOpen = mileStoneOpenStates[mileStone.uuid] || false; // 開閉状態の取得（デフォルトは閉じる）
+
+            return (
+              <Flex vertical gap={8}>
+                <CategoryLabel
+                  label={mileStone.name}
+                  subText={mileStone.version}
+                  onClick={() => toggleMileStone(mileStone.uuid)} // カテゴリクリックでトグル
+                  defaultOpenState={false}
+                  mode="accordion"
+                />
+                <StyledTicketList
+                  vertical
+                  gap={2}
+                  $show={isOpen} // 開閉状態に基づく表示
+                  $height={filteredTicketList.length || 0}
+                >
+                  {sortTicketList(filteredTicketList).map((ticket) => (
+                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
+                  ))}
+                </StyledTicketList>
+              </Flex>
+            );
+          })}
           <Flex vertical gap={8}>
             <CategoryLabel
-              label={'未着手'}
-              onClick={() => toggleCategory(Status.NOT_STARTED)}
-              defaultOpenState={notStartedTicketList.length > 0 || false}
+              label="マイルストーン未設定"
+              onClick={() => toggleMileStone('unassigned')} // 未設定のマイルストーン用トグル
+              defaultOpenState={
+                !(
+                  ticketList
+                    .filter((ticket) => ticket.status !== Status.COMPLETED)
+                    .filter((ticket) => !ticket.mileStone).length > 0
+                )
+              }
               mode="accordion"
             />
             <StyledTicketList
               vertical
               gap={2}
-              $show={showNotStarted}
-              $height={notStartedTicketList.length || 0}
+              $show={mileStoneOpenStates['unassigned'] || false} // 未設定の開閉状態
+              $height={
+                ticketList
+                  .filter((ticket) => ticket.status !== Status.COMPLETED)
+                  .filter((ticket) => !ticket.mileStone).length || 0
+              }
             >
-              {notStartedTicketList.map((ticket) => (
+              {sortTicketList(
+                ticketList
+                  .filter((ticket) => ticket.status !== Status.COMPLETED)
+                  .filter((ticket) => !ticket.mileStone)
+              ).map((ticket) => (
                 <TicketListItem ticket={ticket} key={ticket.ticketId} />
               ))}
             </StyledTicketList>
           </Flex>
-          {/* 着手中*/}
           <Flex vertical gap={8}>
             <CategoryLabel
-              label={'着手中'}
-              onClick={() => toggleCategory(Status.UNDER_CONSTRUCTION)}
-              defaultOpenState={underConstructionTicketList.length > 0 || false}
+              label="完了したチケット"
+              onClick={() => toggleMileStone('completed')}
+              defaultOpenState={
+                ticketList
+                  .filter((ticket) => ticket.status === Status.COMPLETED)
+                  .filter((ticket) => !ticket.mileStone).length > 0
+              }
               mode="accordion"
             />
             <StyledTicketList
               vertical
-              gap={4}
-              $show={showUnderConstruction}
-              $height={underConstructionTicketList.length || 0}
+              gap={2}
+              $show={mileStoneOpenStates['completed'] || false}
+              $height={
+                ticketList
+                  .filter((ticket) => ticket.status === Status.COMPLETED)
+                  .filter((ticket) => !ticket.mileStone).length || 0
+              }
             >
-              {underConstructionTicketList.map((ticket) => (
-                <TicketListItem ticket={ticket} key={ticket.ticketId} />
-              ))}
-            </StyledTicketList>
-          </Flex>
-          {/* 完了 */}
-          <Flex vertical gap={8}>
-            <CategoryLabel
-              label={'完了'}
-              onClick={() => toggleCategory(Status.COMPLETED)}
-              defaultOpenState
-              mode="accordion"
-            />
-            <StyledTicketList
-              vertical
-              gap={4}
-              $show={showCompleted}
-              $height={completedTicketList.length || 0}
-            >
-              {completedTicketList.map((ticket) => (
-                <TicketListItem ticket={ticket} key={ticket.ticketId} />
-              ))}
+              {ticketList
+                .filter((ticket) => ticket.status === Status.COMPLETED)
+                .map((ticket) => (
+                  <TicketListItem ticket={ticket} key={ticket.ticketId} />
+                ))}
             </StyledTicketList>
           </Flex>
         </Flex>
