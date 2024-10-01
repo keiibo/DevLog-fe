@@ -42,7 +42,8 @@ export const Default: TStory = {
       status: Status.UNDER_CONSTRUCTION,
       detail: 'testtesttesttest',
       createdAt: '',
-      completedAt: null
+      completedAt: null,
+      mileStone: null
     }
   }
 };
@@ -62,7 +63,8 @@ export const CantDelete: TStory = {
       status: Status.NOT_STARTED,
       detail: 'testtesttesttest',
       createdAt: '',
-      completedAt: null
+      completedAt: null,
+      mileStone: null
     }
   }
 };

@@ -5,7 +5,7 @@ import { Flex } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import {
   mixinBgWhite,
-  mixinBoldFontSize24px,
+  mixinBoldFontSize16px,
   mixinBorderRadius4px,
   mixinMainColor,
   mixinNormalFontSize16px,
@@ -93,7 +93,7 @@ const StyledCategoryLabel = styled.div<{
 `;
 
 const StyledLabel = styled.div`
-  ${mixinBoldFontSize24px}
+  ${mixinBoldFontSize16px}
 `;
 
 const StyledSubText = styled.div`
