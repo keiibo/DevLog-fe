@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Section } from '../components/compositions/Section';
 import { CategoryLabelMode } from '../../../components/composition/categoryLabel/CategoryLabel';
 import { useParams } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProject } from '../../../api/project';
 import { Loading } from '../../../components/element/loading/Loading';
 import { LinkIcon } from '../components/elements/LinkIcon';
@@ -30,9 +30,10 @@ export const Detail = (): React.JSX.Element => {
   const [form] = useForm();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(QueryKey.PROJECT_DETAIL, () =>
-    getProject(projectId || '')
-  );
+  const { data } = useQuery({
+    queryKey: [QueryKey.PROJECT_DETAIL],
+    queryFn: () => getProject(projectId || '')
+  });
   const [detail, setDetail] = useState<TGetProjectRes>();
 
   if (!data || !projectId) <Loading />;
@@ -41,10 +42,11 @@ export const Detail = (): React.JSX.Element => {
     setDetail(data);
   }, [data]);
 
-  const updateMutation = useMutation(updateProject, {
+  const updateMutation = useMutation({
+    mutationFn: updateProject,
     onSuccess: () => {
-      queryClient.invalidateQueries(QueryKey.PROJECT_DETAIL);
-      queryClient.invalidateQueries(QueryKey.PROJECT_LIST);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.PROJECT_DETAIL] });
+      queryClient.invalidateQueries({ queryKey: [QueryKey.PROJECT_LIST] });
       notification.success({
         message: `プロジェクト情報を更新しました`,
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）

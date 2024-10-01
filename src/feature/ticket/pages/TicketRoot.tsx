@@ -2,7 +2,7 @@ import { Flex } from 'antd';
 import React from 'react';
 import { List } from './List';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getTickets } from '../api/ticket';
 import { TicketDashBoard } from './TicketDashBoard';
 import { Loading } from '../../../components/element/loading/Loading';
@@ -14,12 +14,14 @@ export const TicketRoot = (): React.JSX.Element => {
   if (!projectId) {
     return <Loading />;
   }
-  const { data: ticketList } = useQuery(QueryKey.TICKET_LIST, () =>
-    getTickets(projectId)
-  );
-  const { data: mileStoneList } = useQuery(QueryKey.MILESTONE_LIST, () =>
-    getMileStones(projectId || '')
-  );
+  const { data: ticketList } = useQuery({
+    queryKey: [QueryKey.TICKET_LIST],
+    queryFn: () => getTickets(projectId)
+  });
+  const { data: mileStoneList } = useQuery({
+    queryKey: [QueryKey.MILESTONE_LIST],
+    queryFn: () => getMileStones(projectId || '')
+  });
   if (!ticketList || !mileStoneList) {
     return <Loading />;
   }

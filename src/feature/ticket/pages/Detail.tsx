@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { getLabelColor } from '../lib/labelColor';
 import { mixinBgWhite, mixinBorderRadius12px } from '../../../style/Mixin';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteTicket, getTicket, updateTicket } from '../api/ticket';
 import { Flex, notification, Space } from 'antd';
 import { Button } from '../../../components/element/button/Button';
@@ -34,25 +34,23 @@ export const Detail = (): React.JSX.Element => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { data: ticket, isLoading } = useQuery(
-    QueryKey.TICKET_DETAIL,
-    () => getTicket(ticketId || ''),
-    {
-      staleTime: 0, // キャッシュをすぐに無効化する
-      cacheTime: 0 // キャッシュを残さない
-    }
-  );
+  const { data: ticket, isLoading } = useQuery({
+    queryKey: [QueryKey.TICKET_DETAIL],
+    queryFn: () => getTicket(ticketId || ''),
+    staleTime: 0 // キャッシュをすぐに無効化する
+  });
 
   /**
    * putMutation
    */
-  const putMutation = useMutation(updateTicket, {
+  const putMutation = useMutation({
+    mutationFn: updateTicket,
     onSuccess: () => {
       notification.success({
         message: 'チケットを更新しました',
         duration: NOTIFICATION_TIME.SUCCESS
       });
-      queryClient.invalidateQueries(QueryKey.TICKET_DETAIL);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.TICKET_DETAIL] });
       setIsEditMode(false);
     },
     onError: () => {
@@ -68,13 +66,14 @@ export const Detail = (): React.JSX.Element => {
   /**
    * deleteMutation
    */
-  const deleteMutation = useMutation(deleteTicket, {
+  const deleteMutation = useMutation({
+    mutationFn: deleteTicket,
     onSuccess: () => {
       notification.success({
         message: 'チケットを削除しました',
         duration: NOTIFICATION_TIME.SUCCESS
       });
-      queryClient.invalidateQueries(QueryKey.TICKET_DETAIL);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.TICKET_DETAIL] });
       navigate(`/${projectId}/ticket`);
     },
     onError: () => {

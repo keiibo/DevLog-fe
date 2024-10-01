@@ -25,7 +25,7 @@ import { Colors } from '../../../../style/Colors';
 import { getLabelColorStr } from '../../lib/labelColor';
 import { getStatusStr } from '../../lib/status';
 import { isOverLimitDate } from '../../lib/limitDate';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '../../api/category';
 import { useParams } from 'react-router-dom';
 import { Loading } from '../../../../components/element/loading/Loading';
@@ -59,12 +59,14 @@ export const TicketProperty = ({
   const [markdownValue, setMarkdownValue] = useState('');
 
   const { id } = useParams();
-  const { data: categoryList } = useQuery(QueryKey.CATEGORY_LIST, () =>
-    getCategories(id || '')
-  );
-  const { data: mileStoneList } = useQuery(QueryKey.MILESTONE_LIST, () =>
-    getMileStones(id || '')
-  );
+  const { data: categoryList } = useQuery({
+    queryKey: [QueryKey.CATEGORY_LIST],
+    queryFn: () => getCategories(id || '')
+  });
+  const { data: mileStoneList } = useQuery({
+    queryKey: [QueryKey.MILESTONE_LIST],
+    queryFn: () => getMileStones(id || '')
+  });
 
   const priorityOption = [
     { label: getPriorityStr(Priority.HIGH), value: Priority.HIGH },

@@ -24,7 +24,7 @@ import {
   TLinkIcon,
   TPostLinkIconsReq
 } from '../../types/TDetail';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { deleteLinkIcon, postLinkIcons } from '../../api/detail';
 import { DeleteFilled } from '@ant-design/icons';
 import { v4 } from 'uuid';
@@ -56,7 +56,8 @@ export const LinkIconSettingTooltip = ({
 
   if (!id) <Loading />;
 
-  const postLinkIconMutation = useMutation(postLinkIcons, {
+  const postLinkIconMutation = useMutation({
+    mutationFn: postLinkIcons,
     onSuccess: () => {
       onOk();
       form.resetFields();
@@ -92,7 +93,8 @@ export const LinkIconSettingTooltip = ({
     postLinkIconMutation.mutate(req);
   };
 
-  const mutation = useMutation(deleteLinkIcon, {
+  const mutation = useMutation({
+    mutationFn: deleteLinkIcon,
     onSuccess: () => {
       onOk();
       setIsOpenedDeleteModal(false);

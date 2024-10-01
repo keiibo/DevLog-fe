@@ -12,7 +12,7 @@ import { Button } from '../../../components/element/button/Button';
 import { Search } from '../../../components/element/search/Search';
 import { NoteListItem } from '../components/compositions/NoteListItem';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { createNote, getNotes } from '../api/note';
 import { QueryKey } from '../../../constant/QueryKey';
 import { TPostNoteReq } from '../types/TNote';
@@ -22,15 +22,17 @@ import { MailOutlined } from '@ant-design/icons';
 export const List = (): React.JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: notes } = useQuery(QueryKey.NOTE_LIST, () =>
-    getNotes(id || '')
-  );
+  const { data: notes } = useQuery({
+    queryKey: [QueryKey.NOTE_LIST],
+    queryFn: () => getNotes(id || '')
+  });
   // 検索ボックスのキーワードを管理
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filteredNotes, setFilteredNotes] = useState(notes || []);
 
-  const mutation = useMutation(createNote, {
+  const mutation = useMutation({
+    mutationFn: createNote,
     onSuccess: (res) => {
       navigate(`create/${res.uuid}`);
     }

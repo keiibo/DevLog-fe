@@ -13,7 +13,7 @@ import { TDeleteNoteReq, TNote } from '../../types/TNote';
 import dayjs from 'dayjs';
 import { DateFormat } from '../../../../constant/DateFormat';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteNote } from '../../api/note';
 import { NOTIFICATION_TIME } from '../../../../constant/Notification';
 import { QueryKey } from '../../../../constant/QueryKey';
@@ -48,13 +48,14 @@ export const NoteListItem = ({
     );
   };
 
-  const mutation = useMutation(deleteNote, {
+  const mutation = useMutation({
+    mutationFn: deleteNote,
     onSuccess: () => {
       notification.success({
         message: 'ノートを削除しました',
         duration: NOTIFICATION_TIME.SUCCESS
       });
-      queryClient.invalidateQueries(QueryKey.NOTE_LIST);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.NOTE_LIST] });
     }
   });
 

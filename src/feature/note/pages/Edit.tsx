@@ -19,7 +19,7 @@ import { useForm } from 'antd/es/form/Form';
 import { getNoteDetail, updateNote } from '../api/note';
 import { Loading } from '../../../components/element/loading/Loading';
 import { TNote, TUpdateNoteReq } from '../types/TNote';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKey } from '../../../constant/QueryKey';
 
 export const Edit = (): React.JSX.Element => {
@@ -52,9 +52,10 @@ export const Edit = (): React.JSX.Element => {
     }
   }, [isEdit, id, uuid]);
 
-  const mutation = useMutation(updateNote, {
+  const mutation = useMutation({
+    mutationFn: updateNote,
     onSuccess: () => {
-      queryClient.invalidateQueries(QueryKey.NOTE_LIST);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.NOTE_LIST] });
     }
   });
 

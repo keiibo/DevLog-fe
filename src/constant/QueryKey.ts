@@ -1,4 +1,5 @@
 export const QueryKey = {
+  ME: 'me',
   PROJECT_LIST: 'projects',
   PROJECT_DETAIL: 'projectDetail',
   TICKET_LIST: 'tickets',

@@ -18,7 +18,7 @@ import Checkbox from 'antd/es/checkbox/Checkbox';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { createMileStone } from '../../../api/mileStone';
 
 type TProps = {
@@ -69,7 +69,8 @@ export const NewMileStoneModal = ({
     });
   };
 
-  const mutation = useMutation(createMileStone, {
+  const mutation = useMutation({
+    mutationFn: createMileStone,
     onSuccess: () => {
       setIsOpened(false);
       setIsSelectModalOpened(false);

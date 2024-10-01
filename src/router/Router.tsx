@@ -18,11 +18,12 @@ import { TicketRoot } from '../feature/ticket/pages/TicketRoot';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../store/slice/auth/authSlice';
 import { me } from '../feature/auth/api/auth';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Loading } from '../components/element/loading/Loading';
 import { CreateAccount } from '../feature/auth/pages/CreateAccount';
 import { List as NoteList } from '../feature/note/pages/List';
 import { Edit as NoteEdit } from '../feature/note/pages/Edit';
+import { QueryKey } from '../constant/QueryKey';
 
 export const AppRouter = (): React.JSX.Element => {
   // ログイン画面に強制リダイレクトさせるコンポーネント
@@ -41,7 +42,10 @@ export const AppRouter = (): React.JSX.Element => {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
     const location = useLocation();
-    const { data, error, isLoading } = useQuery('me', me);
+    const { data, error, isLoading } = useQuery({
+      queryKey: [QueryKey.ME],
+      queryFn: me
+    });
     if (isLoading) {
       return <Loading />;
     }

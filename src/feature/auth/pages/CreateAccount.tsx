@@ -13,11 +13,11 @@ import { Input } from '../../../components/element/input/Input';
 import { Button } from '../../../components/element/button/Button';
 import { useForm } from 'antd/es/form/Form';
 import { Rule } from 'antd/es/form';
-import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { createAccount } from '../api/auth';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
 import { AxiosError } from 'axios';
+import { useMutation } from '@tanstack/react-query';
 
 export const CreateAccount = (): React.JSX.Element => {
   const [mode, setMode] = useState<'form' | 'confirm'>('form');
@@ -90,7 +90,8 @@ export const CreateAccount = (): React.JSX.Element => {
 
   const navigate = useNavigate();
 
-  const mutation = useMutation(createAccount, {
+  const mutation = useMutation({
+    mutationFn: createAccount,
     onSuccess: (res) => {
       notification.success({
         message: `ようこそ！${res.userName}さん！`,

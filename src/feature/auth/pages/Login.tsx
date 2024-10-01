@@ -16,7 +16,7 @@ import { FormItem } from '../../../components/element/form/FormItem';
 import { Button } from '../../../components/element/button/Button';
 import { useForm } from 'antd/es/form/Form';
 import { TPostLoginReq } from '../types/TAuth';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { login as postLogin } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -29,7 +29,8 @@ export const Login = (): React.JSX.Element => {
   const [form] = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const mutation = useMutation(postLogin, {
+  const mutation = useMutation({
+    mutationFn: postLogin,
     onSuccess: (res) => {
       notification.success({
         message: 'ログイン成功',
@@ -112,7 +113,9 @@ export const Login = (): React.JSX.Element => {
               ></Input>
             </FormItem>
             <Flex justify="center" align="center" gap={8} vertical>
-            <StyledForgotLink to={'#'}>パスワードを忘れた場合</StyledForgotLink>
+              <StyledForgotLink to={'#'}>
+                パスワードを忘れた場合
+              </StyledForgotLink>
               <Button type={'primary'} htmlType="submit">
                 ログイン
               </Button>

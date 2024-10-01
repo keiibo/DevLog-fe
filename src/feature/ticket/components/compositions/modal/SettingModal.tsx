@@ -17,7 +17,7 @@ import {
 } from '../../../../../style/Mixin';
 import { Colors } from '../../../../../style/Colors';
 import { v4 as uuidv4 } from 'uuid';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { createCategories, getCategories } from '../../../api/category';
 import { NOTIFICATION_TIME } from '../../../../../constant/Notification';
 import { useParams } from 'react-router-dom';
@@ -40,9 +40,10 @@ export const SettingModal = ({
   title
 }: TProps): React.JSX.Element => {
   const { id: projectId } = useParams();
-  const { data } = useQuery(QueryKey.CATEGORY_LIST, () =>
-    getCategories(projectId || '')
-  );
+  const { data } = useQuery({
+    queryKey: [QueryKey.CATEGORY_LIST],
+    queryFn: () => getCategories(projectId || '')
+  });
 
   const [categories, setCategories] = useState<TCategory[]>([]);
   const [form] = useForm();
@@ -53,7 +54,8 @@ export const SettingModal = ({
     }
   }, [data]);
 
-  const mutation = useMutation(createCategories, {
+  const mutation = useMutation({
+    mutationFn: createCategories,
     onSuccess: () => {
       setIsOpened(false);
       notification.success({

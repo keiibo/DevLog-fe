@@ -7,7 +7,7 @@ import { Status, TCategory, TCreateTicketReq } from '../../../types/TTicket';
 import { mixinNormalFontSize16px } from '../../../../../style/Mixin';
 import { styled } from 'styled-components';
 import { Form } from '../../../../../components/element/form/Form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTicket } from '../../../api/ticket';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
@@ -79,7 +79,8 @@ export const CreateModal = ({
   /**
    * postMutation
    */
-  const mutation = useMutation(createTicket, {
+  const mutation = useMutation({
+    mutationFn: createTicket,
     onSuccess: (res) => {
       notification.success({
         message: 'チケットを作成しました',
@@ -87,7 +88,7 @@ export const CreateModal = ({
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
       setIsOpenedNewCreateModal(false);
-      queryClient.invalidateQueries(QueryKey.TICKET_LIST);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.TICKET_LIST] });
       form.resetFields();
       setSelectedCategories([]);
     },

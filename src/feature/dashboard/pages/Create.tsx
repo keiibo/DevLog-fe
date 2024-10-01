@@ -10,7 +10,7 @@ import { Form } from '../../../components/element/form/Form';
 import { FormItem } from '../../../components/element/form/FormItem';
 import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createProject } from '../../../api/project';
 import { TCreateProjectReq } from '../../detail/types/TProject';
 import { useNavigate } from 'react-router-dom';
@@ -95,14 +95,15 @@ export const Create = (): React.JSX.Element => {
     }
   };
 
-  const mutation = useMutation(createProject, {
+  const mutation = useMutation({
+    mutationFn: createProject,
     onSuccess: (res) => {
       notification.success({
         message: 'プロジェクト作成成功',
         description: '新しいプロジェクトが正常に作成されました。',
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
-      queryClient.invalidateQueries(QueryKey.PROJECT_LIST);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.PROJECT_LIST] });
       navigate(`/${res.projectId}/dashboard`);
     },
     onError: () => {

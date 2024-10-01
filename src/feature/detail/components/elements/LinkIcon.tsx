@@ -13,7 +13,7 @@ import {
 } from '../../../../components/element/icon/Icon';
 import { LinkIconSettingTooltip } from './LinkIconSettingTooltip';
 import { TLinkIcon } from '../../types/TDetail';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { QueryKey } from '../../../../constant/QueryKey';
 
 type TProps = {
@@ -77,7 +77,7 @@ export const LinkIcon = ({
         uuid: uuid || ''
       }}
       onOk={() => {
-        queryClient.invalidateQueries(QueryKey.PROJECT_DETAIL);
+        queryClient.invalidateQueries({ queryKey: [QueryKey.PROJECT_DETAIL] });
         setIsOpened(false);
       }}
       isOpen={isOpened}

@@ -5,7 +5,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Content } from 'antd/es/layout/layout';
 import { LayoutNum } from './constant/LayoutNum';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { TGetProjectRes } from './feature/detail/types/TProject';
 import { getProjects } from './api/project';
 import { SideMenu } from './SideMenu';
@@ -25,9 +25,10 @@ export const Root = (): React.JSX.Element => {
   const [canView, setCanView] = useState(false);
 
   // storeに保存されたユーザー情報からuserIdを取得し、reqに使う
-  const { data: projectList, refetch } = useQuery(QueryKey.PROJECT_LIST, () =>
-    getProjects(auth.userId)
-  );
+  const { data: projectList, refetch } = useQuery({
+    queryKey: [QueryKey.PROJECT_LIST],
+    queryFn: () => getProjects(auth.userId)
+  });
   const { id: projectId } = useParams();
   const [project, setProject] = useState<TGetProjectRes | null>(
     projectList

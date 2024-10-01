@@ -14,7 +14,7 @@ import { TicketTitle } from './TicketTitle';
 import { getLabelColor } from '../../lib/labelColor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Category } from '../elements/Category';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '../../api/category';
 import { Loading } from '../../../../components/element/loading/Loading';
 import { Colors } from '../../../../style/Colors';
@@ -28,9 +28,10 @@ export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useQuery(QueryKey.CATEGORY_LIST, () =>
-    getCategories(id || '')
-  );
+  const { data } = useQuery({
+    queryKey: [QueryKey.CATEGORY_LIST],
+    queryFn: () => getCategories(id || '')
+  });
 
   if (!data) {
     return <Loading />;
