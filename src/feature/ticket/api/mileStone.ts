@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
 import { TCreateMileStoneReq, TGetMileStoneRes } from '../types/TTicket';
+import { setConfig, sgetBaseUrl } from '../../../lib/api';
 
 /**
  * マイルストーンの新規作成

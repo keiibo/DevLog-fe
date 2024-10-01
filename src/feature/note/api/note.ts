@@ -6,7 +6,7 @@ import {
   TPostNoteReq,
   TUpdateNoteReq
 } from '../types/TNote';
-import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
+import { setConfig, sgetBaseUrl } from '../../../lib/api';
 
 /**
  * ノート一覧の取得

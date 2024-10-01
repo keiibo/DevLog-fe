@@ -5,6 +5,7 @@ import {
   TPostLoginReq,
   TPostLoginRes
 } from '../types/TAuth';
+import { mockApiCli, setConfig, sgetBaseUrl } from '../../../lib/api';
 
 /**
  * ログイン
@@ -39,7 +40,7 @@ export const createAccount = async (
   req: TPostCreateAccountReq
 ): Promise<TPostCreateAccountRes> => {
   try {
-    const response = await axios.post<TPostCreateAccountRes>(
+    const response = await mockApiCli.post<TPostCreateAccountRes>(
       `${sgetBaseUrl()}/api/user`,
       req,
       setConfig()
@@ -48,27 +49,4 @@ export const createAccount = async (
   } catch (error) {
     throw error; // その他のエラーは再スロー
   }
-};
-
-/**
- * Bearerの設定を付与する
- */
-export const setConfig = (): {} => {
-  const token = localStorage.getItem('token');
-  if (token === '') {
-    // eslint-disable-next-line no-console
-    console.error('tokenが空です');
-  }
-  return {
-    headers: {
-      Authorization: `Bearer ${token}` // トークンをBearerスキームで設定
-    }
-  };
-};
-
-/**
- * baseUrlの決定
- */
-export const sgetBaseUrl = (): string => {
-  return import.meta.env.VITE_BACKEND_URL || '';
 };

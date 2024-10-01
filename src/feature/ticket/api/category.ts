@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
 import {
   TCategory,
   TCreateCategoryReq,
   TMGetCategoryRes
 } from '../types/TTicket';
+import { setConfig, sgetBaseUrl } from '../../../lib/api';
 
 /**
  * カテゴリの新規作成

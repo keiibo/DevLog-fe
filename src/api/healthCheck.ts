@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { sgetBaseUrl } from '../feature/auth/api/auth';
+import { sgetBaseUrl } from '../lib/api';
 
 export const getHealthCheck = async () => {
   try {

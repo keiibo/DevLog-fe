@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
 import {
   TDeleteLinkIconReq,
   TPostLinkIconsReq,
   TPostLinkIconsRes
 } from '../types/TDetail';
 import { TUpdateProjectReq } from '../types/TProject';
+import { setConfig, sgetBaseUrl } from '../../../lib/api';
 
 /**
  * リンクアイコンの作成

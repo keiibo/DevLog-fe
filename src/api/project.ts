@@ -3,7 +3,7 @@ import {
   TCreateProjectReq,
   TGetProjectRes
 } from '../feature/detail/types/TProject';
-import { setConfig, sgetBaseUrl } from '../feature/auth/api/auth';
+import { setConfig, sgetBaseUrl } from '../lib/api';
 
 /**
  * プロジェクト一覧の取得

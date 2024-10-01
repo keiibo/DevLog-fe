@@ -4,7 +4,7 @@ import {
   TGetTicketRes,
   TPutTicketReq
 } from '../types/TTicket';
-import { setConfig, sgetBaseUrl } from '../../auth/api/auth';
+import { setConfig, sgetBaseUrl } from '../../../lib/api';
 
 /**
  * チケット一覧の取得
