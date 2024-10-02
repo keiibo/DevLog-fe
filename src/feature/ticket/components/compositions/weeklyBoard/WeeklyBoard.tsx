@@ -171,7 +171,6 @@ export const WeeklyBoard = ({ ticketList }: TProps): React.JSX.Element => {
 const StyledChartContainer = styled.div`
   border: 1px solid ${Colors.WHITE};
   border-top: none;
-  width: 100%;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   ${mixinPadding12px}

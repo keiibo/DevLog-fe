@@ -23,6 +23,7 @@ import { Loading } from '../../../components/element/loading/Loading';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
 import { QueryKey } from '../../../constant/QueryKey';
 import { ArrowBack } from '../../../components/composition/ArrowBack';
+import { Id } from '../components/elements/Id';
 
 export const Detail = (): React.JSX.Element => {
   const { id: projectId, ticketId } = useParams();
@@ -150,17 +151,20 @@ export const Detail = (): React.JSX.Element => {
       <ArrowBack handleBack={handleBack} />
       <Form onFinish={handleEditFinish} form={form}>
         <StyledTicketContainer vertical gap={16} $labelColor={labelColor || ''}>
-          <TicketTitle
-            id={ticket.ticketId}
-            title={ticket.title}
-            isDeletable
-            mode={'detail'}
-            labelColorType={ticket.labelColorType}
-            isEditable
-            isEditMode={isEditMode}
-            setIsEditMode={setIsEditMode}
-            handleDelete={handleDelete}
-          />
+          <Flex vertical gap={4}>
+            <Id id={ticketId} />
+            <TicketTitle
+              id={ticket.ticketId}
+              title={ticket.title}
+              isDeletable
+              mode={'detail'}
+              labelColorType={ticket.labelColorType}
+              isEditable
+              isEditMode={isEditMode}
+              setIsEditMode={setIsEditMode}
+              handleDelete={handleDelete}
+            />
+          </Flex>
           <TicketProperty
             isEditMode={isEditMode}
             ticket={ticket}

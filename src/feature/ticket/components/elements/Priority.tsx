@@ -3,7 +3,6 @@ import { Priority as PriorityEnum, TPriority } from '../../types/TTicket';
 import { styled } from 'styled-components';
 import { Colors } from '../../../../style/Colors';
 import { Flex } from 'antd';
-import { mixinNormalFontSize12px } from '../../../../style/Mixin';
 
 type TProps = {
   priority: TPriority;
@@ -23,10 +22,10 @@ export const Priority = ({ priority }: TProps): React.JSX.Element => {
     }
   };
   return (
-    <Styled12px gap={4}>
+    <Flex gap={4}>
       優先度:
       <StyledSpan $priority={priority}>{getPriorityLabel(priority)}</StyledSpan>
-    </Styled12px>
+    </Flex>
   );
 };
 
@@ -39,9 +38,7 @@ const getPriorityColor = (priority: TPriority): string => {
   }
 };
 
-const Styled12px = styled(Flex)`
-  ${mixinNormalFontSize12px}
-`;
 const StyledSpan = styled.span<{ $priority: TPriority }>`
+  white-space: nowrap;
   color: ${(props) => getPriorityColor(props.$priority)};
 `;

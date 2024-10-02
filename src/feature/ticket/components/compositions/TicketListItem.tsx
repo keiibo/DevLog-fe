@@ -8,9 +8,8 @@ import {
   mixinBgWhite,
   mixinBorderRadius4px,
   mixinMainColor,
-  mixinPadding8px
+  mixinMargin0
 } from '../../../../style/Mixin';
-import { TicketTitle } from './TicketTitle';
 import { getLabelColor } from '../../lib/labelColor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Category } from '../elements/Category';
@@ -19,6 +18,7 @@ import { getCategories } from '../../api/category';
 import { Loading } from '../../../../components/element/loading/Loading';
 import { Colors } from '../../../../style/Colors';
 import { QueryKey } from '../../../../constant/QueryKey';
+import { Id } from '../elements/Id';
 
 type TProps = {
   ticket: TTicket;
@@ -53,36 +53,54 @@ export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
 
   return (
     <StyledTicketFlexContainer
-      gap={8}
+      gap={4}
       vertical
       $borderColor={labelColorType}
       onClick={() => handleTicketClick()}
     >
-      <StyledFlex align="center" justify="space-between">
-        <TicketTitle
-          id={ticketId}
-          title={title}
-          isDeletable={false}
-          mode="list"
-          labelColorType={labelColorType}
-        />
-        <LimitDate limitStartYm={limitStartYm} limitEndYm={limitEndYm} />
-      </StyledFlex>
       <StyledFlex justify="space-between">
-        <StyledCategoryFlex gap={4}>
-          {categories && categories.length > 0 ? (
-            categories.map((category) => {
-              if (data.find((d) => d.uuid === category.uuid)) {
-                return <Category key={category.uuid} category={category} />;
-              } else {
-                return <div key={category.uuid} style={{ flex: 1 }}></div>;
-              }
-            })
-          ) : (
-            <div style={{ flex: 1 }}></div>
-          )}
-        </StyledCategoryFlex>
-        <Priority priority={priority}></Priority>
+        <StyledLeftContent gap={8}>
+          <Flex vertical gap={4}>
+            <Id id={ticketId} />
+          </Flex>
+          <StyledTitleFlex vertical gap={4}>
+            <StyledTitle>{title}</StyledTitle>
+            <Flex gap={4}>
+              {categories &&
+                categories.length > 0 &&
+                (() => {
+                  // 条件に合致するカテゴリをフィルタリング
+                  const filteredCategories = categories.filter((category) =>
+                    data.find((d) => d.uuid === category.uuid)
+                  );
+
+                  // 最初の5件を取得
+                  const displayedCategories = filteredCategories.slice(0, 5);
+
+                  // 5件以上あるかを判定
+                  const hasMoreCategories = filteredCategories.length > 5;
+
+                  return (
+                    <>
+                      {displayedCategories.map((category) => (
+                        <Category key={category.uuid} category={category} />
+                      ))}
+                      {hasMoreCategories && <span>...</span>}
+                    </>
+                  );
+                })()}
+            </Flex>
+          </StyledTitleFlex>
+        </StyledLeftContent>
+
+        <Flex vertical gap={4} align="end">
+          <LimitDate limitStartYm={limitStartYm} limitEndYm={limitEndYm} />
+          <Flex gap={8}>
+            {/* #DVLG-213 */}
+            {/* <span>着手中</span> */}
+            <Priority priority={priority} />
+          </Flex>
+        </Flex>
       </StyledFlex>
     </StyledTicketFlexContainer>
   );
@@ -92,11 +110,10 @@ const StyledTicketFlexContainer = styled(Flex)<{
   $borderColor: TLabelColorType;
 }>`
   position: relative; /* 疑似要素の基準点とする */
-  box-sizing: border-box;
+  padding: 6px 8px;
   cursor: pointer;
-
   &&:hover {
-    border: 4px solid ${Colors.MAIN}4A;
+    border: 2px solid ${Colors.MAIN}4A;
   }
 
   &::before {
@@ -105,7 +122,7 @@ const StyledTicketFlexContainer = styled(Flex)<{
     left: 0;
     top: 0;
     bottom: 0;
-    width: 12px; /* 左の線の太さ */
+    width: 8px; /* 左の線の太さ */
     background-color: ${(props) =>
       getLabelColor(props.$borderColor)}; /* 背景色はpropsから */
   }
@@ -113,13 +130,29 @@ const StyledTicketFlexContainer = styled(Flex)<{
   ${mixinBgWhite}
   ${mixinMainColor}
   ${mixinBorderRadius4px}
-  ${mixinPadding8px}
 `;
 
 const StyledFlex = styled(Flex)`
   padding: 0 8px;
 `;
 
-const StyledCategoryFlex = styled(Flex)`
-  padding-left: 88px;
+const StyledLeftContent = styled(Flex)`
+  flex: 1;
+  min-width: 0;
+  gap: 8px;
+`;
+
+const StyledTitle = styled.h4`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1; // 追加
+
+  ${mixinMargin0}
+`;
+
+const StyledTitleFlex = styled(Flex)`
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
 `;

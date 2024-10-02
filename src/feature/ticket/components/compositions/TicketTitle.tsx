@@ -1,6 +1,5 @@
 import { Flex } from 'antd';
 import React, { useState } from 'react';
-import { Id } from '../elements/Id';
 import { mixinMargin0 } from '../../../../style/Mixin';
 import { styled } from 'styled-components';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -23,7 +22,6 @@ type TProps = {
 };
 
 export const TicketTitle = ({
-  id,
   title,
   isDeletable = false,
   mode,
@@ -52,7 +50,7 @@ export const TicketTitle = ({
     <>
       <StyledFlex $mode={mode} align="center" justify="space-between" gap={8}>
         <StyledLeftFlex gap={8} align="center">
-          <StyledId id={id} />
+          {/* <StyledId id={id} /> */}
           <StyledTitleContainer gap={8}>
             {isEditMode ? (
               <FormItem
@@ -106,13 +104,11 @@ const StyledFlex = styled(Flex)<{ $mode: string }>`
   /* TODO.Mixin対応できるかどうか */
   font-size: ${({ $mode }) => ($mode === 'detail' ? '24px' : '16px')};
 `;
-const StyledId = styled(Id)`
-  flex: 2;
-`;
+
 const StyledTitleContainer = styled(Flex)`
   flex: 8;
 `;
-const StyledTitle = styled.h4<{
+const StyledTitle = styled.div<{
   $mode: string;
   $labelColorType: TLabelColorType;
 }>`

@@ -29,10 +29,11 @@ export const Id = ({ id }: TProps): React.JSX.Element => {
     </Tooltip>
   );
 };
-const StyledId = styled.div`
+const StyledId = styled.span`
   ${mixinTextColor}
-  padding: 1px 2px;
+  width: fit-content;
   cursor: pointer;
+  white-space: nowrap;
   &&:hover {
     background-color: ${Colors.TEXT_DARK}1a;
     border-radius: 4px;

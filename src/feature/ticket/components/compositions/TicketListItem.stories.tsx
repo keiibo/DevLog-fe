@@ -70,7 +70,7 @@ export const Default: TStory = {
   args: {
     ticket: {
       _id: 1,
-      ticketId: 'TestPJ-1',
+      ticketId: 'DVLG-1',
       projectId: '100',
       labelColorType: 'blue',
       title: 'Example Ticket Title',
@@ -81,6 +81,16 @@ export const Default: TStory = {
       status: Status.UNDER_CONSTRUCTION,
       detail: 'testtesttesttest',
       createdAt: '',
+      categories: [
+        {
+          name: 'カテゴリー1',
+          uuid: 'test-test-test'
+        },
+        {
+          name: 'カテゴリー2',
+          uuid: 'test-test-test-test'
+        }
+      ],
       completedAt: null,
       mileStone: null
     }
@@ -91,10 +101,11 @@ export const CantDelete: TStory = {
   args: {
     ticket: {
       _id: 1,
-      ticketId: 'TestPJ-1',
+      ticketId: 'DVLG-1',
       projectId: '100',
       labelColorType: 'blue',
-      title: 'Example Ticket Title',
+      title:
+        '長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル長いタイトル',
       isDeletable: false,
       limitStartYm: '2022-01-01',
       limitEndYm: '2022-12-02',
@@ -102,6 +113,16 @@ export const CantDelete: TStory = {
       status: Status.NOT_STARTED,
       detail: 'testtesttesttest',
       createdAt: '',
+      categories: [
+        {
+          name: 'カテゴリー1',
+          uuid: 'test-test-test'
+        },
+        {
+          name: 'カテゴリー2',
+          uuid: 'test-test-test-test'
+        }
+      ],
       completedAt: null,
       mileStone: null
     }

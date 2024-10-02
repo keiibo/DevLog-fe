@@ -2,15 +2,11 @@ import { Flex } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import { styled } from 'styled-components';
-import {
-  mixinDangerColor,
-  mixinNormalFontSize12px
-} from '../../../../style/Mixin';
+import { mixinDangerColor } from '../../../../style/Mixin';
 import { DateFormat } from '../../../../constant/DateFormat';
 import { isOverLimitDate } from '../../lib/limitDate';
 import { FireFilled } from '@ant-design/icons';
 import { Colors } from '../../../../style/Colors';
-
 
 type TProps = {
   limitStartYm?: string;
@@ -23,7 +19,7 @@ export const LimitDate = ({
 }: TProps): React.JSX.Element => {
   return (
     <>
-      <Styled12px gap={4}>
+      <Flex gap={4}>
         {(isOverLimitDate(limitStartYm) || isOverLimitDate(limitEndYm)) && (
           <StyledFireFilled />
         )}
@@ -34,15 +30,13 @@ export const LimitDate = ({
         <StyledSpan $isToday={isOverLimitDate(limitEndYm)}>
           {limitEndYm && dayjs(limitEndYm).format(DateFormat.SLASH)}
         </StyledSpan>
-        {!limitStartYm && !limitEndYm && <span>期限日なし</span>}
-      </Styled12px>
+        {!limitStartYm && !limitEndYm && <StyledSpan>期限日なし</StyledSpan>}
+      </Flex>
     </>
   );
 };
-const Styled12px = styled(Flex)`
-  ${mixinNormalFontSize12px}
-`;
-const StyledSpan = styled.span<{ $isToday: boolean }>`
+const StyledSpan = styled.span<{ $isToday?: boolean }>`
+  white-space: nowrap;
   ${({ $isToday }) => ($isToday ? mixinDangerColor : '')}
 `;
 
