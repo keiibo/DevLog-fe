@@ -30,7 +30,12 @@ export const LimitDate = ({
         <StyledSpan $isToday={isOverLimitDate(limitEndYm)}>
           {limitEndYm && dayjs(limitEndYm).format(DateFormat.SLASH)}
         </StyledSpan>
-        {!limitStartYm && !limitEndYm && <StyledSpan>期限日なし</StyledSpan>}
+        {!limitStartYm && !limitEndYm && (
+          <Flex gap={4}>
+            期限日:
+            <StyledSpan>無</StyledSpan>
+          </Flex>
+        )}
       </Flex>
     </>
   );
