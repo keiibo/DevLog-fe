@@ -19,6 +19,7 @@ import { Loading } from '../../../../components/element/loading/Loading';
 import { Colors } from '../../../../style/Colors';
 import { QueryKey } from '../../../../constant/QueryKey';
 import { Id } from '../elements/Id';
+import { Status } from '../elements/Status';
 
 type TProps = {
   ticket: TTicket;
@@ -41,6 +42,7 @@ export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
     ticketId,
     title,
     priority,
+    status,
     limitStartYm,
     limitEndYm,
     labelColorType,
@@ -96,8 +98,7 @@ export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
         <Flex vertical gap={4} align="end">
           <LimitDate limitStartYm={limitStartYm} limitEndYm={limitEndYm} />
           <Flex gap={8}>
-            {/* #DVLG-213 */}
-            {/* <span>着手中</span> */}
+            <Status status={status} />
             <Priority priority={priority} />
           </Flex>
         </Flex>

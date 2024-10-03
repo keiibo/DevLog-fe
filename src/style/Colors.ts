@@ -10,7 +10,8 @@ export const Colors = {
   LIGHT_BLUE_ACCENT: '#76E3EA',
   WHITE: '#F4F5F7',
   PURPLE: '#AA5E84',
-  RED: '#F14040'
+  RED: '#F14040',
+  LIGHT_GREEN: '#8fd98d'
 } as const;
 
 export type TColors = TValueOf<typeof Colors>;
