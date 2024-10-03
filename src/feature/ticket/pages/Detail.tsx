@@ -97,6 +97,7 @@ export const Detail = (): React.JSX.Element => {
       detail: ticket?.detail,
       limitStartYm: ticket?.limitStartYm ? dayjs(ticket?.limitStartYm) : null,
       limitEndYm: ticket?.limitEndYm ? dayjs(ticket?.limitEndYm) : null,
+      mileStone: ticket?.mileStone ? ticket.mileStone.uuid : null,
       isDeletable: ticket?.isDeletable
     });
     setSelectedCategories(ticket?.categories || []);
