@@ -151,7 +151,7 @@ export const Detail = (): React.JSX.Element => {
     <Flex vertical gap={16}>
       <ArrowBack handleBack={handleBack} />
       <Form onFinish={handleEditFinish} form={form}>
-        <StyledTicketContainer vertical gap={16} $labelColor={labelColor || ''}>
+        <StyledTicketContainer vertical gap={4} $labelColor={labelColor || ''}>
           <Flex vertical gap={4}>
             <Id id={ticketId} />
             <TicketTitle
