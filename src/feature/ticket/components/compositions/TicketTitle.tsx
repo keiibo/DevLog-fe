@@ -50,7 +50,6 @@ export const TicketTitle = ({
     <>
       <StyledFlex $mode={mode} align="center" justify="space-between" gap={8}>
         <StyledLeftFlex gap={8} align="center">
-          {/* <StyledId id={id} /> */}
           <StyledTitleContainer gap={8}>
             {isEditMode ? (
               <FormItem

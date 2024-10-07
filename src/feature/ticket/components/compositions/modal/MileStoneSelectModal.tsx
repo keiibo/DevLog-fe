@@ -12,13 +12,15 @@ type TProps = {
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   handleOpenNewMileStoneModal: () => void;
+  handleOpenEditMileStoneModal: () => void;
 };
 
 export const MileStoneSelectModal = ({
   isOpened,
   setIsOpened,
   title,
-  handleOpenNewMileStoneModal
+  handleOpenNewMileStoneModal,
+  handleOpenEditMileStoneModal
 }: TProps): React.JSX.Element => {
   return (
     <Modal
@@ -45,7 +47,9 @@ export const MileStoneSelectModal = ({
             <Button type="primary" onClick={handleOpenNewMileStoneModal}>
               新規マイルストーンの作成
             </Button>
-            <Button type="primary">設定済みマイルストーンを編集</Button>
+            <Button type="primary" onClick={handleOpenEditMileStoneModal}>
+              設定済みマイルストーンを編集
+            </Button>
           </Flex>
         </Flex>
       </ModalBody>

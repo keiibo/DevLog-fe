@@ -26,6 +26,7 @@ import { MileStoneSelectModal } from '../components/compositions/modal/MileStone
 import { NewMileStoneModal } from '../components/compositions/modal/NewMileStoneModal';
 import { Input } from '../../../components/element/input/Input';
 import { Colors } from '../../../style/Colors';
+import { EditMileStoneModal } from '../components/compositions/modal/EditMileStoneModal';
 type TProps = {
   ticketList: TTicket[];
   mileStoneList: TGetMileStoneRes[];
@@ -119,6 +120,8 @@ export const List = ({
     useState<boolean>(false);
   const [isOpenedMileStoneSelectModal, setIsOpenedMileStoneSelectModal] =
     useState<boolean>(false);
+  const [isOpenedEditMileStoneModal, setIsOpenedEditMileStoneModal] =
+    useState<boolean>(false);
 
   // 各マイルストーンの開閉状態を管理するオブジェクト
   const [mileStoneOpenStates, setMileStoneOpenStates] = useState<{
@@ -159,6 +162,9 @@ export const List = ({
   };
   const handleOpenNewMileStoneModal = () => {
     setIsOpenedMileStoneModal(true);
+  };
+  const handleOpenEditMileStoneModal = () => {
+    setIsOpenedEditMileStoneModal(true);
   };
 
   return (
@@ -317,6 +323,7 @@ export const List = ({
         setIsOpened={setIsOpenedMileStoneSelectModal}
         title={'マイルストーン設定'}
         handleOpenNewMileStoneModal={handleOpenNewMileStoneModal}
+        handleOpenEditMileStoneModal={handleOpenEditMileStoneModal}
       />
       <NewMileStoneModal
         isOpened={isOpenedMileStoneModal}
@@ -324,6 +331,11 @@ export const List = ({
         setIsSelectModalOpened={setIsOpenedMileStoneSelectModal}
         title={'新規マイルストーンの作成'}
         tickets={ticketList}
+      />
+      <EditMileStoneModal
+        isOpened={isOpenedEditMileStoneModal}
+        setIsOpened={setIsOpenedEditMileStoneModal}
+        title={'設定済みマイルストーンを編集'}
       />
     </>
   );
