@@ -1,12 +1,12 @@
 import {
   ExperimentFilled,
-  ProfileFilled,
+  // ProfileFilled,
   DatabaseFilled,
   ReadFilled,
   SettingFilled,
-  CustomerServiceFilled,
-  UserOutlined,
-  SaveFilled
+  CustomerServiceFilled
+  // UserOutlined,
+  // SaveFilled
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import Sider from 'antd/es/layout/Sider';
@@ -29,16 +29,16 @@ export const SideMenu = ({ project, canView }: TProps): React.JSX.Element => {
   // TODO.Enumにしたい
   const items: TMenuItem[] = [
     { key: 'detail', label: 'プロジェクト詳細', icon: <ExperimentFilled /> },
-    { key: 'dashboard', label: 'ダッシュボード', icon: <ProfileFilled /> },
+    // { key: 'dashboard', label: 'ダッシュボード', icon: <ProfileFilled /> },
     { key: 'ticket', label: 'チケット', icon: <DatabaseFilled /> },
     { key: 'note', label: 'ノート', icon: <ReadFilled /> },
-    { key: 'develop_log', label: 'みんなの開発ログ', icon: <SaveFilled /> },
+    // { key: 'develop_log', label: 'みんなの開発ログ', icon: <SaveFilled /> },
     {
       key: 'setting',
       label: '設定',
       icon: <SettingFilled />,
       children: [
-        { key: 'userSetting', label: 'ユーザー設定', icon: <UserOutlined /> },
+        // { key: 'userSetting', label: 'ユーザー設定', icon: <UserOutlined /> },
         {
           key: 'customerService',
           label: 'お問い合わせ',

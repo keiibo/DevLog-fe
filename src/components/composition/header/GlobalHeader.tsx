@@ -8,7 +8,7 @@ import { LayoutNum } from '../../../constant/LayoutNum';
 import { useDispatch } from 'react-redux';
 import { logout, TAuthSliceType } from '../../../store/slice/auth/authSlice';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
-import { BellFilled } from '@ant-design/icons';
+// import { BellFilled } from '@ant-design/icons';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { Colors } from '../../../style/Colors';
 
@@ -53,18 +53,18 @@ export const GlobalHeader = ({
   }, [projectId, projectList, setProject]);
 
   const items: TMenuItem[] = [
-    {
-      key: '1',
-      label: `通知`,
-      icon: (
-        <StyledBellFilled
-          style={{
-            fontSize: 16,
-            minWidth: 16
-          }}
-        />
-      )
-    },
+    // {
+    //   key: '1',
+    //   label: `通知`,
+    //   icon: (
+    //     <StyledBellFilled
+    //       style={{
+    //         fontSize: 16,
+    //         minWidth: 16
+    //       }}
+    //     />
+    //   )
+    // },
     {
       key: '2',
       label: selectedProjectName,
@@ -167,10 +167,10 @@ const StyledLink = styled(Link)`
   align-items: center;
 `;
 
-const StyledBellFilled = styled(BellFilled)`
-  width: 16px;
-  min-width: 16px;
-`;
+// const StyledBellFilled = styled(BellFilled)`
+//   width: 16px;
+//   min-width: 16px;
+// `;
 
 const StyledMenu = styled(Menu)`
   &.ant-menu-title-content {
