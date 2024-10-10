@@ -50,7 +50,7 @@ export type TCategory = {
 export type TMileStone = {
   uuid: string;
   name: string;
-  version: string;
+  version: string | null;
 };
 
 export type TGetTicketRes = TTicket;
@@ -90,7 +90,7 @@ export type TGetMileStoneRes = {
   projectId: string;
   uuid: string;
   name: string;
-  version: string;
+  version: string | null;
 };
 
 export type TUpdateMileStoneReq = {

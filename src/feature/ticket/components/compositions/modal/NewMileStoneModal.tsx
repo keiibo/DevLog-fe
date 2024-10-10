@@ -214,16 +214,7 @@ export const NewMileStoneModal = ({
                   </Flex>
                   <Flex vertical gap={4}>
                     <StyledLabel>バージョン:</StyledLabel>
-                    <FormItem
-                      noStyle
-                      name={'version'}
-                      rules={[
-                        {
-                          required: true,
-                          message: '入力してください'
-                        }
-                      ]}
-                    >
+                    <FormItem noStyle name={'version'}>
                       <Input width={'100'} placeholder="v1.0.0" />
                     </FormItem>
                   </Flex>

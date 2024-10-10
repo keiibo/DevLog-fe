@@ -229,7 +229,7 @@ export const List = ({
               <Flex vertical gap={8} key={mileStone.uuid}>
                 <CategoryLabel
                   label={mileStone.name}
-                  subText={mileStone.version}
+                  subText={mileStone.version || ''}
                   onClick={() => toggleMileStone(mileStone.uuid)} // カテゴリクリックでトグル
                   defaultOpenState={false}
                   mode="accordion"
