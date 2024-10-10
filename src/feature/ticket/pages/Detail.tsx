@@ -38,7 +38,8 @@ export const Detail = (): React.JSX.Element => {
   const { data: ticket, isLoading } = useQuery({
     queryKey: [QueryKey.TICKET_DETAIL],
     queryFn: () => getTicket(ticketId || ''),
-    staleTime: 0 // キャッシュをすぐに無効化する
+    // キャッシュをすぐに無効化する
+    staleTime: 0
   });
 
   /**
@@ -103,7 +104,14 @@ export const Detail = (): React.JSX.Element => {
     setSelectedCategories(ticket?.categories || []);
   }, [ticket]);
 
-  if (!ticketId || !projectId || isLoading || !ticket) return <Loading />;
+  if (
+    !ticketId ||
+    !projectId ||
+    isLoading ||
+    !ticket ||
+    !(ticketId === ticket.ticketId)
+  )
+    return <Loading />;
 
   /**
    * 更新ボタン押下時、putリクエストを投げる
