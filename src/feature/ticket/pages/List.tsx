@@ -44,18 +44,21 @@ export const List = ({
 
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-
+  // フィルタリングされたチケットリスト
+  const filteredKeywordTicketList = ticketList.filter((ticket) =>
+    ticket.title.toLowerCase().includes(searchValue.toLowerCase())
+  );
   /**
    * チケットをステータスごとにフィルタリング
    * 件数に使用する
    */
-  const notStartedTicketList = ticketList.filter(
+  const notStartedTicketList = filteredKeywordTicketList.filter(
     (ticket) => ticket.status === Status.NOT_STARTED
   );
-  const underConstructionTicketList = ticketList.filter(
+  const underConstructionTicketList = filteredKeywordTicketList.filter(
     (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
   );
-  const completedTicketList = ticketList.filter(
+  const completedTicketList = filteredKeywordTicketList.filter(
     (ticket) => ticket.status === Status.COMPLETED
   );
 
@@ -145,11 +148,6 @@ export const List = ({
     setMileStoneOpenStates(initialOpenStates);
   }, [mileStoneList]); // mileStoneListが変わるたびに再実行
 
-  // フィルタリングされたチケットリスト
-  const filteredKeywordTicketList = ticketList.filter((ticket) =>
-    ticket.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
-
   // 新規作成ボタン押下時にモーダルを開く
   const handleNewCreateClick = (): void => {
     setIsOpenedNewCreateModal(true);
@@ -174,8 +172,8 @@ export const List = ({
           <Flex gap={8}>
             未着手 {notStartedTicketList.length}件 着手中{'  '}
             {underConstructionTicketList.length}件 完了{'  '}
-            {completedTicketList.length}件 / 全{ticketList && ticketList.length}
-            件
+            {completedTicketList.length}件 / 全
+            {filteredKeywordTicketList && filteredKeywordTicketList.length}件
           </Flex>
           <Flex gap={8}>
             <StyledSearchInput
@@ -251,74 +249,84 @@ export const List = ({
               </Flex>
             );
           })}
-          <Flex vertical gap={8}>
-            <CategoryLabel
-              label="マイルストーン未設定"
-              onClick={() => toggleMileStone('unassigned')} // 未設定のマイルストーン用トグル
-              defaultOpenState={
-                !(
-                  ticketList
+          {filteredKeywordTicketList
+            .filter((ticket) => ticket.status !== Status.COMPLETED)
+            .filter((ticket) => !ticket.mileStoneUuid).length > 0 && (
+            <Flex vertical gap={8}>
+              <CategoryLabel
+                label="マイルストーン未設定"
+                onClick={() => toggleMileStone('unassigned')} // 未設定のマイルストーン用トグル
+                defaultOpenState={
+                  !(
+                    filteredKeywordTicketList
+                      .filter((ticket) => ticket.status !== Status.COMPLETED)
+                      .filter((ticket) => !ticket.mileStoneUuid).length > 0
+                  )
+                }
+                mode="accordion"
+              />
+              <StyledTicketList
+                vertical
+                gap={2}
+                $show={mileStoneOpenStates['unassigned'] || false} // 未設定の開閉状態
+                $height={
+                  filteredKeywordTicketList
                     .filter((ticket) => ticket.status !== Status.COMPLETED)
-                    .filter((ticket) => !ticket.mileStoneUuid).length > 0
-                )
-              }
-              mode="accordion"
-            />
-            <StyledTicketList
-              vertical
-              gap={2}
-              $show={mileStoneOpenStates['unassigned'] || false} // 未設定の開閉状態
-              $height={
-                ticketList
-                  .filter((ticket) => ticket.status !== Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStoneUuid).length || 0
-              }
-            >
-              {sortTicketList(
-                filteredKeywordTicketList
-                  .filter((ticket) => ticket.status !== Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStoneUuid)
-              ).map((ticket) => (
-                <TicketListItem
-                  ticket={ticket}
-                  key={ticket.ticketId}
-                  searchedValue={searchValue}
-                />
-              ))}
-            </StyledTicketList>
-          </Flex>
-          <Flex vertical gap={8}>
-            <CategoryLabel
-              label="完了したチケット"
-              onClick={() => toggleMileStone('completed')}
-              defaultOpenState={
-                ticketList
-                  .filter((ticket) => ticket.status === Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStoneUuid).length > 0
-              }
-              mode="accordion"
-            />
-            <StyledTicketList
-              vertical
-              gap={2}
-              $show={mileStoneOpenStates['completed'] || false}
-              $height={
-                ticketList
-                  .filter((ticket) => ticket.status === Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStoneUuid).length || 0
-              }
-            >
-              {filteredKeywordTicketList
-                .filter((ticket) => ticket.status === Status.COMPLETED)
-                .map((ticket) => (
+                    .filter((ticket) => !ticket.mileStoneUuid).length || 0
+                }
+              >
+                {sortTicketList(
+                  filteredKeywordTicketList
+                    .filter((ticket) => ticket.status !== Status.COMPLETED)
+                    .filter((ticket) => !ticket.mileStoneUuid)
+                ).map((ticket) => (
                   <TicketListItem
                     ticket={ticket}
                     key={ticket.ticketId}
                     searchedValue={searchValue}
                   />
                 ))}
-            </StyledTicketList>
-          </Flex>
+              </StyledTicketList>
+            </Flex>
+          )}
+          {filteredKeywordTicketList
+            .filter((ticket) => ticket.status === Status.COMPLETED)
+            .filter((ticket) => !ticket.mileStoneUuid).length > 0 && (
+            <Flex vertical gap={8}>
+              <CategoryLabel
+                label="完了したチケット"
+                onClick={() => toggleMileStone('completed')}
+                defaultOpenState={
+                  !searchValue
+                    ? true
+                    : filteredKeywordTicketList
+                        .filter((ticket) => ticket.status === Status.COMPLETED)
+                        .filter((ticket) => !ticket.mileStoneUuid).length > 0
+                }
+                mode="accordion"
+              />
+              <StyledTicketList
+                vertical
+                gap={2}
+                $show={mileStoneOpenStates['completed'] || false}
+                $height={
+                  filteredKeywordTicketList
+                    .filter((ticket) => ticket.status === Status.COMPLETED)
+                    .filter((ticket) => !ticket.mileStoneUuid).length || 0
+                }
+              >
+                {filteredKeywordTicketList
+                  .filter((ticket) => ticket.status === Status.COMPLETED)
+                  .map((ticket) => (
+                    <TicketListItem
+                      ticket={ticket}
+                      key={ticket.ticketId}
+                      searchedValue={searchValue}
+                    />
+                  ))}
+              </StyledTicketList>
+            </Flex>
+          )}
         </Flex>
       </StyledListFlexContainer>
       <CreateModal
