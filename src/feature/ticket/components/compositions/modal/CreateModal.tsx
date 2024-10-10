@@ -38,6 +38,9 @@ export const CreateModal = ({
   useEffect(() => {
     // モーダルが開かれたときにタイトルのInputにフォーカスを設定
     if (isOpenedNewCreateModal) {
+      setSelectedCategories([]);
+      // フォームのフィールドをリセット
+      form.resetFields();
       setTimeout(() => titleInputRef.current?.focus(), 100);
     }
   }, [isOpenedNewCreateModal]); // 依存配列にモーダルの状態を追加
@@ -141,7 +144,7 @@ export const CreateModal = ({
               </FormItem>
             </Flex>
             <TicketProperty
-              isEditMode={true}
+              isEditMode
               ticket={null}
               selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}

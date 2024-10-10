@@ -368,7 +368,11 @@ export const TicketProperty = ({
           <FormItem
             noStyle
             name="categories"
-            initialValue={selectedCategories.map((category) => category.uuid)}
+            initialValue={
+              (selectedCategories.length > 0 &&
+                selectedCategories.map((category) => category.uuid)) ||
+              []
+            }
           >
             <Checkbox.Group
               value={selectedCategories.map((category) => category.uuid)}
