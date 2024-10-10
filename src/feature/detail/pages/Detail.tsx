@@ -1,5 +1,5 @@
 import { Flex, notification } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Section } from '../components/compositions/Section';
 import { CategoryLabelMode } from '../../../components/composition/categoryLabel/CategoryLabel';
 import { useParams } from 'react-router-dom';
@@ -17,7 +17,7 @@ import { Form } from '../../../components/element/form/Form';
 import { FormItem } from '../../../components/element/form/FormItem';
 import { MultiLineText } from '../../../components/composition/MultiLineText';
 import { updateProject } from '../api/detail';
-import { TGetProjectRes, TUpdateProjectReq } from '../types/TProject';
+import { TUpdateProjectReq } from '../types/TProject';
 import { useForm } from 'antd/es/form/Form';
 import { NOTIFICATION_TIME } from '../../../constant/Notification';
 import { QueryKey } from '../../../constant/QueryKey';
@@ -30,17 +30,12 @@ export const Detail = (): React.JSX.Element => {
   const [form] = useForm();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryKey: [QueryKey.PROJECT_DETAIL],
+  const { data: detail } = useQuery({
+    queryKey: [QueryKey.PROJECT_DETAIL, projectId],
     queryFn: () => getProject(projectId || '')
   });
-  const [detail, setDetail] = useState<TGetProjectRes>();
 
-  if (!data || !projectId) <Loading />;
-
-  useEffect(() => {
-    setDetail(data);
-  }, [data]);
+  if (!projectId) return <Loading />;
 
   const updateMutation = useMutation({
     mutationFn: updateProject,

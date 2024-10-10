@@ -56,7 +56,7 @@ export const SideMenu = ({ project, canView }: TProps): React.JSX.Element => {
       <StyledMenu
         mode="inline"
         selectedKeys={selectedKeys}
-        defaultSelectedKeys={['dashboard']}
+        defaultSelectedKeys={['detail']}
         items={items}
         onClick={handleMenuClick}
         inlineCollapsed={canView}

@@ -1,4 +1,11 @@
-import { Flex, Image, Menu, MenuProps, notification } from 'antd';
+import {
+  ConfigProvider,
+  Flex,
+  Image,
+  Menu,
+  MenuProps,
+  notification
+} from 'antd';
 import { Header as AntDHeader } from 'antd/es/layout/layout';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -11,6 +18,7 @@ import { NOTIFICATION_TIME } from '../../../constant/Notification';
 // import { BellFilled } from '@ant-design/icons';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { Colors } from '../../../style/Colors';
+import { mixinMainColor } from '../../../style/Mixin';
 
 // import { useAuth0 } from '@auth0/auth0-react';
 
@@ -35,7 +43,6 @@ export const GlobalHeader = ({
 }: TProps): React.JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   // URLクエリパラメータを解析
   const { id: projectId } = useParams();
 
@@ -108,33 +115,43 @@ export const GlobalHeader = ({
       default:
         const project = projectList.find((p) => p.projectId === e.key);
         setProject(project ? project : null);
-        navigate(`/${e.key}/dashboard`);
+        navigate(`/${e.key}/detail`);
         break;
     }
   };
 
   return (
-    <StyledAntDHeader>
-      <Flex align="center" gap={20}>
-        <StyledIconFlex>
-          <RxHamburgerMenu
-            onClick={() => setCanView(!canView)}
-            color={Colors.TEXT}
-            fontSize={24}
-            cursor={'pointer'}
-          />
-        </StyledIconFlex>
-        <StyledLink to={'#'}>
-          <Image
-            preview={false}
-            src="/assets/DevLog_header_logo.svg"
-            alt="develog"
-            width={152}
-          />
-        </StyledLink>
-      </Flex>
-      <StyledMenu mode="horizontal" items={items} onClick={handleMenuClick} />
-    </StyledAntDHeader>
+    <ConfigProvider
+      theme={{
+        components: {
+          Menu: {
+            popupBg: Colors.MAIN
+          }
+        }
+      }}
+    >
+      <StyledAntDHeader>
+        <Flex align="center" gap={20}>
+          <StyledIconFlex>
+            <RxHamburgerMenu
+              onClick={() => setCanView(!canView)}
+              color={Colors.TEXT}
+              fontSize={24}
+              cursor={'pointer'}
+            />
+          </StyledIconFlex>
+          <StyledLink to={'#'}>
+            <Image
+              preview={false}
+              src="/assets/DevLog_header_logo.svg"
+              alt="develog"
+              width={152}
+            />
+          </StyledLink>
+        </Flex>
+        <StyledMenu mode="horizontal" items={items} onClick={handleMenuClick} />
+      </StyledAntDHeader>
+    </ConfigProvider>
   );
 };
 
@@ -176,5 +193,8 @@ const StyledMenu = styled(Menu)`
   &.ant-menu-title-content {
     margin-inline-start: 0;
     margin: 0;
+  }
+  &.custom-submenu-item {
+    ${mixinMainColor}
   }
 `;
