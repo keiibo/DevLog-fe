@@ -23,9 +23,13 @@ import { Status } from '../elements/Status';
 
 type TProps = {
   ticket: TTicket;
+  searchedValue: string;
 };
 
-export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
+export const TicketListItem = ({
+  ticket,
+  searchedValue
+}: TProps): React.JSX.Element => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -53,6 +57,30 @@ export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
     navigate(ticketId);
   };
 
+  // ハイライト関数を追加
+  const getHighlightedText = (text: string, highlight: string) => {
+    if (!highlight) {
+      return text;
+    }
+
+    // 正規表現の特殊文字をエスケープ
+    const escapeRegExp = (string: string) => {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    };
+
+    const escapedHighlight = escapeRegExp(highlight);
+    const regex = new RegExp(`(${escapedHighlight})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) =>
+      regex.test(part) ? (
+        <HighlightSpan key={index}>{part}</HighlightSpan>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
     <StyledTicketFlexContainer
       gap={4}
@@ -66,7 +94,9 @@ export const TicketListItem = ({ ticket }: TProps): React.JSX.Element => {
             <Id id={ticketId} />
           </Flex>
           <StyledTitleFlex vertical gap={4}>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>
+              {getHighlightedText(title, searchedValue)}
+            </StyledTitle>
             <Flex gap={4}>
               {categories &&
                 categories.length > 0 &&
@@ -113,6 +143,10 @@ const StyledTicketFlexContainer = styled(Flex)<{
   position: relative; /* 疑似要素の基準点とする */
   padding: 6px 8px;
   cursor: pointer;
+
+  ${mixinBgWhite}
+  ${mixinMainColor}
+  ${mixinBorderRadius4px}
   &&:hover {
     border: 2px solid ${Colors.MAIN}4A;
   }
@@ -127,10 +161,6 @@ const StyledTicketFlexContainer = styled(Flex)<{
     background-color: ${(props) =>
       getLabelColor(props.$borderColor)}; /* 背景色はpropsから */
   }
-
-  ${mixinBgWhite}
-  ${mixinMainColor}
-  ${mixinBorderRadius4px}
 `;
 
 const StyledFlex = styled(Flex)`
@@ -156,4 +186,7 @@ const StyledTitleFlex = styled(Flex)`
   flex: 1;
   overflow: hidden;
   min-width: 0;
+`;
+const HighlightSpan = styled.span`
+  background-color: ${Colors.PURPLE}6a;
 `;

@@ -13,7 +13,7 @@ export type TTicket = {
   priority: TPriority;
   status: TStatus;
   categories?: TCategory[];
-  mileStone: TMileStone | null;
+  mileStoneUuid: string | null;
   createdAt: string;
   completedAt: string | null;
 };
@@ -64,7 +64,7 @@ export type TCreateTicketReq = {
   priority: TPriority;
   status: TStatus;
   categories?: TCategory[];
-  mileStone: string | null;
+  mileStoneUuid: string | null;
   createdAt: string;
   completedAt: string | null;
 };

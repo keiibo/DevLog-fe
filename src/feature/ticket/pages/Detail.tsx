@@ -97,7 +97,7 @@ export const Detail = (): React.JSX.Element => {
       detail: ticket?.detail,
       limitStartYm: ticket?.limitStartYm ? dayjs(ticket?.limitStartYm) : null,
       limitEndYm: ticket?.limitEndYm ? dayjs(ticket?.limitEndYm) : null,
-      mileStone: ticket?.mileStone ? ticket.mileStone.uuid : null,
+      mileStone: ticket?.mileStoneUuid,
       isDeletable: ticket?.isDeletable
     });
     setSelectedCategories(ticket?.categories || []);
@@ -124,7 +124,7 @@ export const Detail = (): React.JSX.Element => {
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status'),
       categories: selectedCategories,
-      mileStone: form.getFieldValue('mileStone') || null,
+      mileStoneUuid: form.getFieldValue('mileStone') || null,
       completedAt:
         form.getFieldValue('status') === Status.COMPLETED
           ? new Date().toISOString()

@@ -136,6 +136,15 @@ export const TicketProperty = ({
     });
   };
 
+  const getMileStoneName = (mileStoneUuid: string): string => {
+    if (mileStoneUuid === '') return '';
+    return (
+      mileStoneList?.find((mileStone) => {
+        return mileStone.uuid === mileStoneUuid;
+      })?.name || ''
+    );
+  };
+
   const options = useMemo(() => {
     return {
       toolbar: [
@@ -185,7 +194,7 @@ export const TicketProperty = ({
         <StyledLabel>マイルストーン:</StyledLabel>
         <FormItem
           noStyle
-          initialValue={ticket?.mileStone?.uuid || null}
+          initialValue={ticket?.mileStoneUuid || null}
           name={'mileStone'}
         >
           {isEditMode ? (
@@ -202,7 +211,7 @@ export const TicketProperty = ({
               })}
             </StyledMileStoneSelect>
           ) : (
-            ticket?.mileStone?.name
+            getMileStoneName(ticket?.mileStoneUuid || '')
           )}
         </FormItem>
       </Flex>

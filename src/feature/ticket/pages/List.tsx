@@ -218,7 +218,7 @@ export const List = ({
             // マイルストーンが設定されている完了していないチケットをフィルター
             const filteredTicketList = filteredKeywordTicketList
               .filter((ticket) => ticket.status !== Status.COMPLETED)
-              .filter((ticket) => ticket.mileStone?.uuid === mileStone.uuid);
+              .filter((ticket) => ticket.mileStoneUuid === mileStone.uuid);
             // チケットがない場合はスキップ
             if (filteredTicketList.length === 0) {
               return null;
@@ -241,7 +241,11 @@ export const List = ({
                   $height={filteredTicketList.length || 0}
                 >
                   {sortTicketList(filteredTicketList).map((ticket) => (
-                    <TicketListItem ticket={ticket} key={ticket.ticketId} />
+                    <TicketListItem
+                      ticket={ticket}
+                      key={ticket.ticketId}
+                      searchedValue={searchValue}
+                    />
                   ))}
                 </StyledTicketList>
               </Flex>
@@ -255,7 +259,7 @@ export const List = ({
                 !(
                   ticketList
                     .filter((ticket) => ticket.status !== Status.COMPLETED)
-                    .filter((ticket) => !ticket.mileStone).length > 0
+                    .filter((ticket) => !ticket.mileStoneUuid).length > 0
                 )
               }
               mode="accordion"
@@ -267,15 +271,19 @@ export const List = ({
               $height={
                 ticketList
                   .filter((ticket) => ticket.status !== Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStone).length || 0
+                  .filter((ticket) => !ticket.mileStoneUuid).length || 0
               }
             >
               {sortTicketList(
                 filteredKeywordTicketList
                   .filter((ticket) => ticket.status !== Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStone)
+                  .filter((ticket) => !ticket.mileStoneUuid)
               ).map((ticket) => (
-                <TicketListItem ticket={ticket} key={ticket.ticketId} />
+                <TicketListItem
+                  ticket={ticket}
+                  key={ticket.ticketId}
+                  searchedValue={searchValue}
+                />
               ))}
             </StyledTicketList>
           </Flex>
@@ -286,7 +294,7 @@ export const List = ({
               defaultOpenState={
                 ticketList
                   .filter((ticket) => ticket.status === Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStone).length > 0
+                  .filter((ticket) => !ticket.mileStoneUuid).length > 0
               }
               mode="accordion"
             />
@@ -297,13 +305,17 @@ export const List = ({
               $height={
                 ticketList
                   .filter((ticket) => ticket.status === Status.COMPLETED)
-                  .filter((ticket) => !ticket.mileStone).length || 0
+                  .filter((ticket) => !ticket.mileStoneUuid).length || 0
               }
             >
               {filteredKeywordTicketList
                 .filter((ticket) => ticket.status === Status.COMPLETED)
                 .map((ticket) => (
-                  <TicketListItem ticket={ticket} key={ticket.ticketId} />
+                  <TicketListItem
+                    ticket={ticket}
+                    key={ticket.ticketId}
+                    searchedValue={searchValue}
+                  />
                 ))}
             </StyledTicketList>
           </Flex>
@@ -335,6 +347,7 @@ export const List = ({
       <EditMileStoneModal
         isOpened={isOpenedEditMileStoneModal}
         setIsOpened={setIsOpenedEditMileStoneModal}
+        mileStoneList={mileStoneList}
         title={'設定済みマイルストーンを編集'}
       />
     </>
@@ -376,8 +389,8 @@ const StyledSearchInput = styled(Input)<{ $visible: boolean }>`
   width: ${(props) => (props.$visible ? '200px' : '0px')};
   opacity: ${(props) => (props.$visible ? 1 : 0)};
   transition:
-    width 0.3s ease-in-out,
-    opacity 0.3s ease-in-out;
+    width 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
   overflow: hidden;
   /* プレースホルダーとアイコンの位置調整 */
   .ant-input-prefix {

@@ -65,7 +65,7 @@ export const CreateModal = ({
       priority: form.getFieldValue('priority'),
       status: form.getFieldValue('status'),
       categories: selectedCategories,
-      mileStone: form.getFieldValue('mileStone') || null,
+      mileStoneUuid: form.getFieldValue('mileStone') || null,
       createdAt: new Date().toISOString(),
       completedAt:
         form.getFieldValue('status') === Status.COMPLETED

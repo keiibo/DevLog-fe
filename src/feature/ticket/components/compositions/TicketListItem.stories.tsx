@@ -92,8 +92,9 @@ export const Default: TStory = {
         }
       ],
       completedAt: null,
-      mileStone: null
-    }
+      mileStoneUuid: null
+    },
+    searchedValue: ''
   }
 };
 
@@ -124,7 +125,8 @@ export const CantDelete: TStory = {
         }
       ],
       completedAt: null,
-      mileStone: null
-    }
+      mileStoneUuid: null
+    },
+    searchedValue: ''
   }
 };
