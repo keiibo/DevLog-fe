@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { TCreateMileStoneReq, TGetMileStoneRes } from '../types/TTicket';
+import {
+  TCreateMileStoneReq,
+  TGetMileStoneRes,
+  TUpdateMileStoneReq
+} from '../types/TTicket';
 import { setConfig, sgetBaseUrl } from '../../../lib/api';
 
 /**
@@ -19,6 +23,21 @@ export const getMileStones = async (
 ): Promise<TGetMileStoneRes[]> => {
   const res = await axios.get(
     `${sgetBaseUrl()}/api/tickets/mileStone/${projectId}`,
+    setConfig()
+  );
+  return res.data;
+};
+
+/**
+ * マイルストーン更新
+ */
+export const updateMileStones = async (
+  req: TUpdateMileStoneReq
+): Promise<TGetMileStoneRes[]> => {
+  const { projectId, updateMileStones } = req;
+  const res = await axios.put(
+    `${sgetBaseUrl()}/api/mileStones/update/${projectId}`,
+    updateMileStones,
     setConfig()
   );
   return res.data;

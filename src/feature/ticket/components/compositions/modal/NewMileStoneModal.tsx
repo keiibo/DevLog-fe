@@ -8,7 +8,7 @@ import {
   mixinNormalFontSize24px
 } from '../../../../../style/Mixin';
 import { MultiLineText } from '../../../../../components/composition/MultiLineText';
-import { Flex, Table } from 'antd';
+import { Flex, notification, Table } from 'antd';
 import { Form } from '../../../../../components/element/form/Form';
 import { FormItem } from '../../../../../components/element/form/FormItem';
 import { Input } from '../../../../../components/element/input/Input';
@@ -18,8 +18,10 @@ import Checkbox from 'antd/es/checkbox/Checkbox';
 import { useForm } from 'antd/es/form/Form';
 import { useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createMileStone } from '../../../api/mileStone';
+import { QueryKey } from '../../../../../constant/QueryKey';
+import { NOTIFICATION_TIME } from '../../../../../constant/Notification';
 
 type TProps = {
   isOpened: boolean;
@@ -38,6 +40,8 @@ export const NewMileStoneModal = ({
 }: TProps): React.JSX.Element => {
   const { id } = useParams();
   const [form] = useForm();
+  const queryClient = useQueryClient();
+
   // ステップ管理用のstate
   const [step, setStep] = useState(1);
   // チェックされたチケットの情報を保持するstate
@@ -72,8 +76,14 @@ export const NewMileStoneModal = ({
   const mutation = useMutation({
     mutationFn: createMileStone,
     onSuccess: () => {
+      notification.success({
+        message: `マイルストーンを作成しました`,
+        duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
+      });
       setIsOpened(false);
       setIsSelectModalOpened(false);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.TICKET_LIST] });
+      queryClient.invalidateQueries({ queryKey: [QueryKey.MILESTONE_LIST] });
     }
   });
 
@@ -98,6 +108,7 @@ export const NewMileStoneModal = ({
   };
 
   const dataSource = tickets.map((ticket) => ({
+    key: ticket.ticketId,
     checkbox: (
       <Checkbox
         onChange={(e) => handleCheckboxChange(ticket, e.target.checked)}
@@ -109,6 +120,7 @@ export const NewMileStoneModal = ({
   }));
 
   const selectedTicketDataSource = selectedTickets.map((selectedTicket) => ({
+    key: selectedTicket.ticketId,
     id: selectedTicket.ticketId,
     name: selectedTicket.title
   }));

@@ -226,7 +226,7 @@ export const List = ({
             const isOpen = mileStoneOpenStates[mileStone.uuid] || false; // 開閉状態の取得（デフォルトは閉じる）
 
             return (
-              <Flex vertical gap={8}>
+              <Flex vertical gap={8} key={mileStone.uuid}>
                 <CategoryLabel
                   label={mileStone.name}
                   subText={mileStone.version}

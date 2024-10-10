@@ -3,12 +3,17 @@ import { Modal } from '../../../../../components/element/modal/Modal';
 import { ModalHeader } from '../../../../../components/element/modal/ModalHeader';
 import { ModalBody } from '../../../../../components/element/modal/ModalBody';
 import styled from 'styled-components';
-import { Flex, Table, Input, Button } from 'antd';
+import { Flex, Table, Input, Button, notification } from 'antd';
 import { mixinNormalFontSize24px } from '../../../../../style/Mixin';
 import { MultiLineText } from '../../../../../components/composition/MultiLineText';
 import { Loading } from '../../../../../components/element/loading/Loading';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { TGetMileStoneRes } from '../../../types/TTicket';
+import { TGetMileStoneRes, TUpdateMileStoneReq } from '../../../types/TTicket';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateMileStones } from '../../../api/mileStone';
+import { NOTIFICATION_TIME } from '../../../../../constant/Notification';
+import { QueryKey } from '../../../../../constant/QueryKey';
+import { useParams } from 'react-router-dom';
 
 type TProps = {
   isOpened: boolean;
@@ -23,8 +28,9 @@ export const EditMileStoneModal = ({
   title,
   mileStoneList
 }: TProps): React.JSX.Element => {
+  const { id } = useParams();
   const [editingKey, setEditingKey] = useState<string | null>(null);
-
+  const queryClient = useQueryClient();
   if (!mileStoneList) return <Loading />;
 
   const dataSource = mileStoneList.map((mileStone) => ({
@@ -85,7 +91,39 @@ export const EditMileStoneModal = ({
     setMileStones((prev) => prev.filter((item) => item.key !== key));
   };
 
-  const handleAllSave = () => {};
+  const mutation = useMutation({
+    mutationFn: updateMileStones,
+    onSuccess() {
+      notification.success({
+        message: `マイルストーンを更新しました`,
+        duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
+      });
+      setIsOpened(false);
+      queryClient.invalidateQueries({ queryKey: [QueryKey.MILESTONE_LIST] });
+      queryClient.invalidateQueries({ queryKey: [QueryKey.TICKET_LIST] });
+    },
+    onError() {
+      notification.error({
+        message: `マイルストーンの更新に失敗しました`,
+        duration: NOTIFICATION_TIME.ERROR // 通知が表示される時間（秒）
+      });
+    }
+  });
+
+  const handleAllSave = () => {
+    const updateMileStones = mileStones.map((mileStone) => {
+      return {
+        uuid: mileStone.key,
+        name: mileStone.name,
+        version: mileStone.version
+      };
+    });
+    const req: TUpdateMileStoneReq = {
+      projectId: id || '',
+      updateMileStones
+    };
+    mutation.mutate(req);
+  };
 
   const columns = [
     {
@@ -183,7 +221,11 @@ export const EditMileStoneModal = ({
             pagination={false}
           />
           <Flex justify="center">
-            <Button type="primary" onClick={handleAllSave}>
+            <Button
+              type="primary"
+              onClick={handleAllSave}
+              disabled={editingKey != null}
+            >
               保存
             </Button>
           </Flex>
