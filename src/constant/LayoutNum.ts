@@ -1,4 +1,4 @@
 export const LayoutNum = {
-  HEADER_HEIGHT: 80,
+  HEADER_HEIGHT: 60,
   FOOTER_HEIGHT: 80
 };
