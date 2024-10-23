@@ -26,10 +26,7 @@ type TProps = {
   searchedValue: string;
 };
 
-export const TicketListItem = ({
-  ticket,
-  searchedValue
-}: TProps): React.JSX.Element => {
+export const Card = ({ ticket, searchedValue }: TProps): React.JSX.Element => {
   const { id } = useParams();
   const navigate = useNavigate();
 

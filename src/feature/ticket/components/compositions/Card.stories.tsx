@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { TicketListItem } from './TicketListItem';
+import { Card } from './Card';
 import { Colors } from '../../../../style/Colors';
 import { Priority, Status } from '../../types/TTicket';
 import { sgetBaseUrl } from '../../../../lib/api';
@@ -9,7 +9,7 @@ const baseUrl = sgetBaseUrl();
 
 const meta = {
   title: 'feature/ticket/compositions/TicketListItem',
-  component: TicketListItem,
+  component: Card,
   tags: ['autodocs'],
   parameters: {
     msw: {
@@ -61,7 +61,7 @@ const meta = {
       description: 'The ticket data object to display'
     }
   }
-} satisfies Meta<typeof TicketListItem>;
+} satisfies Meta<typeof Card>;
 
 export default meta;
 type TStory = StoryObj<typeof meta>;

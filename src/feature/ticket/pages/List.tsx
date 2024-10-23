@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Priority, Status, TGetMileStoneRes, TTicket } from '../types/TTicket';
 import { Flex, Tooltip } from 'antd';
 import { CategoryLabel } from '../../../components/composition/categoryLabel/CategoryLabel';
-import { TicketListItem } from '../components/compositions/TicketListItem';
+import { Card } from '../components/compositions/Card';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/modal/CreateModal';
 import {
@@ -239,7 +239,7 @@ export const List = ({
                   $height={filteredTicketList.length || 0}
                 >
                   {sortTicketList(filteredTicketList).map((ticket) => (
-                    <TicketListItem
+                    <Card
                       ticket={ticket}
                       key={ticket.ticketId}
                       searchedValue={searchValue}
@@ -280,7 +280,7 @@ export const List = ({
                     .filter((ticket) => ticket.status !== Status.COMPLETED)
                     .filter((ticket) => !ticket.mileStoneUuid)
                 ).map((ticket) => (
-                  <TicketListItem
+                  <Card
                     ticket={ticket}
                     key={ticket.ticketId}
                     searchedValue={searchValue}
@@ -318,7 +318,7 @@ export const List = ({
                 {filteredKeywordTicketList
                   .filter((ticket) => ticket.status === Status.COMPLETED)
                   .map((ticket) => (
-                    <TicketListItem
+                    <Card
                       ticket={ticket}
                       key={ticket.ticketId}
                       searchedValue={searchValue}
