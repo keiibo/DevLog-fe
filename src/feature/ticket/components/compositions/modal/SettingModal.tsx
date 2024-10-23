@@ -6,6 +6,7 @@ import { ModalHeader } from '../../../../../components/element/modal/ModalHeader
 import { ModalBody } from '../../../../../components/element/modal/ModalBody';
 import { Tab } from '../../../../../components/element/tab/Tab';
 import { CategoryTabItem } from '../tabItem/CategoryTabItem';
+import { TemplateTabItem } from '../tabItem/TemplateTabItem';
 
 type TProps = {
   isOpened: boolean;
@@ -18,17 +19,19 @@ export const SettingModal = ({
   setIsOpened,
   title
 }: TProps): React.JSX.Element => {
-  const [form] = useForm();
+  const [categoryForm] = useForm();
+  const [templateForm] = useForm();
 
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: 'カテゴリ',
-      children: <CategoryTabItem form={form} />
+      children: <CategoryTabItem form={categoryForm} />
     },
     {
       key: '2',
-      label: 'テンプレート'
+      label: 'テンプレート',
+      children: <TemplateTabItem form={templateForm} />
     }
   ];
 
@@ -41,7 +44,8 @@ export const SettingModal = ({
       closeIcon={false}
       onCancel={() => {
         setIsOpened(false);
-        form.resetFields();
+        categoryForm.resetFields();
+        templateForm.resetFields();
       }}
     >
       <ModalHeader
@@ -49,7 +53,8 @@ export const SettingModal = ({
         hasCloseIcon
         onClickCloseButton={() => {
           setIsOpened(false);
-          form.resetFields();
+          categoryForm.resetFields();
+          templateForm.resetFields();
         }}
       />
       <ModalBody>

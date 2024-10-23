@@ -97,3 +97,29 @@ export type TUpdateMileStoneReq = {
   projectId: string;
   updateMileStones: TMileStone[];
 };
+
+export type TTemplate = {
+  projectId: string;
+  uuid: string;
+  title: string;
+  content: string;
+};
+
+export type TGetTemplateRes = TTemplate;
+export type TUpdateTemplateRequest = {
+  projectId: string;
+  req: {
+    uuid: string;
+    title: string;
+    content: string;
+  };
+};
+
+export type TCreateTemplateReq = {
+  projectId: string;
+  req: {
+    uuid: string;
+    title: string;
+    content: string;
+  };
+};

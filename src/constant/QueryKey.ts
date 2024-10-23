@@ -7,5 +7,6 @@ export const QueryKey = {
   MILESTONE_LIST: 'mileStones',
   CATEGORY_LIST: 'category',
   NOTE_LIST: 'noteList',
-  NOTE_DETAIL: 'noteDetail'
+  NOTE_DETAIL: 'noteDetail',
+  TEMPLATE_LIST: 'templates'
 };
