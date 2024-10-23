@@ -8,7 +8,7 @@ import {
   TTicket
 } from '../../types/TTicket';
 import { FormItem } from '../../../../components/element/form/FormItem';
-import { Checkbox, Flex } from 'antd';
+import { Checkbox, Flex, FormInstance } from 'antd';
 import dayjs from 'dayjs';
 import DatePicker from '../../../../components/element/datepicker/DatePicker';
 import { DateFormat } from '../../../../constant/DateFormat';
@@ -37,6 +37,7 @@ import 'easymde/dist/easymde.min.css';
 import ReactMarkdown from 'react-markdown';
 import { QueryKey } from '../../../../constant/QueryKey';
 import { getMileStones } from '../../api/mileStone';
+import { getTemplates } from '../../api/template';
 
 type TProps = {
   isEditMode: boolean;
@@ -44,6 +45,7 @@ type TProps = {
   setLabelColor?: React.Dispatch<SetStateAction<TLabelColorType | undefined>>;
   selectedCategories: TCategory[];
   setSelectedCategories: React.Dispatch<SetStateAction<TCategory[]>>;
+  form?: FormInstance;
 };
 
 export const TicketProperty = ({
@@ -51,7 +53,8 @@ export const TicketProperty = ({
   ticket,
   setLabelColor,
   selectedCategories,
-  setSelectedCategories
+  setSelectedCategories,
+  form
 }: TProps): React.JSX.Element => {
   const [startYm, setStartYm] = useState(
     ticket ? dayjs(ticket.limitStartYm) : undefined
@@ -66,6 +69,10 @@ export const TicketProperty = ({
   const { data: mileStoneList } = useQuery({
     queryKey: [QueryKey.MILESTONE_LIST],
     queryFn: () => getMileStones(id || '')
+  });
+  const { data: templateList } = useQuery({
+    queryKey: [QueryKey.TEMPLATE_LIST],
+    queryFn: () => getTemplates(id || '')
   });
 
   const priorityOption = [
@@ -174,7 +181,25 @@ export const TicketProperty = ({
     <>
       {isEditMode ? (
         <>
-          <StyledLabel>詳細:</StyledLabel>
+          <Flex justify="space-between">
+            <StyledLabel>詳細:</StyledLabel>
+            <StyledTemplateSelect
+              placeholder="テンプレートを適用する"
+              onChange={(value) => {
+                const content =
+                  templateList?.find((template) => template.uuid === value)
+                    ?.content || '';
+                setMarkdownValue(content);
+                form?.setFieldValue('detail', content);
+              }}
+            >
+              {templateList?.map((template) => (
+                <Option key={template.uuid} value={template.uuid}>
+                  {template.title}
+                </Option>
+              ))}
+            </StyledTemplateSelect>
+          </Flex>
           <FormItem name={'detail'} noStyle initialValue={ticket?.detail}>
             <SimpleMdeReact
               value={markdownValue}
@@ -430,6 +455,9 @@ const StyledLabel = styled.div`
 
 const StyledSelect = styled(Select)`
   width: 120px;
+`;
+const StyledTemplateSelect = styled(Select)`
+  width: 240px;
 `;
 const StyledMileStoneSelect = styled(Select)`
   width: 60%;

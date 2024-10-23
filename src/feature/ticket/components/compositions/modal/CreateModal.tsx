@@ -148,6 +148,7 @@ export const CreateModal = ({
               ticket={null}
               selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}
+              form={form}
             />
 
             <Flex justify="center">
