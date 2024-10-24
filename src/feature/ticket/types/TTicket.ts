@@ -1,7 +1,7 @@
 import { TValueOf } from '../../../lib/type';
 
 export type TTicket = {
-  _id: number;
+  id: number;
   ticketId: string;
   projectId: string;
   detail: string | null;
@@ -69,7 +69,7 @@ export type TCreateTicketReq = {
   createdAt: string;
   completedAt: string | null;
 };
-export type TPutTicketReq = Omit<TTicket, '_id' | 'ticketId' | 'createdAt'>;
+export type TPutTicketReq = Omit<TTicket, 'id' | 'ticketId' | 'createdAt'>;
 export type TCreateCategoryReq = {
   projectId: string;
   categories: TCategory[];

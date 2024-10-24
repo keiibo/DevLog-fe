@@ -5,7 +5,6 @@ import { styled } from 'styled-components';
 import { Priority } from '../elements/Priority';
 import { LimitDate } from '../elements/LimitDate';
 import {
-  mixinBgWhite,
   mixinBorderRadius4px,
   mixinMainColor,
   mixinMargin0
@@ -20,6 +19,9 @@ import { Colors } from '../../../../style/Colors';
 import { QueryKey } from '../../../../constant/QueryKey';
 import { Id } from '../elements/Id';
 import { Status } from '../elements/Status';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { HolderOutlined } from '@ant-design/icons';
 
 type TProps = {
   ticket: TTicket;
@@ -29,7 +31,17 @@ type TProps = {
 export const Card = ({ ticket, searchedValue }: TProps): React.JSX.Element => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const {
+    isDragging,
+    // 並び替えのつまみ部分に設定するプロパティ
+    setActivatorNodeRef,
+    attributes,
+    listeners,
+    // DOM全体に対して設定するプロパティ
+    setNodeRef,
+    transform,
+    transition
+  } = useSortable({ id: ticket.id });
   const { data } = useQuery({
     queryKey: [QueryKey.CATEGORY_LIST],
     queryFn: () => getCategories(id || '')
@@ -78,14 +90,31 @@ export const Card = ({ ticket, searchedValue }: TProps): React.JSX.Element => {
     );
   };
 
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  };
+
   return (
     <StyledTicketFlexContainer
       gap={4}
       vertical
       $borderColor={labelColorType}
       onClick={() => handleTicketClick()}
+      ref={setNodeRef}
+      style={style}
+      $isDragging={isDragging}
     >
-      <StyledFlex justify="space-between">
+      <StyledFlex justify="space-between" ref={setActivatorNodeRef} gap={4}>
+        {/* つまみ部分 */}
+        <HolderOutlined
+          ref={setActivatorNodeRef}
+          style={{
+            cursor: isDragging ? 'grabbing' : 'grab'
+          }}
+          {...attributes}
+          {...listeners}
+        />
         <StyledLeftContent gap={8}>
           <Flex vertical gap={4}>
             <Id id={ticketId} />
@@ -136,12 +165,15 @@ export const Card = ({ ticket, searchedValue }: TProps): React.JSX.Element => {
 
 const StyledTicketFlexContainer = styled(Flex)<{
   $borderColor: TLabelColorType;
+  $isDragging: boolean;
 }>`
   position: relative; /* 疑似要素の基準点とする */
-  padding: 6px 8px;
+  padding: 6px 4px;
   cursor: pointer;
+  z-index: ${(props) => (props.$isDragging ? 1000 : 10)};
+  background-color: ${(props) =>
+    props.$isDragging ? '#ffc3e1de' : Colors.WHITE}; /* お好みの色に変更 */
 
-  ${mixinBgWhite}
   ${mixinMainColor}
   ${mixinBorderRadius4px}
   &&:hover {

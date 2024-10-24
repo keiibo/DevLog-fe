@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Priority, Status, TGetMileStoneRes, TTicket } from '../types/TTicket';
+import { Status, TGetMileStoneRes, TTicket } from '../types/TTicket';
 import { Flex, Tooltip } from 'antd';
 import { CategoryLabel } from '../../../components/composition/categoryLabel/CategoryLabel';
-import { Card } from '../components/compositions/Card';
 import { styled } from 'styled-components';
 import { CreateModal } from '../components/compositions/modal/CreateModal';
 import {
@@ -20,13 +19,12 @@ import {
 } from '@ant-design/icons';
 import { SettingModal } from '../components/compositions/modal/SettingModal';
 import { SortPopover } from '../components/elements/SortPopover';
-import { useSearchParams } from 'react-router-dom';
-import { SortQueryCategoryType, HowToSortQueryType } from '../types/TQuery';
 import { MileStoneSelectModal } from '../components/compositions/modal/MileStoneSelectModal';
 import { NewMileStoneModal } from '../components/compositions/modal/NewMileStoneModal';
 import { Input } from '../../../components/element/input/Input';
 import { Colors } from '../../../style/Colors';
 import { EditMileStoneModal } from '../components/compositions/modal/EditMileStoneModal';
+import { Column } from '../components/compositions/column/Column';
 type TProps = {
   ticketList: TTicket[];
   mileStoneList: TGetMileStoneRes[];
@@ -36,18 +34,15 @@ export const List = ({
   ticketList,
   mileStoneList
 }: TProps): React.JSX.Element => {
-  const [searchParams, _] = useSearchParams();
-  const querySortType = searchParams.get('sort');
-  const queryCategory = searchParams.get('category');
   const [open, setOpen] = useState(false);
   const handleOpenChange = () => setOpen(!open);
-
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   // フィルタリングされたチケットリスト
   const filteredKeywordTicketList = ticketList.filter((ticket) =>
     ticket.title.toLowerCase().includes(searchValue.toLowerCase())
   );
+
   /**
    * チケットをステータスごとにフィルタリング
    * 件数に使用する
@@ -61,58 +56,6 @@ export const List = ({
   const completedTicketList = filteredKeywordTicketList.filter(
     (ticket) => ticket.status === Status.COMPLETED
   );
-
-  // 優先度を数値にマッピングする関数
-  const priorityToNumber = (priority: string): number => {
-    switch (priority) {
-      case Priority.HIGH:
-        return 1;
-      case Priority.MEDIUM:
-        return 2;
-      case Priority.LOW:
-        return 3;
-      default:
-        return 4; // 未知の値は最低優先度とする
-    }
-  };
-
-  // ソート
-  const sortTicketList = (list: TTicket[]): TTicket[] => {
-    // クエリパラメータから条件を取得する
-    // 条件未設定の場合はそのまま返す
-    if (!queryCategory || !querySortType) return list;
-    return list.sort((a, b) => {
-      let result = 0;
-      switch (queryCategory) {
-        case SortQueryCategoryType.CREATE_AT:
-          // createdAtが存在しない場合の処理
-          if (!a.createdAt) return 1; // aがnullならbを前に
-          if (!b.createdAt) return -1; // bがnullならaを前に
-
-          const createdAtA = new Date(a.createdAt);
-          const createdAtB = new Date(b.createdAt);
-          result = createdAtA.getTime() - createdAtB.getTime();
-          break;
-
-        case SortQueryCategoryType.LIMIT_DATE:
-          if (!a.limitEndYm) return 1; // aがnullならbを前に
-          if (!b.limitEndYm) return -1; // bがnullならaを前に
-
-          const dateA = new Date(a.limitEndYm);
-          const dateB = new Date(b.limitEndYm);
-          result = dateA.getTime() - dateB.getTime();
-          break;
-        case SortQueryCategoryType.PRIORITY:
-          const priorityA = priorityToNumber(a.priority);
-          const priorityB = priorityToNumber(b.priority);
-          result = priorityA - priorityB;
-          break;
-        default:
-          return 0;
-      }
-      return querySortType === HowToSortQueryType.DESCENDING ? -result : result;
-    });
-  };
 
   // モーダル用のstate
   const [isOpenedNewCreateModal, setIsOpenedNewCreateModal] =
@@ -232,20 +175,12 @@ export const List = ({
                   defaultOpenState={false}
                   mode="accordion"
                 />
-                <StyledTicketList
-                  vertical
-                  gap={2}
-                  $show={isOpen} // 開閉状態に基づく表示
-                  $height={filteredTicketList.length || 0}
-                >
-                  {sortTicketList(filteredTicketList).map((ticket) => (
-                    <Card
-                      ticket={ticket}
-                      key={ticket.ticketId}
-                      searchedValue={searchValue}
-                    />
-                  ))}
-                </StyledTicketList>
+                <Column
+                  id={mileStone.name}
+                  ticketList={filteredTicketList}
+                  isOpen={isOpen}
+                  searchValue={searchValue}
+                />
               </Flex>
             );
           })}
@@ -265,28 +200,14 @@ export const List = ({
                 }
                 mode="accordion"
               />
-              <StyledTicketList
-                vertical
-                gap={2}
-                $show={mileStoneOpenStates['unassigned'] || false} // 未設定の開閉状態
-                $height={
-                  filteredKeywordTicketList
-                    .filter((ticket) => ticket.status !== Status.COMPLETED)
-                    .filter((ticket) => !ticket.mileStoneUuid).length || 0
-                }
-              >
-                {sortTicketList(
-                  filteredKeywordTicketList
-                    .filter((ticket) => ticket.status !== Status.COMPLETED)
-                    .filter((ticket) => !ticket.mileStoneUuid)
-                ).map((ticket) => (
-                  <Card
-                    ticket={ticket}
-                    key={ticket.ticketId}
-                    searchedValue={searchValue}
-                  />
-                ))}
-              </StyledTicketList>
+              <Column
+                id="unassigned"
+                ticketList={filteredKeywordTicketList
+                  .filter((ticket) => ticket.status !== Status.COMPLETED)
+                  .filter((ticket) => !ticket.mileStoneUuid)}
+                isOpen={mileStoneOpenStates['unassigned'] || false}
+                searchValue={searchValue}
+              />
             </Flex>
           )}
           {filteredKeywordTicketList
@@ -305,26 +226,14 @@ export const List = ({
                 }
                 mode="accordion"
               />
-              <StyledTicketList
-                vertical
-                gap={2}
-                $show={mileStoneOpenStates['completed'] || false}
-                $height={
-                  filteredKeywordTicketList
-                    .filter((ticket) => ticket.status === Status.COMPLETED)
-                    .filter((ticket) => !ticket.mileStoneUuid).length || 0
-                }
-              >
-                {filteredKeywordTicketList
+              <Column
+                id="completed"
+                ticketList={filteredKeywordTicketList
                   .filter((ticket) => ticket.status === Status.COMPLETED)
-                  .map((ticket) => (
-                    <Card
-                      ticket={ticket}
-                      key={ticket.ticketId}
-                      searchedValue={searchValue}
-                    />
-                  ))}
-              </StyledTicketList>
+                  .filter((ticket) => !ticket.mileStoneUuid)}
+                isOpen={mileStoneOpenStates['completed'] || false}
+                searchValue={searchValue}
+              />
             </Flex>
           )}
         </Flex>
@@ -369,14 +278,6 @@ const StyledListFlexContainer = styled(Flex)`
 
 const StyledListDataFlex = styled(Flex)`
   ${mixinTextColor}
-`;
-
-const StyledTicketList = styled(Flex)<{ $show: boolean; $height: number }>`
-  padding-left: 32px;
-  /* 70は1チケットあたりの高さ */
-  max-height: ${(props) => (props.$show ? `${props.$height * 70}px` : '0')};
-  overflow: hidden;
-  transition: max-height 0.2s ease-in-out;
 `;
 
 const StyledPlusCircleFilled = styled(PlusCircleFilled)`
