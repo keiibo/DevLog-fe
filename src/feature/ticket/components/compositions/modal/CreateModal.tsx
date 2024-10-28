@@ -80,7 +80,7 @@ export const CreateModal = ({
   };
 
   /**
-   * postMutation
+   * チケット作成postMutation
    */
   const mutation = useMutation({
     mutationFn: createTicket,
@@ -90,7 +90,6 @@ export const CreateModal = ({
         description: `タイトル: ${res.title}`,
         duration: NOTIFICATION_TIME.SUCCESS // 通知が表示される時間（秒）
       });
-      setIsOpenedNewCreateModal(false);
       queryClient.invalidateQueries({ queryKey: [QueryKey.TICKET_LIST] });
       form.resetFields();
       setSelectedCategories([]);
