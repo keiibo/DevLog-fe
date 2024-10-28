@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Col, Flex } from 'antd';
 import React from 'react';
 import { List } from './List';
 import { useParams } from 'react-router-dom';
@@ -28,8 +28,12 @@ export const TicketRoot = (): React.JSX.Element => {
 
   return (
     <Flex gap={16}>
-      <List ticketList={ticketList} mileStoneList={mileStoneList} />
-      <TicketDashBoard ticketList={ticketList} />
+      <Col span={16}>
+        <List ticketList={ticketList} mileStoneList={mileStoneList} />
+      </Col>
+      <Col span={8}>
+        <TicketDashBoard ticketList={ticketList} />
+      </Col>
     </Flex>
   );
 };

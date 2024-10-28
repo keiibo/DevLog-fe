@@ -9,7 +9,7 @@ type TProps = {
 // #DVLG-41
 export const TicketDashBoard = ({ ticketList }: TProps): React.JSX.Element => {
   return (
-    <Flex style={{ width: '100%' }}>
+    <Flex>
       <WeeklyBoard ticketList={ticketList} />
     </Flex>
   );

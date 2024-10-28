@@ -51,7 +51,12 @@ export const Detail = (): React.JSX.Element => {
         message: 'チケットを更新しました',
         duration: NOTIFICATION_TIME.SUCCESS
       });
-      queryClient.invalidateQueries({ queryKey: [QueryKey.TICKET_DETAIL] });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKey.TICKET_DETAIL]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKey.TICKET_LIST]
+      });
       setIsEditMode(false);
     },
     onError: () => {

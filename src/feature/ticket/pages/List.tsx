@@ -48,15 +48,15 @@ export const List = ({
    * チケットをステータスごとにフィルタリング
    * 件数に使用する
    */
-  const notStartedTicketList = filteredKeywordTicketList.filter(
+  const notStartedTicketCount = filteredKeywordTicketList.filter(
     (ticket) => ticket.status === Status.NOT_STARTED
-  );
-  const underConstructionTicketList = filteredKeywordTicketList.filter(
+  ).length;
+  const underConstructionTicketCount = filteredKeywordTicketList.filter(
     (ticket) => ticket.status === Status.UNDER_CONSTRUCTION
-  );
-  const completedTicketList = filteredKeywordTicketList.filter(
+  ).length;
+  const completedTicketCount = filteredKeywordTicketList.filter(
     (ticket) => ticket.status === Status.COMPLETED
-  );
+  ).length;
 
   // モーダル用のstate
   const [isOpenedNewCreateModal, setIsOpenedNewCreateModal] =
@@ -114,9 +114,9 @@ export const List = ({
       <StyledListFlexContainer vertical gap={16}>
         <StyledListDataFlex justify="space-between" align="center">
           <Flex gap={8}>
-            未着手 {notStartedTicketList.length}件 着手中{'  '}
-            {underConstructionTicketList.length}件 完了{'  '}
-            {completedTicketList.length}件 / 全
+            未着手 {notStartedTicketCount}件 着手中{'  '}
+            {underConstructionTicketCount}件 完了{'  '}
+            {completedTicketCount}件 / 全
             {filteredKeywordTicketList && filteredKeywordTicketList.length}件
           </Flex>
           <Flex gap={8}>
@@ -270,10 +270,7 @@ export const List = ({
   );
 };
 
-const StyledListFlexContainer = styled(Flex)`
-  max-width: 50vw;
-  min-width: 50vw;
-`;
+const StyledListFlexContainer = styled(Flex)``;
 
 const StyledListDataFlex = styled(Flex)`
   ${mixinTextColor}

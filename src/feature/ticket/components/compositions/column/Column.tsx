@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { Card } from '../Card';
 import { Priority, TTicket } from '../../../types/TTicket';
@@ -81,6 +81,10 @@ export const Column = ({
     });
   };
   const [items, setItems] = useState<TTicket[]>(sortTicketList(ticketList));
+
+  useEffect(() => {
+    setItems(sortTicketList(ticketList));
+  }, [queryCategory, querySortType]);
 
   return (
     <DndContext
