@@ -25,6 +25,7 @@ import { Input } from '../../../components/element/input/Input';
 import { Colors } from '../../../style/Colors';
 import { EditMileStoneModal } from '../components/compositions/modal/EditMileStoneModal';
 import { Column } from '../components/compositions/column/Column';
+
 type TProps = {
   ticketList: TTicket[];
   mileStoneList: TGetMileStoneRes[];
@@ -153,7 +154,6 @@ export const List = ({
             </Tooltip>
           </Flex>
         </StyledListDataFlex>
-
         <Flex vertical gap={24}>
           {mileStoneList.map((mileStone) => {
             // マイルストーンが設定されている完了していないチケットをフィルター
@@ -165,7 +165,6 @@ export const List = ({
               return null;
             }
             const isOpen = mileStoneOpenStates[mileStone.uuid] || false; // 開閉状態の取得（デフォルトは閉じる）
-
             return (
               <Flex vertical gap={8} key={mileStone.uuid}>
                 <CategoryLabel

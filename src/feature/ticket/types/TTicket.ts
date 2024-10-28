@@ -87,6 +87,7 @@ export type TCreateMileStoneReq = {
 };
 
 export type TGetMileStoneRes = {
+  id: number;
   projectId: string;
   uuid: string;
   name: string;

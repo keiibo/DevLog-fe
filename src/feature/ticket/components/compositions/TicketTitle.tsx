@@ -73,16 +73,16 @@ export const TicketTitle = ({
           </StyledTitleContainer>
         </StyledLeftFlex>
         <Flex gap={8}>
-          <StyledIcon>
-            {isDeletable && (
-              <DeleteOutlined onClick={() => setIsDeleteModalOpened(true)} />
-            )}
-          </StyledIcon>
           {isEditable && (
             <StyledIcon onClick={handleClickEditButton}>
               <EditOutlined />
             </StyledIcon>
           )}
+          <StyledIcon>
+            {isDeletable && (
+              <DeleteOutlined onClick={() => setIsDeleteModalOpened(true)} />
+            )}
+          </StyledIcon>
         </Flex>
       </StyledFlex>
       {isDeleteModalOpened && (

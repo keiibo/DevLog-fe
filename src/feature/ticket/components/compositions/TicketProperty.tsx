@@ -8,15 +8,16 @@ import {
   TTicket
 } from '../../types/TTicket';
 import { FormItem } from '../../../../components/element/form/FormItem';
-import { Checkbox, Flex, FormInstance } from 'antd';
+import { Checkbox, Col, Flex, FormInstance, Row } from 'antd';
 import dayjs from 'dayjs';
 import DatePicker from '../../../../components/element/datepicker/DatePicker';
 import { DateFormat } from '../../../../constant/DateFormat';
 import { styled } from 'styled-components';
 import {
   mixinDangerColor,
-  mixinNormalFontSize16px,
-  mixinPadding8px
+  mixinNormalFontSize12px,
+  mixinPadding8px,
+  mixinWhiteColor
 } from '../../../../style/Mixin';
 import { Select } from '../../../../components/element/select/Select';
 import { Option } from '../../../../components/element/select/Option';
@@ -181,7 +182,7 @@ export const TicketProperty = ({
     <>
       {isEditMode ? (
         <>
-          <Flex justify="space-between">
+          <Flex justify="space-between" align="center">
             <StyledLabel>詳細:</StyledLabel>
             <StyledTemplateSelect
               placeholder="テンプレートを適用する"
@@ -215,7 +216,7 @@ export const TicketProperty = ({
         </StyledDetailBox>
       )}
       <Divider />
-      <Flex align="center" gap={32}>
+      <Flex align="center" gap={12}>
         <StyledLabel>マイルストーン:</StyledLabel>
         <FormItem
           noStyle
@@ -236,14 +237,17 @@ export const TicketProperty = ({
               })}
             </StyledMileStoneSelect>
           ) : (
-            getMileStoneName(ticket?.mileStoneUuid || '')
+            <StyledMileStoneLabel>
+              {getMileStoneName(ticket?.mileStoneUuid || '')}
+            </StyledMileStoneLabel>
           )}
         </FormItem>
       </Flex>
       <Divider />
-      <Flex gap={48}>
-        <StyledPropertyFlex vertical gap={8} flex={4}>
-          <Flex align="center" justify="space-between">
+
+      <Row wrap>
+        <Col span={8}>
+          <Flex align="center" gap={16}>
             <StyledLabel>優先度:</StyledLabel>
             <FormItem
               noStyle
@@ -271,7 +275,9 @@ export const TicketProperty = ({
               )}
             </FormItem>
           </Flex>
-          <Flex flex={5} align="center" justify="space-between">
+        </Col>
+        <Col span={8}>
+          <Flex align="center" gap={16}>
             <StyledLabel>ステータス:</StyledLabel>
             <FormItem
               noStyle
@@ -299,7 +305,9 @@ export const TicketProperty = ({
               )}
             </FormItem>
           </Flex>
-          <Flex flex={5} align="center" justify="space-between">
+        </Col>
+        <Col span={8}>
+          <Flex align="center" gap={16}>
             <StyledLabel>ラベルカラー:</StyledLabel>
             <FormItem
               noStyle
@@ -332,60 +340,60 @@ export const TicketProperty = ({
               )}
             </FormItem>
           </Flex>
-        </StyledPropertyFlex>
-        <StyledPropertyFlex vertical gap={8} flex={6}>
-          <Flex align="center" justify="space-between">
-            <StyledLabel>期限日:</StyledLabel>
-            <Flex gap={4} align="center">
-              <FormItem
-                noStyle
-                name={'limitStartYm'}
-                initialValue={
-                  ticket?.limitStartYm ? dayjs(ticket.limitStartYm) : undefined
-                }
-              >
-                {isEditMode ? (
-                  <DatePicker
-                    format={DateFormat.SLASH}
-                    onChange={(value) => setStartYm(value)}
-                  />
-                ) : ticket?.limitStartYm ? (
-                  <StyledSpan $isToday={isOverLimitDate(ticket.limitEndYm)}>
-                    {dayjs(ticket.limitStartYm).format(DateFormat.SLASH)}
-                  </StyledSpan>
-                ) : (
-                  ''
-                )}
-              </FormItem>
-              {isEditMode || ticket?.limitStartYm || ticket?.limitEndYm ? (
-                <span>~</span>
+        </Col>
+      </Row>
+      <Row wrap>
+        <Flex align="center" gap={16}>
+          <StyledLabel>期限日:</StyledLabel>
+          <Flex gap={4} align="center">
+            <FormItem
+              noStyle
+              name={'limitStartYm'}
+              initialValue={
+                ticket?.limitStartYm ? dayjs(ticket.limitStartYm) : undefined
+              }
+            >
+              {isEditMode ? (
+                <DatePicker
+                  format={DateFormat.SLASH}
+                  onChange={(value) => setStartYm(value)}
+                />
+              ) : ticket?.limitStartYm ? (
+                <StyledSpan $isToday={isOverLimitDate(ticket.limitEndYm)}>
+                  {dayjs(ticket.limitStartYm).format(DateFormat.SLASH)}
+                </StyledSpan>
               ) : (
-                <span>期限日無し</span>
+                ''
               )}
-              <FormItem
-                noStyle
-                name={'limitEndYm'}
-                initialValue={
-                  ticket?.limitEndYm ? dayjs(ticket.limitEndYm) : undefined
-                }
-              >
-                {isEditMode ? (
-                  <DatePicker
-                    format={DateFormat.SLASH}
-                    minDate={startYm ? startYm.add(-1, 'day') : undefined}
-                  />
-                ) : ticket?.limitEndYm ? (
-                  <StyledSpan $isToday={isOverLimitDate(ticket.limitEndYm)}>
-                    {dayjs(ticket.limitEndYm).format(DateFormat.SLASH)}
-                  </StyledSpan>
-                ) : (
-                  ''
-                )}
-              </FormItem>
-            </Flex>
+            </FormItem>
+            {isEditMode || ticket?.limitStartYm || ticket?.limitEndYm ? (
+              <span>~</span>
+            ) : (
+              <span>期限日無し</span>
+            )}
+            <FormItem
+              noStyle
+              name={'limitEndYm'}
+              initialValue={
+                ticket?.limitEndYm ? dayjs(ticket.limitEndYm) : undefined
+              }
+            >
+              {isEditMode ? (
+                <DatePicker
+                  format={DateFormat.SLASH}
+                  minDate={startYm ? startYm.add(-1, 'day') : undefined}
+                />
+              ) : ticket?.limitEndYm ? (
+                <StyledSpan $isToday={isOverLimitDate(ticket.limitEndYm)}>
+                  {dayjs(ticket.limitEndYm).format(DateFormat.SLASH)}
+                </StyledSpan>
+              ) : (
+                ''
+              )}
+            </FormItem>
           </Flex>
-        </StyledPropertyFlex>
-      </Flex>
+        </Flex>
+      </Row>
       <Divider />
       <StyledLabel>カテゴリ:</StyledLabel>
       <StyledCategoryFlex gap={8}>
@@ -440,22 +448,19 @@ export const TicketProperty = ({
   );
 };
 
-const StyledPropertyFlex = styled(Flex)`
-  width: 50%;
-`;
-
 const StyledDetailBox = styled.div`
   border: 1px solid ${Colors.TEXT};
   min-height: 320px;
   ${mixinPadding8px}
 `;
 const StyledLabel = styled.div`
-  ${mixinNormalFontSize16px}
+  ${mixinNormalFontSize12px}
 `;
 
 const StyledSelect = styled(Select)`
-  width: 120px;
+  width: 100px;
 `;
+
 const StyledTemplateSelect = styled(Select)`
   width: 240px;
 `;
@@ -469,4 +474,12 @@ const StyledSpan = styled.span<{ $isToday: boolean }>`
 
 const StyledCategoryFlex = styled(Flex)`
   padding-left: 16px;
+`;
+
+const StyledMileStoneLabel = styled.span`
+  background-color: ${Colors.PURPLE}6a;
+  border-radius: 4px;
+  padding: 1px 12px;
+
+  ${mixinWhiteColor}
 `;

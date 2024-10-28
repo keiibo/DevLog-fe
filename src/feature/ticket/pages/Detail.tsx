@@ -7,12 +7,11 @@ import {
 } from '../types/TTicket';
 import { TicketTitle } from '../components/compositions/TicketTitle';
 import styled from 'styled-components';
-import { getLabelColor } from '../lib/labelColor';
-import { mixinBgWhite, mixinBorderRadius12px } from '../../../style/Mixin';
+import { mixinBgWhite } from '../../../style/Mixin';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteTicket, getTicket, updateTicket } from '../api/ticket';
-import { Flex, notification, Space } from 'antd';
+import { Col, Flex, notification, Space } from 'antd';
 import { Button } from '../../../components/element/button/Button';
 import { TicketProperty } from '../components/compositions/TicketProperty';
 import { Form } from '../../../components/element/form/Form';
@@ -156,42 +155,50 @@ export const Detail = (): React.JSX.Element => {
   };
 
   return (
-    <Flex vertical gap={16}>
-      <ArrowBack handleBack={handleBack} />
-      <Form onFinish={handleEditFinish} form={form}>
-        <StyledTicketContainer vertical gap={4} $labelColor={labelColor || ''}>
-          <Flex vertical gap={4}>
-            <Id id={ticketId} />
-            <TicketTitle
-              id={ticket.ticketId}
-              title={ticket.title}
-              isDeletable
-              mode={'detail'}
-              labelColorType={ticket.labelColorType}
-              isEditable
-              isEditMode={isEditMode}
-              setIsEditMode={setIsEditMode}
-              handleDelete={handleDelete}
-            />
-          </Flex>
-          <TicketProperty
-            isEditMode={isEditMode}
-            ticket={ticket}
-            setLabelColor={setLabelColor}
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-          />
-          <Flex justify="center">
-            <Space>
-              {isEditMode && (
-                <Button htmlType={'submit'} type="primary">
-                  更新
-                </Button>
-              )}
-            </Space>
-          </Flex>
-        </StyledTicketContainer>
-      </Form>
+    <Flex>
+      <Col span={12}>
+        <Flex vertical gap={16}>
+          <ArrowBack handleBack={handleBack} />
+          <Form onFinish={handleEditFinish} form={form}>
+            <StyledTicketContainer
+              vertical
+              gap={4}
+              $labelColor={labelColor || ''}
+            >
+              <Flex vertical gap={4}>
+                <Id id={ticketId} />
+                <TicketTitle
+                  id={ticket.ticketId}
+                  title={ticket.title}
+                  isDeletable
+                  mode={'detail'}
+                  labelColorType={ticket.labelColorType}
+                  isEditable
+                  isEditMode={isEditMode}
+                  setIsEditMode={setIsEditMode}
+                  handleDelete={handleDelete}
+                />
+              </Flex>
+              <TicketProperty
+                isEditMode={isEditMode}
+                ticket={ticket}
+                setLabelColor={setLabelColor}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+              />
+              <Flex justify="center">
+                <Space>
+                  {isEditMode && (
+                    <Button htmlType={'submit'} type="primary">
+                      更新
+                    </Button>
+                  )}
+                </Space>
+              </Flex>
+            </StyledTicketContainer>
+          </Form>
+        </Flex>
+      </Col>
     </Flex>
   );
 };
@@ -199,10 +206,7 @@ export const Detail = (): React.JSX.Element => {
 const StyledTicketContainer = styled(Flex)<{
   $labelColor: TLabelColorType;
 }>`
-  width: 800px;
-  border-top: 12px solid ${(props) => getLabelColor(props.$labelColor)};
-  padding: 12px 24px;
+  padding: 24px 36px;
 
   ${mixinBgWhite};
-  ${mixinBorderRadius12px};
 `;

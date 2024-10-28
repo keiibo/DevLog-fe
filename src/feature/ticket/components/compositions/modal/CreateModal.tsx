@@ -4,7 +4,7 @@ import { FormItem } from '../../../../../components/element/form/FormItem';
 import { Input } from '../../../../../components/element/input/Input';
 import { Button } from '../../../../../components/element/button/Button';
 import { Status, TCategory, TCreateTicketReq } from '../../../types/TTicket';
-import { mixinNormalFontSize16px } from '../../../../../style/Mixin';
+import { mixinNormalFontSize12px } from '../../../../../style/Mixin';
 import { styled } from 'styled-components';
 import { Form } from '../../../../../components/element/form/Form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -164,5 +164,5 @@ export const CreateModal = ({
 };
 
 const StyledLabel = styled.div`
-  ${mixinNormalFontSize16px}
+  ${mixinNormalFontSize12px}
 `;
